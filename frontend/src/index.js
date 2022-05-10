@@ -16,9 +16,9 @@ export default function IssueTracker() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navbar />}>
-          <Route path="home" element={<Home />}/>
-          <Route path="about" element={<About />}/>
-          <Route path="container-list" element={<ContainerList />}/>
+          <Route path="home" element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="container-list" element={<ContainerList />} />
         </Route>
       </Routes>
     </BrowserRouter>
