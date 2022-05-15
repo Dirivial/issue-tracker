@@ -4,7 +4,16 @@ export default function About() {
 
   return (
     <div className={"about"}>
-      <p>This is About</p>
+        <section>
+            <h1>About this website</h1>
+            <p>This website was built using react and react-bootstrap.</p>
+        </section>
+
+        <section>
+            <h2>About me</h2>
+            <p>I am me :)</p>
+        </section>
+
     </div>
   )
 }
