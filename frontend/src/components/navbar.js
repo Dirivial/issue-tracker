@@ -1,16 +1,24 @@
 import { Outlet } from 'react-router-dom';
 
+import Navbar from "react-bootstrap/Navbar";
+import Stack from "react-bootstrap/Stack";
+import Button from "react-bootstrap/Button";
+import Nav from "react-bootstrap/Nav";
+
 import './navbar.css';
 
-export default function Navbar() {
+export default function MyNavbar() {
 
   return (
     <div>
-      <div className="navbar">
-        <p>This is my navbar</p>
-      </div>
-
-      <Outlet />
+        <Navbar className="navbar navbar-expand-lg navbar-dark bg-dark ml-auto">
+            <Nav className="me-auto">
+                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/container-list">Containers</Nav.Link>
+                <Nav.Link href="/about">About</Nav.Link>
+            </Nav>
+        </Navbar>
+        <Outlet />
     </div>
   )
 }
