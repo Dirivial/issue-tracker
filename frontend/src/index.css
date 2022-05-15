@@ -10,6 +10,12 @@
     --main-purple: #b16286;
     --main-aqua: #689d6a;
     --main-grey: #927384;
+
+    --bs-body-bg: var(--main-bg);
+}
+
+html {
+    height: 100%;
 }
 
 body {
@@ -19,6 +25,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--main-bg);
+  height: 100%;
+}
+
+#root {
+    height: 100%;
+    background-color: var(--main-bg);
 }
 
 code {

@@ -3,8 +3,8 @@ import "./About.css"
 export default function About() {
 
   return (
-    <div className={"about"}>
-        <section>
+    <div className="about">
+        <section className="about-section">
             <h1>About this website</h1>
             <p>This website was built using react and react-bootstrap.</p>
         </section>

@@ -1,5 +1,24 @@
 
 .about {
-  background-color: red;
-  margin-top: 5vh;
+    background-color: var(--main-bg);
+    color: var(--main-fg);
+    margin-top: 5vh;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.about-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.about-section > h1,h2,p {
+    text-align: center;
+}
+
+.about-section > h1 {
+    margin-top: 3vh;
 }
