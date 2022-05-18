@@ -10,7 +10,6 @@
 }
 
 .about-section {
-    background-color: pink;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -18,7 +17,6 @@
 
 .about-section > h1,h2,p {
     text-align: center;
-    background-color: orange;
 }
 
 .about-section > h1 {
