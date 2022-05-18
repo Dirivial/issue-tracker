@@ -1,8 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
 import Navbar from "react-bootstrap/Navbar";
-import Stack from "react-bootstrap/Stack";
-import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 
 import './navbar.css';

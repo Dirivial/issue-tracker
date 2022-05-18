@@ -1,5 +1,17 @@
 
 .home {
-  background-color: red;
   margin-top: 5vh;
+  color: var(--main-fg);
 }
+
+
+.welcoming-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+    text-align: center;
+}
+
+
