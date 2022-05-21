@@ -1,0 +1,26 @@
+.ContainerList {
+    color: var(--main-fg);
+    margin-top: 5vh;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.ContainerListHeader {
+    padding-top: 3vh;
+}
+
+.ContainerGrid {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 6rem;
+    gap: 15px 10px;
+}
+
+.ContainerGridWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}

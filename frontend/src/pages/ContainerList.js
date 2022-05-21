@@ -1,10 +1,29 @@
+import './ContainerList.css';
 
+import ContainerListItem from '../components/ContainerListItem.js';
+
+import GridDiv from 'react-bootstrap/Container';
 
 export default function ContainerList() {
 
   return (
-    <div>
-      <p>This is a container</p>
+    <div className="ContainerList">
+        <h2 className="ContainerListHeader">These are my containers</h2>
+        
+        <div className="ContainerGridWrapper">
+                <div className="ContainerGrid">
+                    <ContainerListItem name={"My first container"}/>
+                    <ContainerListItem name={"My second container"}/>
+                    <ContainerListItem name={"My second container"}/>
+                    <ContainerListItem name={"My second container"}/>
+                    <ContainerListItem name={"My second container"}/>
+                    <ContainerListItem name={"My second container"}/>
+                    <ContainerListItem name={"My second container"}/>
+
+                </div>
+
+        </div>
+
     </div>
   )
 }
