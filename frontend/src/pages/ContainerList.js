@@ -2,8 +2,6 @@ import './ContainerList.css';
 
 import ContainerListItem from '../components/ContainerListItem.js';
 
-import GridDiv from 'react-bootstrap/Container';
-
 export default function ContainerList() {
 
   return (
