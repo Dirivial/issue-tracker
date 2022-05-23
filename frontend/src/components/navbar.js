@@ -14,6 +14,7 @@ export default function MyNavbar() {
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/container-list">Containers</Nav.Link>
                 <Nav.Link href="/about">About</Nav.Link>
+                <Nav.Link href="/example-container">example-container</Nav.Link>
             </Nav>
         </Navbar>
         <Outlet />
