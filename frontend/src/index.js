@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import ContainerList from './pages/ContainerList';
 import Container from './pages/Container';
+import Login from './pages/Login';
 
 // Components
 import Navbar from './components/navbar';
@@ -20,7 +21,8 @@ export default function IssueTracker() {
     <BrowserRouter>
         <Routes>
             <Route path="/" element={<Navbar />}>
-            <Route path="" element={<Home />} />
+            <Route path="" element={<Login />} />
+            <Route path="home" element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="container-list" element={<ContainerList />} />
             <Route path="example-container" element={<Container />} />

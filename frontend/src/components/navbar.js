@@ -11,7 +11,7 @@ export default function MyNavbar() {
     <div>
         <Navbar className="navbar navbar-expand-lg navbar-dark bg-dark ml-auto">
             <Nav className="me-auto">
-                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/home">Home</Nav.Link>
                 <Nav.Link href="/container-list">Containers</Nav.Link>
                 <Nav.Link href="/about">About</Nav.Link>
                 <Nav.Link href="/example-container">example-container</Nav.Link>
