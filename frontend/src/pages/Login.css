@@ -3,3 +3,16 @@
     margin-top: 5vh;
     color: var(--main-fg);
 }
+
+.loginFormWrapper {
+    background-color: #504945;
+    padding: 0px 30px 0px 30px;
+    border-radius: 3px;
+}
+
+.loginform-thing {
+    padding-top: 3vh;
+    display: flex;
+    justify-content: center;
+
+}
