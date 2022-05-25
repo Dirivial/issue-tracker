@@ -71,27 +71,21 @@ function LoginForm() {
 
     return (
         <div className="loginform-thing">
-            <div className="loginFormWrapper" style={{ maxWidth: 550}}>
-                <form style={{ maxWidth: 500}} className="center pt-4 pb-4">
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
+            <div className="loginFormWrapper" style={{ maxWidth: 750}}>
+                <form style={{ maxWidth: 700}} className="">
+                    <Form.Group className="loginInput" controlId="formBasicEmail">
                         <Form.Label className="float-left">Username</Form.Label>
                         <Form.Control type="user" value={username} placeholder="Username" onChange={e => {setUsername(e.target.value)}}/>
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Group className="loginInput" controlId="formBasicPassword">
                         <Form.Label className="float-left">Password</Form.Label>
                         <Form.Control type="password" value={password} placeholder="Password" onKeyDown={e => {handleKeyDown(e)}} onChange={e => {setPassword(e.target.value)}} />
                     </Form.Group>
-                    <div className="row">
-
-                        {/* SPACER */}
-                        <div className="col-3"></div>
-
-                        <div className="col-9">
-                            <Button className="" onClick={loginClicked} >
-                            Log in
-                            </Button>
-                        </div>
+                    <div className="row btnLoginRow">
+                        <Button className="btnLogin" onClick={loginClicked} >
+                        Log in
+                        </Button>
                     </div>
                     {errorMsg ? <p style={{color: 'red'}}>{errorMsg}</p> : null}
                 </form>                
