@@ -17,7 +17,7 @@ export default function Login() {
 
 
 function LoginForm() {
-    const [errorMsg, setErrorMsg] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null); // Not used currently, but will be once users have been created.
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
