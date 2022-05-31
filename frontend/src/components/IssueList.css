@@ -1,0 +1,7 @@
+
+.issue-list {
+    padding: 1vh;
+    background-color: var(--main-orange);
+
+    box-shadow: 5px 5px 2px 1px var(--main-red);
+}

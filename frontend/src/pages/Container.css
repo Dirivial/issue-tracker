@@ -1,5 +1,16 @@
 
 .container {
-  margin-top: 5vh;
-  color: var(--main-fg);
+    margin-top: 5vh;
+    color: var(--main-fg);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 2vh;
+
+    margin-left: 1vh;
+
+    padding-top: 2vh;
+    padding-bottom: 5vh;
 }
