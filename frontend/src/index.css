@@ -1,14 +1,40 @@
 
 :root {
     --main-bg: #282828;
+    --main-bg-hard: #1d2021;
+    --main-bg-soft: #32302f;
+    --bg1: #3c3836;
+    --bg2: #504945;
+    --bg3: #665c54;
+    --bg4: #7c6f64;
+
     --main-fg: #ebdbb2;
-    --main-orange: #fe8019;
+    --fg1: #fbf1c7;
+    --fg2: #d5c4a1;
+    --fg3: #bdae93;
+    --fg4: #a89984;
+    
+    --main-orange: #d65d0e;
+    --accent-orange: #fe8019;
+
     --main-red: #cc241d;
+    --accent-red: #fb4934;
+
     --main-green: #98971a;
+    --accent-green: #b8bb26;
+
     --main-yellow: #d79921;
+    --accent-yellow: #fabd2f;
+
     --main-blue: #458588;
+    --alt-blue: #83a598;
+
     --main-purple: #b16286;
+    --alt-purple: #d3869;
+
     --main-aqua: #689d6a;
+    --alt-aqua: #8ec07c;
+
     --main-grey: #927384;
 
     --bs-body-bg: var(--main-bg);
