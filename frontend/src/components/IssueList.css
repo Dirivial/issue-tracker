@@ -1,7 +1,10 @@
 
 .issue-list {
     padding: 1vh;
-    background-color: var(--main-orange);
+    background-color: var(--bg3);
+    box-shadow: 5px 5px 2px 1px var(--bg1);
 
-    box-shadow: 5px 5px 2px 1px var(--main-red);
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
 }

@@ -1,0 +1,6 @@
+
+.issue-list-item {
+    background-color: var(--main-bg-soft);
+    padding: 10px 0px 1px 0px;
+    margin-bottom: 5px;
+}
