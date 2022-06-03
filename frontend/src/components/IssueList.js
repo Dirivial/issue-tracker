@@ -1,3 +1,4 @@
+import AddIssueButton from '../components/AddIssueButton.js';
 import Issue from '../components/IssueListItem.js';
 import './IssueList.css';
 
@@ -13,6 +14,8 @@ export default function IssueList(props) {
                 <Issue info="First issue in this list"/>
                 <Issue info="Second issue in this list"/>
             </div>
+
+            <AddIssueButton />
         </div>
     )
 }
