@@ -1,4 +1,4 @@
-import AddIssueButton from '../components/AddIssueButton.js';
+import Button from 'react-bootstrap/Button'
 import Issue from '../components/IssueListItem.js';
 import './IssueList.css';
 
@@ -15,7 +15,7 @@ export default function IssueList(props) {
                 <Issue info="Second issue in this list"/>
             </div>
 
-            <AddIssueButton />
+            <Button onClick={() => props.issuePopup(true)}>New Issue</Button>
         </div>
     )
 }
