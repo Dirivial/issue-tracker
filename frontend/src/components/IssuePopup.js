@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+import './IssuePopup.css';
+
+
 export default function IssuePopup(props) {
 
     const [name, setName] = useState('')
 
     return (
         <div className="NewIssuePopup">
-            <Modal
+            <Modal 
                 {...props}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
