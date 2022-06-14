@@ -4,13 +4,25 @@ import { useNavigate } from 'react-router-dom';
 
 import { useState } from 'react';
 
+import RegisterPopup from '../components/RegisterUserPopup.js';
+
 import './Login.css'
 
 export default function Login() {
 
+    const [showRegisterPopup, setShowRegisterPopup] = useState(false);
+    
     return (
         <div className="login">
             <LoginForm />
+            <div className="btnLoginRow">
+                <Button className="btnLogin" onClick={() => setShowRegisterPopup(true)}>Not registered?</Button>
+            </div>
+
+            <RegisterPopup
+                show={showRegisterPopup}
+                onHide={() => {setShowRegisterPopup(false)}}
+            />
         </div>
     )
 }
@@ -89,6 +101,7 @@ function LoginForm() {
                     </div>
                     {errorMsg ? <p style={{color: 'red'}}>{errorMsg}</p> : null}
                 </form>                
+
             </div>
 
         </div>
