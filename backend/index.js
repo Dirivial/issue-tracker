@@ -23,7 +23,8 @@ app.post('/create', (req, res) => {
         [name, password, mail],
         (err, result) => {
             if(err) {
-                console.log(err);
+                res.status(500);
+                res.send({ error: 'Amogus' });
             } else {
                 res.send("Values inserted.");
             }
