@@ -1,8 +1,11 @@
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import Axios from 'axios';
+import { useCookies } from 'react-cookie';
+import { AccountContext } from '../context.js';
 
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import RegisterPopup from '../components/RegisterUserPopup.js';
 
@@ -29,51 +32,56 @@ export default function Login() {
 
 
 function LoginForm() {
-    const [errorMsg, setErrorMsg] = useState(null); // Not used currently, but will be once users have been created.
-    const [username, setUsername] = useState('');
+    const [errorMsg, setErrorMsg] = useState(null);
+    const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
+    const [cookies, setCookies] = useCookies(['token']);
     const navigate = useNavigate();
+    const {token, setToken} = useContext(AccountContext);
 
     function loginIsOk(response) {
+        if (response.status !== 200) {
+            console.log(response)
+            if (response.status === 400) {
+                console.log("Status: " + response.status + " bad request");
+                setErrorMsg("Username or password incorrect.");
+            } else if (response.status === 406) {
+                console.log("Status: " + response.status + " not acceptable");
+                setErrorMsg("Fill in all fields");
+            } else if (response.status === 500) {
+                console.log("Status: " + response.status + " internal error");
+                setErrorMsg("Interal error.");
+            }
+            return false;
+        }
+       
+        console.log("Response: " + response.data);
+        console.log("Response token: " + response.data.token);
+        setCookies('token', response.data.token, {secure: false, maxAge: 1200, path: '/'});
+        setToken(response.token);
         return true;
-        // if (!response.ok) {
-        //     console.log(response)
-        //     if (response.status === 400) {
-        //         console.log("Status: " + response.status + " bad request");
-        //         setErrorMsg("Username or password incorrect.");
-        //     } else if (response.status === 406) {
-        //         console.log("Status: " + response.status + " not acceptable");
-        //         setErrorMsg("Fill in all fields");
-        //     } else if (response.status === 500) {
-        //         console.log("Status: " + response.status + " internal error");
-        //         setErrorMsg("Interal error.");
-        //     }
-        //     return false;
-        // } 
-        //
-        // if (response.status === 200) {
-        //     response.text().then(token => {
-        //         setCookies('token', token, {secure: false, maxAge: 1200, path: '/'});
-        //         setToken(token);
-        //     })
-        //     return true;
-        // }
     }
 
     async function loginClicked() {
-        // const requestOptions = {
-        //     headers: {'Content-type': 'application/json', token},
-        //     method: "POST",
-        //     body: JSON.stringify({username: username, password: password})
-        // };
-        //const response = await fetch(`/user/verify`, requestOptions)
-       
-        const response = true;
-
-        if(loginIsOk(response)) {
-            navigate("/home")
-        } 
+        Axios.post('http://localhost:3001/verify',
+            {
+                mail: mail,
+                password: password
+            }).then((response) => {
+                console.log(response);
+                if(loginIsOk(response)) {
+                    navigate("/home");
+                }
+            }).catch((error) => {
+                console.log("Cronge");
+        });
     }
+
+    useEffect(() => {
+        if (cookies.token) {
+            navigate('/home');
+        }
+    })
 
     function handleKeyDown(event) {
         if (event.key === 'Enter') {
@@ -86,8 +94,8 @@ function LoginForm() {
             <div className="loginFormWrapper" style={{ maxWidth: 750}}>
                 <form style={{ maxWidth: 700}} className="">
                     <Form.Group className="loginInput" controlId="formBasicEmail">
-                        <Form.Label className="float-left">Username</Form.Label>
-                        <Form.Control type="user" value={username} placeholder="Username" onChange={e => {setUsername(e.target.value)}}/>
+                        <Form.Label className="float-left">E-mail</Form.Label>
+                        <Form.Control type="email" value={mail} placeholder="E-mail" onChange={e => {setMail(e.target.value)}}/>
                     </Form.Group>
 
                     <Form.Group className="loginInput" controlId="formBasicPassword">

@@ -14,13 +14,13 @@ const db = mysql.createConnection({
 });
 
 
-app.post('/create', (req, res) => {
-    const mail = req.body.mail;
+app.post('/create-issue', (req, res) => {
     const name = req.body.username;
-    const password = req.body.password;
+    const description = req.body.description;
+    const userid = req.body.userid;
 
-    db.query('INSERT INTO usario (name, password, mail) VALUES (?,?,?)',
-        [name, password, mail],
+    db.query('INSERT INTO (name, description, userid) VALUES (?,?,?)',
+        [name, description, userid],
         (err, result) => {
             if(err) {
                 res.status(500);
@@ -32,6 +32,6 @@ app.post('/create', (req, res) => {
 }) 
 
 
-app.listen(3001, () => {
+app.listen(3003, () => {
     console.log("Server running on 3001");
 });
