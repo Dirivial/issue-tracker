@@ -46,12 +46,10 @@ app.post('/verify', (req, res) => {
                 res.status(500);
                 res.send({ error: "Uh oh" });
             } else {
-                console.log(result);
                 if (bcrypt.compareSync(password, result[0].password)) {
                     const token = jwt.sign({ userid: result[0].id }, SECRET, {
                         expiresIn: 86400 // 24 hours
                     });
-                    console.log(token);
                     res.status(200).send({ 
                         userid: result[0].id,
                         name: result[0].name,

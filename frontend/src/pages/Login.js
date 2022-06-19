@@ -55,8 +55,6 @@ function LoginForm() {
             return false;
         }
        
-        console.log("Response: " + response.data);
-        console.log("Response token: " + response.data.token);
         setCookies('token', response.data.token, {secure: false, maxAge: 1200, path: '/'});
         setToken(response.token);
         return true;
@@ -68,7 +66,6 @@ function LoginForm() {
                 mail: mail,
                 password: password
             }).then((response) => {
-                console.log(response);
                 if(loginIsOk(response)) {
                     navigate("/home");
                 }
