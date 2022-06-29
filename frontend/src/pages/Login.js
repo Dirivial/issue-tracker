@@ -61,7 +61,7 @@ function LoginForm() {
     }
 
     async function loginClicked() {
-        Axios.post('http://localhost:3001/verify',
+        Axios.post('http://localhost:8081/auth/verify',
             {
                 mail: mail,
                 password: password

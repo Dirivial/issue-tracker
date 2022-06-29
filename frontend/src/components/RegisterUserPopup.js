@@ -17,7 +17,7 @@ export default function RegisterUserPopup(props) {
     }
 
     function submitInformation() {
-        Axios.post('http://localhost:3001/create', 
+        Axios.post('http://localhost:8081/auth/create', 
             {
                 mail: mail,
                 username: username,
