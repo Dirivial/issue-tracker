@@ -28,20 +28,30 @@ export default function IssueTracker() {
     stateRef.current = token;
 
     const userId = (cookies.token !== undefined) ? decodeToken(cookies.token) : 0;
-    console.log(cookies);
     
     return (
         <AccountContext.Provider value={{token: token, userId: userId, setToken: setToken}}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Navbar />}>
-                    <Route path="" element={<Login />} />
-                    <Route path="home" element={<Home />} />
-                    <Route path="about" element={<About />} />
-                    <Route path="container-list" element={<ContainerList />} />
-                    <Route path="example-container" element={<Container />} />
+                    {
+                        cookies.token || process.env.REACT_APP_LOGIN_ENABLED === 'false' ? (
+                            <>
+                                {process.env.REACT_APP_LOGIN_ENABLED !== 'false' ? <Route index element={<Login />}/> : null}
+                            
+                                <Route path="/" element={<Navbar />}>
 
-                    </Route>
+                                    <Route path="home" element={<Home />} />
+                                    <Route path="about" element={<About />} />
+                                    <Route path="container-list" element={<ContainerList />} />
+                                    <Route path="example-container" element={<Container />} />
+
+
+                                </Route>
+                            </>
+                        ) : (
+                            <Route path="*" element={<Login />} />
+                        )
+                    }
                 </Routes>
             </BrowserRouter>
         </AccountContext.Provider>
