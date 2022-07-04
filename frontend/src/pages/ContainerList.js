@@ -1,6 +1,7 @@
-import './ContainerList.css';
-
+import NewContainerButton from '../components/NewContainerButton.js';
 import ContainerListItem from '../components/ContainerListItem.js';
+
+import './ContainerList.css';
 
 export default function ContainerList() {
 
@@ -17,6 +18,7 @@ export default function ContainerList() {
                 <ContainerListItem name={"My second container"}/>
                 <ContainerListItem name={"My second container"}/>
                 <ContainerListItem name={"My second container"}/>
+                <NewContainerButton />
             </div>
         </div>
     </div>
