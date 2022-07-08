@@ -17,10 +17,13 @@ module.exports = function(app) {
             [name, password, mail],
             (err, result) => {
                 if(err) {
-                    res.status(500);
-                    res.send({ error: 'Amogus' });
+                    if(err.code === 'ER_DUP_ENTRY') {
+                        return res.status(409).send('Email already exists');
+                    } else {
+                        return res.status(500).send('Error when querying database');
+                    }
                 } else {
-                    res.send("Values inserted.");
+                    res.status(204).send("Values inserted.");
                 }
             });
     });
@@ -95,13 +98,14 @@ module.exports = function(app) {
                     if (!bcrypt.compareSync(password, result[0].password)) return res.status(403).send({ error: "Wrong password." });
                     
                     // Generate tokens
+                    const userid = result[0].id;
                     const token = jwt.sign(
-                        { userid: result[0].id },
+                        { userid },
                         process.env.ACCESS_TOKEN_SECRET, 
                         { expiresIn: '300s' }
                     );
                     const refreshToken = jwt.sign(
-                        { userid: result[0].id },
+                        { userid },
                         process.env.REFRESH_TOKEN_SECRET, 
                         { expiresIn: '1d' }
                     );
@@ -113,7 +117,7 @@ module.exports = function(app) {
                             res.send({error: "Could not store refresh token in database"})
                         } else {
                             res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000});
-                            res.status(200).send({ token });
+                            res.status(200).send({ userid, token });
                         }
                     });
                 }

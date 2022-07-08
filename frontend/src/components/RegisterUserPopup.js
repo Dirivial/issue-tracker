@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
-import Axios from 'axios';
+import axios from '../api/axios.js';
 
 export default function RegisterUserPopup(props) {
 
@@ -16,33 +16,30 @@ export default function RegisterUserPopup(props) {
 
     }
 
-    function submitInformation() {
-        Axios.post('http://localhost:8081/auth/create', 
-            {
-                mail: mail,
-                username: username,
-                password: password
-            }).then((response) => {
-                props.onHide();
-            }).catch((error) => {
-                setErrorMsg('Could not create user');
-                if (error.response) {
-                  // The request was made and the server responded with a status code
-                  // that falls out of the range of 2xx
-                  console.log(error.response.data);
-                  console.log(error.response.status);
-                  console.log(error.response.headers);
-                } else if (error.request) {
-                  // The request was made but no response was received
-                  // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                  // http.ClientRequest in node.js
-                  console.log(error.request);
-                } else {
-                  // Something happened in setting up the request that triggered an Error
-                  console.log('Error', error.message);
+    async function submitInformation() {
+        try {
+            const response = await axios.post('/register', 
+                {
+                    mail,
+                    username,
+                    password
+                },
+                {
+                    headers: { 'Content-type': 'application/json' },
+                    withCredentials: true
                 }
-                console.log(error.config);
-            }); 
+            );
+            props.onHide();
+        } catch (err) {
+            if (!err?.response) {
+                setErrorMsg('No server response.');
+            } else if (err.response?.status === 409) {
+                setErrorMsg('The given Email is already in use.');
+            } else {
+                setErrorMsg('Registration failed');
+            }
+        }
+        
     }
 
     return (
@@ -77,9 +74,9 @@ export default function RegisterUserPopup(props) {
                     </form>                
                 </Modal.Body>
                 <Modal.Footer>
+                    {errorMsg ? <p style={{color: 'red'}}>{errorMsg}</p> : null}
                     <Button className="float-left"onClick={props.onHide}>Close</Button>
                     <Button onClick={submitInformation}>Submit</Button>
-                    {errorMsg ? <p style={{color: 'red'}}>{errorMsg}</p> : null}
                 </Modal.Footer>
             </Modal>
         </div>
