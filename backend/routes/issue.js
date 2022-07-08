@@ -1,5 +1,4 @@
 const db = require("../config/sql_util.js");
-const SECRET = require("../config/auth.config.js").secret;
 
 module.exports = function(app) {
     app.post('/create-issue', (req, res) => {

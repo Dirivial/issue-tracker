@@ -1,7 +1,6 @@
-const verifyJWT = require("../middleware/authJwt.js").verifytoken;
-
 const db = require("../config/sql_util.js");
-const SECRET = require("../config/auth.config.js").secret;
+const verifyJWT = require('../middleware/verifyJWT');
+
 
 module.exports = function(app) {
 
@@ -9,9 +8,6 @@ module.exports = function(app) {
         const name = req.body.name;
         const description = req.body.description;
         const userid = req.body.userid;
-        console.log("Name: " + name);
-        console.log("description: " + description);
-        console.log("id: " + userid);
 
         db.query('INSERT INTO container (name, description, userid) VALUES (?,?,?)',
             [name, description, userid],

@@ -1,21 +1,22 @@
 const express = require("express");
 const cors = require("cors");
-const cookieSession = require("cookie-session");
-const app = express();
 const mysql = require("mysql");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-app.use(cors());
-app.use(express.json());
-//app.use(express.urlsencoded({ extended: true }));
+const corsOptions = require('./config/corsOptions.js');
+const credentials = require('./middleware/credentials.js');
 
-app.use(cookieSession({
-    name: "Issue-tracker",
-    secret: "I-GOT-ISSUES",
-    httpOnly: true
-    })
-);
+const verifyJWT = require('./middleware/verifyJWT');
+const cookieParser = require('cookie-parser');
+
+const app = express();
+
+app.use(credentials);
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to my issue-tracker" });
@@ -23,6 +24,8 @@ app.get("/", (req, res) => {
 
 // Routes
 require("./routes/user")(app);
+
+app.use(verifyJWT);
 require("./routes/container.js")(app);
 require("./routes/issue.js")(app);
 
