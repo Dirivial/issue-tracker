@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import axios from '../api/axios.js';
 import useAuth from '../hooks/useAuth.js';
@@ -35,12 +35,12 @@ function LoginForm() {
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
     
-    const { setAuth } = useAuth();
+    const { setAuth, persist, setPersist } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location?.state?.from?.pathname || "/"; 
 
-    async function loginClicked() {
+    const loginClicked = async () => {
         
         try {
             const response = await axios.post('/login',
@@ -72,11 +72,19 @@ function LoginForm() {
         }
     }
 
-    function handleKeyDown(event) {
+    const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             loginClicked().then(r => {})
         }
     }
+
+    const togglePersist = () => {
+        setPersist(prev => !prev);
+    }
+
+    useEffect(() => {
+        localStorage.setItem("persist", persist);
+    }, [persist]);
 
     return (
         <div className="loginform-thing">
@@ -91,10 +99,15 @@ function LoginForm() {
                         <Form.Label className="float-left">Password</Form.Label>
                         <Form.Control type="password" value={password} placeholder="Password" onKeyDown={e => {handleKeyDown(e)}} onChange={e => {setPassword(e.target.value)}} />
                     </Form.Group>
-                    <div className="row btnLoginRow">
-                        <Button className="btnLogin" onClick={loginClicked} >
-                        Log in
-                        </Button>
+                    <div className="submitLoginContainer">
+                        <input 
+                            type="checkbox"
+                            id="persist"
+                            onChange={togglePersist}
+                            checked={persist}
+                        />
+                        <label htmlFor="persist"> Trust This Device? </label>
+                        <Button className="btnLogin" onClick={loginClicked}>Log in</Button>
                     </div>
                     {errorMsg ? <p style={{color: 'red'}}>{errorMsg}</p> : null}
                 </form>                

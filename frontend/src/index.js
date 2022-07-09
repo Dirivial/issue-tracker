@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function IssueTracker() {
 
     return (
+        <React.StrictMode>
         <BrowserRouter>
             <AuthProvider>
                 <Routes>
@@ -17,9 +18,12 @@ export default function IssueTracker() {
                 </Routes>
             </AuthProvider>
         </BrowserRouter>
+        </React.StrictMode>
     )
 }
 
 const container = document.getElementById('root');
 const root = createRoot(container)
 root.render(<IssueTracker />);
+
+
