@@ -1,4 +1,3 @@
-//import { axiosPrivate } from '../api/axios.js';
 import axios from '../api/axios.js';
 import useAuth from './useAuth.js';
 
