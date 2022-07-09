@@ -1,10 +1,12 @@
+const jwt = require("jsonwebtoken");
 const db = require("../config/sql_util.js");
-const verifyJWT = require('../middleware/verifyJWT');
+require('dotenv').config();
 
+const PATH = '/container';
 
 module.exports = function(app) {
 
-    app.post('/create-container', (req, res) => {
+    app.post(PATH + '/create', (req, res) => {
         const name = req.body.name;
         const description = req.body.description;
         const userid = req.body.userid;
@@ -13,14 +15,25 @@ module.exports = function(app) {
             [name, description, userid],
             (err, result) => {
                 if(err) {
-
-                    res.status(500);
                     console.log(err);
-                    res.send({ error: 'Something went terribly wrong.' });
+                    return res.sendStatus(500);
                 } else {
-                    res.status(200).send("Container successfully inserted.");
+                    return res.status(200).send("Container successfully inserted.");
                 }
             });
-    }) 
+    });
 
+    app.get(PATH + '/my-containers', (req, res) => {
+
+        db.query('SELECT * from container WHERE userid = (?)',
+            [req.userid],
+            (err, result) => {
+                if(err) {
+                    console.log(err);
+                    return res.sendStatus(500);
+                } else {
+                    return res.status(200).send({ containers: result });
+                }
+            });
+    });
 }
