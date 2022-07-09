@@ -36,6 +36,8 @@ function NewContainerPopup(props) {
     const location = useLocation();
 
     async function submitContainer() {
+        console.log("Current info in auth:");
+        console.log(auth);
         try {
             const response = axiosPrivate.post('/create-container', 
                 {

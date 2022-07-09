@@ -30,12 +30,11 @@ module.exports = function(app) {
 
     app.post('/logout', (req, res) => {
         // Remember to delete the token in the client
-
         const cookies = req.cookies;
-        if (!cookies?.jwt) return sendStatus(204);
+        if (!cookies?.jwt) return res.sendStatus(204);
         const refreshToken = cookies.jwt;
 
-        // Is refreshToken in db?
+        // Is refreshToken in db
         db.query('UPDATE usario SET token = ? WHERE token = ?',
             [null, refreshToken],
             (err, result) => {
@@ -73,7 +72,7 @@ module.exports = function(app) {
                                 process.env.ACCESS_TOKEN_SECRET, 
                                 { expiresIn: '300s' }
                             )
-                            res.status(200).send({ token });
+                            res.status(200).send({ userid: result[0].id, token: token });
                         }
                     )
                 }

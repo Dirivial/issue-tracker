@@ -8,8 +8,9 @@ import Container from './pages/Container';
 import Login from './pages/Login';
 
 // Components
-import Navbar from './components/navbar';
+import Navbar from './components/navbar.js';
 import RequireAuth from './components/RequireAuth.js';
+import PersistLogin from './components/PersistLogin.js';
 
 
 export default function App() {
@@ -22,10 +23,12 @@ export default function App() {
                 <Route path="about" element={<About />} />
 
                 {/* Protected routes */}
-                <Route element={<RequireAuth />}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="container-list" element={<ContainerList />} />
-                    <Route path="example-container" element={<Container />} />
+                <Route element={<PersistLogin />}>
+                    <Route element={<RequireAuth />}>
+                        <Route path="/" element={<Home />} />
+                        <Route path="container-list" element={<ContainerList />} />
+                        <Route path="example-container" element={<Container />} />
+                    </Route>
                 </Route>
             </Route>
         </Routes>
