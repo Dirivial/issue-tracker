@@ -26,8 +26,8 @@ export default function App() {
                 <Route element={<PersistLogin />}>
                     <Route element={<RequireAuth />}>
                         <Route path="/" element={<Home />} />
-                        <Route path="container-list" element={<ContainerList />} />
-                        <Route path="example-container" element={<Container />} />
+                        <Route path="containers" element={<ContainerList />} />
+                        <Route path="containers/:id" element={<Container />} />
                     </Route>
                 </Route>
             </Route>

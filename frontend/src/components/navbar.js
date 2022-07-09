@@ -24,9 +24,8 @@ export default function MyNavbar() {
             <Nav className="me-auto navstuff">
                 <Link className="navbarlink" to="/">Home</Link>
 
-                <Link className="navbarlink"to="/container-list">Containers</Link>
+                <Link className="navbarlink"to="/containers">Containers</Link>
                 <Link className="navbarlink"to="/about">About</Link>
-                <Link className="navbarlink"to="/example-container">example-container</Link>
             </Nav>
 
             <Navbar.Collapse className="justify-content-end">

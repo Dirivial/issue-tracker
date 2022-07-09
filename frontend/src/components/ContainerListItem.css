@@ -1,4 +1,20 @@
 
+.OpenBtn {
+    margin: auto;
+    width: 8rem;
+    padding: 1vh 0vh 1vh 0vh;
+    color: var(--fg2);
+    background-color: var(--bg2);
+    transition: background-color 0.2s;
+    border-radius: 3px;
+    border-style: none;
+}
+
+.OpenBtn:hover {
+    background-color: var(--bg1);
+    transition: background-color 0.2s;
+}
+
 .epic {
     background-color: #665c54;
     color: #d65d0e;

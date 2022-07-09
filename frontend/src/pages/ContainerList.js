@@ -29,7 +29,8 @@ export default function ContainerList() {
 
     const buildContainerComponents = () => {
         for (let i = 0; i < containerData.length; i++) {
-            setContainers(prev => [...prev, <ContainerListItem key={containerData[i].id} name={containerData[i].name}/>]);
+            let c = containerData[i];
+            setContainers(prev => [...prev, <ContainerListItem key={c.id} containerid={c.id} name={c.name}/>]);
         }
     }
 
