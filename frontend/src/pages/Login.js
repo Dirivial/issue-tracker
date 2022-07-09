@@ -53,11 +53,10 @@ function LoginForm() {
                     withCredentials: true
                 } 
             );
-            console.log(response?.data);
             const token = response?.data?.token;
             const userid = response?.data?.userid;
 
-            setAuth({ mail, password, userid, token });
+            setAuth({ userid, token });
             navigate(from, { replace: true });
         } catch (err) {
             if(!err?.response) {
