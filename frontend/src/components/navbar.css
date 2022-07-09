@@ -11,3 +11,21 @@
 .logoutButton {
     margin-right: 1vh;
 }
+
+.navbarlink {
+    margin-left: 1vh;
+    padding: 0.5vh;
+}
+
+.navstuff > a {
+    border-radius: 3px;
+    text-decoration: none;
+    color: var(--fg2);
+    transition: background-color 0.2s ease;
+}
+
+.navstuff > a:hover {
+    color: var(--fg1);
+    background-color: var(--main-bg-hard);
+    transition: background-color 0.2s ease;
+}

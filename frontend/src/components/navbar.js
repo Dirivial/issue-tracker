@@ -21,12 +21,12 @@ export default function MyNavbar() {
     return (
     <div>
         <Navbar className="navbar navbar-expand-lg navbar-dark bg-dark ml-auto">
-            <Nav className="me-auto">
-                <Link to="/">Home</Link>
+            <Nav className="me-auto navstuff">
+                <Link className="navbarlink" to="/">Home</Link>
 
-                <Link to="/container-list">Containers</Link>
-                <Link to="/about">About</Link>
-                <Link to="/example-container">example-container</Link>
+                <Link className="navbarlink"to="/container-list">Containers</Link>
+                <Link className="navbarlink"to="/about">About</Link>
+                <Link className="navbarlink"to="/example-container">example-container</Link>
             </Nav>
 
             <Navbar.Collapse className="justify-content-end">
