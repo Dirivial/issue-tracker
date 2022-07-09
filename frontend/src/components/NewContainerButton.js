@@ -7,13 +7,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js'; 
 import useAuth from '../hooks/useAuth.js';
 
+import './NewContainerButton.css';
+
 export default function NewContainerButton() {
 
     const [showModal, setShowModal] = useState(false);
 
     return (
-        <div className="NewContainerButton">
-            <Button className="" onClick={() => setShowModal(true)}>Create Container</Button>
+        <div className="NewContainerComponent">
+            <button className="NewContainerBtn" onClick={() => setShowModal(true)}>New Container</button>
 
             <NewContainerPopup
                 onHide={() => setShowModal(false)}
@@ -36,10 +38,8 @@ function NewContainerPopup(props) {
     const location = useLocation();
 
     async function submitContainer() {
-        console.log("Current info in auth:");
-        console.log(auth);
         try {
-            const response = axiosPrivate.post('/create-container', 
+            const response = axiosPrivate.post('/container/create', 
                 {
                     name: name,
                     description: description,
