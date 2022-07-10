@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const db = require("../config/sql_util.js");
 require('dotenv').config();
 
@@ -18,14 +17,14 @@ module.exports = function(app) {
                     console.log(err);
                     return res.sendStatus(500);
                 } else {
-                    return res.status(200).send("Container successfully inserted.");
+                    return res.sendStatus(201);
                 }
             });
     });
 
     app.get(PATH + '/my-containers', (req, res) => {
 
-        db.query('SELECT * from container WHERE userid = (?)',
+        db.query('SELECT * FROM container WHERE userid = (?)',
             [req.userid],
             (err, result) => {
                 if(err) {
@@ -33,6 +32,21 @@ module.exports = function(app) {
                     return res.sendStatus(500);
                 } else {
                     return res.status(200).send({ containers: result });
+                }
+            });
+    });
+
+    app.get(PATH + '/get', (req, res) => {
+        if (!req.query?.id) return res.sendStatus(400);
+
+        db.query('SELECT * FROM container WHERE id = (?)',
+            [req.query.id],
+            (err, result) => {
+                if(err) {
+                    console.log(err);
+                    return res.sendStatus(500);
+                } else {
+                    return res.status(201).send({ name: result[0].name, description: result[0].description, creatorid: result[0].userid });
                 }
             });
     });

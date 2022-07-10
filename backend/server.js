@@ -27,6 +27,7 @@ require("./routes/user")(app);
 
 app.use(verifyJWT);
 require("./routes/container.js")(app);
+require("./routes/issueList.js")(app);
 require("./routes/issue.js")(app);
 
 const PORT = process.env.PORT || 8081;

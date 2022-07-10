@@ -1,19 +1,21 @@
 const db = require("../config/sql_util.js");
+require('dotenv').config();
+
+const PATH = '/issue';
 
 module.exports = function(app) {
-    app.post('/create-issue', (req, res) => {
+    app.post(PATH + '/create', (req, res) => {
         const name = req.body.username;
         const description = req.body.description;
-        const userid = req.body.userid;
+        const containerID = req.body.containerid;
 
-        db.query('INSERT INTO (name, description, userid) VALUES (?,?,?)',
-            [name, description, userid],
+        db.query('INSERT INTO issue (name, description, containerID) VALUES (?,?,?)',
+            [name, description, containerID],
             (err, result) => {
                 if(err) {
-                    res.status(500);
-                    res.send({ error: 'Amogus' });
+                    return res.sendStatus(500);
                 } else {
-                    res.send("Values inserted.");
+                    return res.sendStatus(201);
                 }
             });
     });

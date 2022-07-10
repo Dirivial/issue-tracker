@@ -23,7 +23,7 @@ module.exports = function(app) {
                         return res.status(500).send('Error when querying database');
                     }
                 } else {
-                    res.status(204).send("Values inserted.");
+                    res.sendStatus(201);
                 }
             });
     });
