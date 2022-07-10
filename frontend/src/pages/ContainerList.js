@@ -1,4 +1,4 @@
-import { axiosPrivate } from '../api/axios.js';
+import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ export default function ContainerList() {
     const location = useLocation();
     const [containerData, setContainerData] = useState({});
     const [containers, setContainers] = useState([]);
+    const axiosPrivate = useAxiosPrivate();
 
     const getContainers = async () => {
         try {

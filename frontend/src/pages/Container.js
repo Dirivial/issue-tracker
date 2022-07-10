@@ -1,26 +1,38 @@
-import React, { useState } from 'react';
-import IssueList from '../components/IssueList.js';
-import IssuePopup from '../components/IssuePopup.js' 
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+
+import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
+import DisplayLists from '../components/DisplayLists.js';
 import './Container.css';
 
 
 export default function Container() {
 
-    const [issuePopupShow, setIssuePopupShow] = useState(false);
+    const [data, setData] = useState({});
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const axiosPrivate = useAxiosPrivate();
 
-    function launchIssuePopup(props) {
-        setIssuePopupShow(true);
+    const getContainerInfo = async () => {
+        try {
+            const response = await axiosPrivate.get('/container/get?id=' + id);
+            setData(response?.data);
+
+        } catch (err) {
+            console.log(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
     }
+
+    useEffect(() => {
+        getContainerInfo();
+    }, [])
 
     return (
     <div className="container">
-        <IssueList name="My first issue list" issuePopup={launchIssuePopup}/>
-        <IssueList name="My second issue list" issuePopup={launchIssuePopup}/>
+        <DisplayLists containerid={id}/>
 
-        <IssuePopup
-            show={issuePopupShow}
-            onHide={() => {setIssuePopupShow(false)}}
-        />
     </div>
     )
 }

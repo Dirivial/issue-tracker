@@ -14,3 +14,34 @@
     padding-top: 2vh;
     padding-bottom: 5vh;
 }
+
+.IssueListsContainer {
+    color: var(--main-fg);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 2vh;
+
+    margin-left: 1vh;
+
+    padding-top: 2vh;
+    padding-bottom: 5vh;
+
+}
+
+.NewListBtn {
+    width: 12rem;
+    padding: 3vh 0vh 3vh 0vh;
+    color: var(--fg2);
+    background-color: var(--bg2);
+    transition: background-color 0.2s;
+    border-radius: 3px;
+    border-style: none;
+}
+
+.NewListBtn:hover {
+    background-color: var(--bg1);
+    transition: background-color 0.2s;
+}
