@@ -1,13 +1,35 @@
 import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
+import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import './IssuePopup.css';
-
 
 export default function IssuePopup(props) {
 
-    const [name, setName] = useState('')
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const axiosPrivate = useAxiosPrivate();
+
+    const submit = () => {
+
+        try {
+            const listinfo = props.currentlist();
+            const response = axiosPrivate.post('/issue/create', 
+                {
+                    name: name,
+                    description: description,
+                    position: listinfo.position,
+                    listid: listinfo.listid
+                });
+            props.onHide();
+        } catch (err) {
+            console.log(err);
+            //navigate('/login', { state: { from: location }, replace: true });
+        }
+    }
+
 
     return (
         <div className="NewIssuePopup">
@@ -20,19 +42,22 @@ export default function IssuePopup(props) {
                 >
                 <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Modal heading
+                    New Issue
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Centered Modal</h4>
-                    <p>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                        consectetur ac, vestibulum at eros.
-                    </p>
+                    <Form.Group className="issueNameForm" controlId="formName">
+                        <Form.Label className="float-left">Name</Form.Label>
+                        <Form.Control type="text" value={name} placeholder="Issue" onChange={e => {setName(e.target.value)}}/>
+                    </Form.Group>
+
+                    <Form.Group className="issueDescriptionForm" controlId="formDescription">
+                        <Form.Label className="float-left">Description</Form.Label>
+                        <Form.Control type="textarea" value={description} placeholder="Description" onChange={e => {setDescription(e.target.value)}}/>
+                    </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={props.onHide}>Close</Button>
+                    <Button onClick={submit}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </div>

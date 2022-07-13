@@ -8,6 +8,7 @@ import IssuePopup from '../components/IssuePopup.js';
 export default function DisplayLists(props) {
 
     const [issuePopupShow, setIssuePopupShow] = useState(false);
+    const [activeListInfo, setActiveListInfo] = useState({});
     const [data, setData] = useState([]);
     const [lists, setLists] = useState([]);
     const navigate = useNavigate();
@@ -42,8 +43,13 @@ export default function DisplayLists(props) {
         }
     }
 
-    const launchIssuePopup = () => {
+    const launchIssuePopup = (listinfo) => {
+        setActiveListInfo(listinfo);
         setIssuePopupShow(true);
+    }
+
+    const getActiveListInfo = () => {
+        return activeListInfo;
     }
 
     useEffect(() => {
@@ -51,7 +57,12 @@ export default function DisplayLists(props) {
             setLists([]);
             for (let i = 0; i < data.length; i++) {
                 let list = data[i];
-                setLists(prev => [...prev, <IssueList key={list.id} name={list.name}/>]);
+                setLists(prev => [...prev, <IssueList 
+                    key={list.id} 
+                    listid={list.id} 
+                    postition={list.position} 
+                    name={list.name}
+                    issuePopup={launchIssuePopup}/>]);
             }
         }
     }, [data]);
@@ -65,6 +76,7 @@ export default function DisplayLists(props) {
             { lists }
             <button className="NewListBtn" onClick={createNewList}>New list</button>
             <IssuePopup
+                currentlist={getActiveListInfo}
                 show={issuePopupShow}
                 onHide={() => {setIssuePopupShow(false)}}
             />
