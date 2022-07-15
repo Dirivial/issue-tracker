@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEllipsisVertical, faCheck } from '@fortawesome/free-solid-svg-icons';
+
 import "./IssueListItem.css";
 
 export default function IssueListItem(props) {
@@ -13,7 +16,7 @@ export default function IssueListItem(props) {
     return (
         <div className="issue-list-item">
             <input type='text' value={name} className="issue-name" onChange={(e) => (setName(e.target.value))}/>
-            <button onClick={removeIssue}>X</button>
+            <button onClick={removeIssue}><FontAwesomeIcon icon={faEllipsisVertical} /></button>
         </div>
     )
 }
