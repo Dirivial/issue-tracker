@@ -47,7 +47,7 @@ export default function DisplayLists(props) {
         setLists(prev => prev.filter((list) => {return list.props.listid !== listid}));
 
         try {
-            const response = await axiosPrivate.get('/issueList/remove?listid=' + props.listid);
+            const response = await axiosPrivate.get('/issueList/remove?listid=' + listid);
 
         } catch (err) {
             console.log(err);

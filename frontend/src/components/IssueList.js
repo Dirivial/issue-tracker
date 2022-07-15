@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 
 import IssueListItem from '../components/IssueListItem.js';
@@ -9,6 +10,8 @@ export default function IssueList(props) {
     const [name, setName] = useState(props.name ? props.name : 'New list');
     const [issues, setIssues] = useState([]);
     const [data, setData] = useState([]);
+    const navigate = useNavigate();
+    const location = useLocation();
     const axiosPrivate = useAxiosPrivate();
 
     const getIssues = async () => {
@@ -20,7 +23,7 @@ export default function IssueList(props) {
 
         } catch (err) {
             console.log(err);
-            //navigate('/login', { state: { from: location }, replace: true });
+            navigate('/login', { state: { from: location }, replace: true });
         }
     }
 
@@ -32,17 +35,17 @@ export default function IssueList(props) {
 
         } catch (err) {
             console.log(err);
-            //navigate('/login', { state: { from: location }, replace: true });
+            navigate('/login', { state: { from: location }, replace: true });
         }
+    }
+
+    const removeList = () => {
+        props.remove(props.listid);
     }
 
 
     const launchIssuePopup = () => {
         props.issuePopup({listid: props.listid, position: issues.length});
-    }
-
-    const removeList = async () => {
-
     }
 
     useEffect(() => {
