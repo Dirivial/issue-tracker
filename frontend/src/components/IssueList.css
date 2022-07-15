@@ -1,12 +1,20 @@
 
 .issue-list {
+    width: 20rem;
     padding: 1vh;
     background-color: var(--bg3);
+    border-radius: 3px;
     box-shadow: 5px 5px 2px 1px var(--bg1);
 
     display: flex;
     flex-direction: column;
     row-gap: 5px;
+}
+
+.list-name-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 }
 
 .list-name {
@@ -15,6 +23,7 @@
     border-style: none;
     padding: 3px 0px 2px 10px;
     margin-bottom: 1vh;
+    margin-right: 5px;
 }
 
 .list-name::placeholder {
@@ -24,4 +33,31 @@
 
 .list-name:focus {
     outline: 2px solid var(--fg4);
+}
+
+.new-issue-button {
+    padding: 1vh 0vh 1vh 0vh;
+    color: var(--fg2);
+    background-color: var(--bg1);
+    transition: background-color 0.2s;
+    border-radius: 3px;
+    border-style: none;
+}
+
+.new-issue-button:hover {
+    background-color: var(--main-bg-hard);
+    transition: background-color 0.2s;
+}
+
+.list-name-wrapper > button {
+    color: var(--fg2);
+    background-color: var(--bg2);
+    transition: background-color 0.2s;
+    border-radius: 3px;
+    border-style: none;
+}
+
+.list-name-wrapper > button:hover {
+    background-color: var(--bg1);
+    transition: background-color 0.2s;
 }

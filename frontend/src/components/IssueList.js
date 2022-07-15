@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 
-import Button from 'react-bootstrap/Button'
-import Issue from '../components/IssueListItem.js';
+import IssueListItem from '../components/IssueListItem.js';
 import './IssueList.css';
 
 export default function IssueList(props) {
@@ -12,15 +11,10 @@ export default function IssueList(props) {
     const [data, setData] = useState([]);
     const axiosPrivate = useAxiosPrivate();
 
-    const nameUpdated = (e) => {
-        setName(e);
-    } 
-
     const getIssues = async () => {
         try {
-            const response = await axiosPrivate.get('/issue/get-in?listid=' + props.listid);
+            const response = await axiosPrivate.get('/issue/?listid=' + props.listid);
             if(response?.data !== data) {
-                console.log(response.data);
                 setData(response.data);
             }
 
@@ -30,8 +24,25 @@ export default function IssueList(props) {
         }
     }
 
+    const removeIssue = async (issueid) => {
+        setIssues(prev => prev.filter((issue) => {return issue.props.issueid !== issueid}));
+
+        try {
+            const response = await axiosPrivate.get('/issue/remove?issueid=' + issueid);
+
+        } catch (err) {
+            console.log(err);
+            //navigate('/login', { state: { from: location }, replace: true });
+        }
+    }
+
+
     const launchIssuePopup = () => {
         props.issuePopup({listid: props.listid, position: issues.length});
+    }
+
+    const removeList = async () => {
+
     }
 
     useEffect(() => {
@@ -40,31 +51,33 @@ export default function IssueList(props) {
 
     useEffect(() => {
         if(data.length > 0) {
-            setIssues([]);
+            let allIssues = [];
             for (let i = 0; i < data.length; i++) {
                 let issue = data[i];
-                setIssues(prev => [...prev, <Issue 
+                allIssues.push(<IssueListItem 
+                    remove={removeIssue}
                     key={issue.id} 
+                    issueid={issue.id}
                     postition={issue.position} 
                     name={issue.name} 
-                    description={issue.description}/>]);
+                    description={issue.description}/>);
             }
-            console.log("Issues: ");
-            console.log(issues);
+            setIssues(allIssues);
         }
     }, [data]);
 
     return (
         <div className="issue-list">
             <div className="list-name-wrapper">
-                <input className="list-name" value={name} placeholder={name} onChange={(e) => ((e.target.value))}/>
+                <input className="list-name" value={name} placeholder={name} onChange={(e) => (setName(e.target.value))}/>
+                <button onClick={removeList}>X</button>
             </div>
 
             <div className="list-of-items">
                 {issues}
             </div>
 
-            <Button onClick={launchIssuePopup}>New Issue</Button>
+            <button className="new-issue-button" onClick={launchIssuePopup}>New Issue</button>
         </div>
     )
 }

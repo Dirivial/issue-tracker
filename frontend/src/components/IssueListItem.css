@@ -1,6 +1,41 @@
 
 .issue-list-item {
     background-color: var(--main-bg-soft);
-    padding: 10px 0px 1px 0px;
+    padding: 10px 10px 0px 10px;
+    margin: 5px 0px 0px 0px;
     margin-bottom: 5px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.issue-list-item > button {
+    color: var(--fg2);
+    background-color: var(--bg2);
+    transition: background-color 0.2s;
+    border-radius: 3px;
+    border-style: none;
+}
+
+.issue-list-item > button:hover {
+    background-color: var(--bg1);
+    transition: background-color 0.2s;
+}
+
+.issue-name {
+    background-color: var(--main-bg-soft);
+    color: var(--main-fg);
+    border-style: none;
+    margin-bottom: 1vh;
+    margin-right: 5px;
+}
+
+.issue-name::placeholder {
+    opacity: 1;
+    color: var(--main-fg);
+}
+
+.issue-name:focus {
+    outline: 2px solid var(--fg4);
 }

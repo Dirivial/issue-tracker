@@ -21,7 +21,7 @@ module.exports = function(app) {
             });
     });
 
-    app.get(PATH + '/get-in', (req, res) => {
+    app.get(PATH + '/', (req, res) => {
         if (!req.query?.containerid) return res.sendStatus(400);
 
         db.query('SELECT * FROM issueList WHERE containerid = (?)',
@@ -35,17 +35,37 @@ module.exports = function(app) {
             })
     });
 
-    app.get(PATH + '/remove', (req, res) => {
-        if (!req.query?.issueListid) return res.sendStatus(400);
+    app.post(PATH + '/update', (req, res) => {
+
+        const name = req.body.name;
+        const position = req.body.position;
+        const containerID = req.body.containerid;
+        const listid = req.body.listid;
         
-        db.query('DELETE FROM issueList WHERE id = (?)',
-            [req.query.issueListid],
+        db.query('UPDATE issueList SET (?,?,?) WHERE id = (?)',
+            [name, position, containerID, listid],
             (err, result) => {
                 if(err) {
+                    console.log(err);
                     return res.sendStatus(500);
                 } else {
                     return res.status(200);
                 }
-            })
+            });
+    });
+
+    app.get(PATH + '/remove', (req, res) => {
+        if (!req.query?.listid) return res.sendStatus(400);
+        
+        db.query('DELETE FROM issueList WHERE id = (?)',
+            [req.query.listid],
+            (err, result) => {
+                if(err) {
+                    console.log(err);
+                    return res.sendStatus(500);
+                } else {
+                    return res.status(200);
+                }
+            });
     });
 }

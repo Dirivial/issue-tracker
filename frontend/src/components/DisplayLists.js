@@ -32,10 +32,22 @@ export default function DisplayLists(props) {
 
     const getLists = async () => {
         try {
-            const response = await axiosPrivate.get('/issueList/get-in?containerid=' + props.containerid);
+            const response = await axiosPrivate.get('/issueList/?containerid=' + props.containerid);
             if(response?.data !== data) {
                 setData(response?.data);
             }
+
+        } catch (err) {
+            console.log(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+    }
+
+    const removeList = async (listid) => {
+        setLists(prev => prev.filter((list) => {return list.props.listid !== listid}));
+
+        try {
+            const response = await axiosPrivate.get('/issueList/remove?listid=' + props.listid);
 
         } catch (err) {
             console.log(err);
@@ -54,16 +66,18 @@ export default function DisplayLists(props) {
 
     useEffect(() => {
         if(data.length > 0) {
-            setLists([]);
+            let allLists = [];
             for (let i = 0; i < data.length; i++) {
                 let list = data[i];
-                setLists(prev => [...prev, <IssueList 
+                allLists.push(<IssueList 
                     key={list.id} 
-                    listid={list.id} 
+                    remove={removeList}
+                    listid={list.id}
                     postition={list.position} 
                     name={list.name}
-                    issuePopup={launchIssuePopup}/>]);
+                    issuePopup={launchIssuePopup}/>);
             }
+            setLists(allLists);
         }
     }, [data]);
 

@@ -19,10 +19,11 @@
     color: var(--main-fg);
 
     display: flex;
-    flex-direction: row;
+    flex-flow: row wrap;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     column-gap: 2vh;
+    row-gap: 2vh;
 
     margin-left: 1vh;
 

@@ -22,7 +22,7 @@ module.exports = function(app) {
             });
     });
 
-    app.get(PATH + '/get-in', (req, res) => {
+    app.get(PATH + '/', (req, res) => {
         if (!req.query?.listid) return res.sendStatus(400);
 
         db.query('SELECT * FROM issue WHERE listid = (?)',
@@ -34,6 +34,41 @@ module.exports = function(app) {
                     return res.status(200).send(result);
                 }
             })
+    });
+
+    app.get(PATH + '/remove', (req, res) => {
+        if (!req.query?.issueid) return res.sendStatus(400);
+        
+        db.query('DELETE FROM issue WHERE id = (?)',
+            [req.query.issueid],
+            (err, result) => {
+                if(err) {
+                    return res.sendStatus(500);
+                } else {
+                    return res.status(200);
+                }
+            });
+    });
+
+    app.post(PATH + '/update', (req, res) => {
+
+        const name = req.body.name;
+        const description = req.body.description;
+        const position = req.body.position;
+        const done = req.body.done;
+        const listid = req.body.listid;
+        const issueid = req.body.issueid;
+        
+        db.query('UPDATE issue SET (?,?,?,?) WHERE id = (?)',
+            [name, description, position, done, listid, issueid],
+            (err, result) => {
+                if(err) {
+                    console.log(err);
+                    return res.sendStatus(500);
+                } else {
+                    return res.status(200);
+                }
+            });
     });
 }
 
