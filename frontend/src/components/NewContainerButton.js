@@ -9,7 +9,7 @@ import useAuth from '../hooks/useAuth.js';
 
 import './NewContainerButton.css';
 
-export default function NewContainerButton() {
+export default function NewContainerButton(props) {
 
     const [showModal, setShowModal] = useState(false);
 
@@ -18,6 +18,7 @@ export default function NewContainerButton() {
             <button className="NewContainerBtn" onClick={() => setShowModal(true)}>New Container</button>
 
             <NewContainerPopup
+                onNew={() => props.onNew()}
                 onHide={() => setShowModal(false)}
                 show={showModal}
             />
@@ -47,6 +48,7 @@ function NewContainerPopup(props) {
                 }, { 
                     "Content-type": "application/json; charset=UTF-8",
                 });
+            props.onNew();
             props.onHide();
         } catch (err) {
             console.log(err);

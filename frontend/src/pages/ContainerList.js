@@ -23,7 +23,6 @@ export default function ContainerList() {
             setContainerData(response?.data?.containers);
 
         } catch (err) {
-            console.log(err);
             navigate('/login', { state: { from: location }, replace: true });
         }
     }
@@ -53,7 +52,7 @@ export default function ContainerList() {
         <div className="ContainerGridWrapper">
             <div className="ContainerGrid">
                 { containers }
-                <NewContainerButton />
+                <NewContainerButton onNew={getContainers}/>
             </div>
         </div>
     </div>
