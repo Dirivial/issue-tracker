@@ -50,4 +50,21 @@ module.exports = function(app) {
                 }
             });
     });
+
+    app.post(PATH + '/remove', (req, res) => {
+        
+        const containerid = req.body.containerid;
+        const userid = req.body.userid;
+
+        db.query('DELETE FROM container WHERE (id, userid) = (?,?)',
+            [containerid, userid],
+            (err, result) => {
+                if(err) {
+                    console.log(err);
+                    return res.sendStatus(500);
+                } else {
+                    return res.status(200);
+                }
+            });
+    });
 }
