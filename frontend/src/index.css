@@ -36,8 +36,6 @@
     --alt-aqua: #8ec07c;
 
     --main-grey: #927384;
-
-    --bs-body-bg: var(--main-bg);
 }
 
 html {
@@ -45,22 +43,14 @@ html {
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--main-bg);
-  height: 100%;
+    height: 100%;
 }
+
 
 #root {
     height: 100%;
     background-color: var(--main-bg);
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.background {
+    background-color: var(--main-bg);
 }

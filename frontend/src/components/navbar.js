@@ -19,7 +19,7 @@ export default function MyNavbar() {
     }
 
     return (
-    <div>
+    <div className="background">
         <Navbar className="navbar navbar-expand-lg navbar-dark bg-dark ml-auto">
             <Nav className="me-auto navstuff">
                 <Link className="navbarlink" to="/">Home</Link>
@@ -29,7 +29,7 @@ export default function MyNavbar() {
             </Nav>
 
             <Navbar.Collapse className="justify-content-end">
-                <Button variant="dark" className="logoutButton" onClick={signOut}>Sign Out</Button>
+                <button className="logoutButton" onClick={signOut}>Sign Out</button>
             </Navbar.Collapse>
         </Navbar>
         <Outlet />

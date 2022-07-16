@@ -39,13 +39,12 @@ export default function IssuePopup(props) {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 backdrop="static"
+                contentClassName="normal-background"
                 >
-                <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    New Issue
-                </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
+                <div className="modalHeader normal-background">
+                    <h2 className="issueHeader">New Issue</h2>
+                </div>
+                <Modal.Body className="normal-background" >
                     <Form.Group className="issueNameForm" controlId="formName">
                         <Form.Label className="float-left">Name</Form.Label>
                         <Form.Control type="text" value={name} placeholder="Issue" onChange={e => {setName(e.target.value)}}/>
@@ -56,8 +55,9 @@ export default function IssuePopup(props) {
                         <Form.Control type="textarea" value={description} placeholder="Description" onChange={e => {setDescription(e.target.value)}}/>
                     </Form.Group>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={submit}>Close</Button>
+                <Modal.Footer className="normal-background">
+                    <button onClick={props.onHide}>Close</button>
+                    <Button onClick={submit}>Save</Button>
                 </Modal.Footer>
             </Modal>
         </div>

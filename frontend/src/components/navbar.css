@@ -1,7 +1,6 @@
 
 .navbar {
   width: 100%;
-  background-color: orange;
   position: absolute;
   left: 0;
   top: 0;
@@ -10,8 +9,18 @@
 
 .logoutButton {
     margin-right: 1vh;
+    padding: 0.5vh;
+    color: var(--main-bg-hard);
+    background-color: var(--accent-orange);
+    transition: background-color 0.2s;
+    border-radius: 3px;
+    border-style: none;
 }
 
+.logoutButton:hover {
+    background-color: var(--main-orange);
+    transition: background-color 0.2s;
+}
 .navbarlink {
     margin-left: 1vh;
     padding: 0.5vh;
@@ -21,6 +30,7 @@
     border-radius: 3px;
     text-decoration: none;
     color: var(--fg2);
+    background-color: var(--bg2);
     transition: background-color 0.2s ease;
 }
 

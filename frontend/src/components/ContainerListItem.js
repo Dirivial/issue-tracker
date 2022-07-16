@@ -16,10 +16,9 @@ export default function ContainerListItem(props) {
     }
 
     return (
-        <div>
-            <Card bsPrefix="" bg={'dark'} style={{ width: '12rem' }}>
-                <Card.Img variant="top" src="/horse_by_ocean.jpg" />
-                <Card.Body className="text-center">
+        <div className="containerCardCard">
+            <Card bsPrefix="" className="containerCardCard" style={{ width: '12rem' }}>
+                <Card.Body className="containerCard text-center">
                 <Card.Title as="p" >{props.name}</Card.Title>
                 <button variant="primary" className="OpenBtn" onClick={openContainer}>Open</button>
                 </Card.Body>

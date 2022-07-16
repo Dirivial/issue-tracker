@@ -1,0 +1,9 @@
+.normal-background {
+    background-color: var(--bg2);
+    color: var(--fg1);
+}
+
+.issueHeader {
+    padding: 1vh;
+    border-bottom: 2px solid var(--main-orange);
+}

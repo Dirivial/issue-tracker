@@ -1,4 +1,15 @@
 
+.containerCardCard.card {
+    background-color: var(--bg1);
+    border-radius: 2px;
+}
+
+.containerCard {
+    background-image: linear-gradient(330deg, var(--main-blue) 40%, var(--main-blue) 30%, var(--bg3) 41%);
+    border-radius: 2px;
+    border-width: 0px;
+}
+
 .OpenBtn {
     margin: auto;
     width: 8rem;
