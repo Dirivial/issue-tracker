@@ -49,7 +49,7 @@ module.exports = function(app) {
 
     app.get('/refresh', (req, res) => {
         const cookies = req.cookies;
-        if (!cookies?.jwt) return sendStatus(401);
+        if (!cookies?.jwt) return res.sendStatus(401);
         const refreshToken = cookies.jwt;
 
         db.query('SELECT * FROM usario WHERE token = ?',
