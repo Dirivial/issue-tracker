@@ -1,11 +1,7 @@
 
-.cardTitle {
-    font-size: 16px;
-    margin-top: 1rem;
-    text-align: center;
-}
-
 .containerCard {
+    position: relative;
+
     width: 12rem;
     height: 8rem;
 
@@ -17,18 +13,35 @@
     flex-direction: column;
 }
 
-.OpenBtn {
-    margin: auto;
-    width: 8rem;
-    padding: 1vh 0vh 1vh 0vh;
+
+.cardTitle {
+    font-size: 16px;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.cardBtn {
     color: var(--fg2);
-    background-color: var(--bg2);
     transition: background-color 0.2s;
     border-radius: 3px;
     border-style: none;
 }
 
-.OpenBtn:hover {
+.cardBtn:hover {
     background-color: var(--bg1);
     transition: background-color 0.2s;
+}
+
+.openBtn {
+    margin: auto;
+    background-color: var(--bg2);
+    width: 8rem;
+    padding: 1vh 0vh 1vh 0vh;
+}
+
+.deleteButton {
+    background-color: var(--bg3);
+    position: absolute;
+    right: 0.5vh;
+    top: 0.5vh;
 }

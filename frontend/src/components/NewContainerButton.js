@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -18,7 +18,7 @@ export default function NewContainerButton(props) {
             <button className="NewContainerBtn" onClick={() => setShowModal(true)}>New Container</button>
 
             <NewContainerPopup
-                onNew={() => props.onNew()}
+                updateContainers={() => props.new()}
                 onHide={() => setShowModal(false)}
                 show={showModal}
             />
@@ -50,7 +50,7 @@ function NewContainerPopup(props) {
                 });
             setName('');
             setDescription('');
-            props.onNew();
+            props.updateContainers();
             props.onHide();
         } catch (err) {
             console.log(err);
@@ -61,7 +61,8 @@ function NewContainerPopup(props) {
     return (
         <div className="NewContainerButton">
             <Modal 
-                {...props}
+                show={props.show}
+                onHide={props.onHide}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
