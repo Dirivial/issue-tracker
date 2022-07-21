@@ -4,15 +4,54 @@
     color: var(--main-fg);
 
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    column-gap: 2vh;
-
-    margin-left: 1vh;
+    row-gap: 2vh;
 
     padding-top: 2vh;
     padding-bottom: 5vh;
+}
+
+.containerHeader {
+    height: 10rem;
+    display: flex;
+    align-content: center;
+}
+
+.containerTitle {
+    font-size: 24px;
+    background-color: var(--main-bg);
+    color: var(--main-fg);
+    border-style: none;
+    margin-right: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.containerTitle::placeholder {
+    opacity: 1;
+    color: var(--main-fg);
+}
+
+.containerTitle:focus {
+    outline: 2px solid var(--fg4);
+}
+
+.containerDescription {
+    font-size: 18px;
+    resize: none;
+    max-height: 12rem;
+    background-color: var(--main-bg);
+    color: var(--main-fg);
+    border-style: solid;
+    border-width: 1px;
+    margin-bottom: 1vh;
+    margin-right: 5px;
+}
+
+.containerDescription:focus {
+    outline: 2px solid var(--fg4);
 }
 
 .IssueListsContainer {

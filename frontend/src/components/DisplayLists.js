@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
+import './DisplayLists.css';
+
 import IssueList from '../components/IssueList.js';
 import IssuePopup from '../components/IssuePopup.js';
 
