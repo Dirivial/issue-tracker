@@ -1,6 +1,7 @@
 
 .NewContainerBtn {
     width: 12rem;
+    height: 8rem;
     padding: 3vh 0vh 3vh 0vh;
     color: var(--fg2);
     background-color: var(--bg2);

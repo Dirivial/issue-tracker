@@ -48,6 +48,8 @@ function NewContainerPopup(props) {
                 }, { 
                     "Content-type": "application/json; charset=UTF-8",
                 });
+            setName('');
+            setDescription('');
             props.onNew();
             props.onHide();
         } catch (err) {

@@ -1,13 +1,20 @@
 
-.containerCardCard.card {
-    background-color: var(--bg1);
-    border-radius: 2px;
+.cardTitle {
+    font-size: 16px;
+    margin-top: 1rem;
+    text-align: center;
 }
 
 .containerCard {
+    width: 12rem;
+    height: 8rem;
+
     background-image: linear-gradient(330deg, var(--main-blue) 40%, var(--main-blue) 30%, var(--bg3) 41%);
     border-radius: 2px;
     border-width: 0px;
+
+    display: flex;
+    flex-direction: column;
 }
 
 .OpenBtn {
@@ -24,9 +31,4 @@
 .OpenBtn:hover {
     background-color: var(--bg1);
     transition: background-color 0.2s;
-}
-
-.epic {
-    background-color: #665c54;
-    color: #d65d0e;
 }
