@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faX } from '@fortawesome/free-solid-svg-icons';
+
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 
 import IssueListItem from '../components/IssueListItem.js';
@@ -73,7 +77,7 @@ export default function IssueList(props) {
         <div className="issue-list">
             <div className="list-name-wrapper">
                 <input className="list-name" value={name} placeholder={name} onChange={(e) => (setName(e.target.value))}/>
-                <button onClick={removeList}>X</button>
+                <button className="" onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
             </div>
 
             <div className="list-of-items">
