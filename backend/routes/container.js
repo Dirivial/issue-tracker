@@ -67,4 +67,22 @@ module.exports = function(app) {
                 }
             });
     });
+
+    app.post(PATH + '/update', (req, res) => {
+
+        const name = req.body.name;
+        const description = req.body.description;
+        const userid = req.body.userid;
+
+        db.query('UPDATE container SET (name, description) WHERE userid = ?',
+            [name, description, userid],
+            (err, result) => {
+                if(err) {
+                    console.log(err);
+                    return res.sendStatus(500);
+                } else {
+                    return res.sendStatus(201);
+                }
+            });
+    });
 }
