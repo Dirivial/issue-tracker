@@ -47,11 +47,7 @@ export default function Container() {
 
     useEffect(() => {
         setAllowUpdate(true);
-    }, [name])
-
-    useEffect(() => {
-        setAllowUpdate(true);
-    }, [desc])
+    }, [name, desc])
 
     useEffect(() => {
         getContainerInfo();
