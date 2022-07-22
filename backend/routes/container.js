@@ -72,10 +72,10 @@ module.exports = function(app) {
 
         const name = req.body.name;
         const description = req.body.description;
-        const userid = req.body.userid;
+        const id = req.body.containerid;
 
-        db.query('UPDATE container SET (name, description) WHERE userid = ?',
-            [name, description, userid],
+        db.query('UPDATE container SET name = ?, description = ? WHERE id = ?',
+            [name, description, id],
             (err, result) => {
                 if(err) {
                     console.log(err);
