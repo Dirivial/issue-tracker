@@ -5,12 +5,9 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import './DisplayLists.css';
 
 import IssueList from '../components/IssueList.js';
-import IssuePopup from '../components/IssuePopup.js';
 
 export default function DisplayLists(props) {
 
-    const [issuePopupShow, setIssuePopupShow] = useState(false);
-    const [activeListInfo, setActiveListInfo] = useState({});
     const [data, setData] = useState([]);
     const [lists, setLists] = useState([]);
     const navigate = useNavigate();
@@ -80,15 +77,6 @@ export default function DisplayLists(props) {
         }
     }
 
-    const launchIssuePopup = (listinfo) => {
-        setActiveListInfo(listinfo);
-        setIssuePopupShow(true);
-    }
-
-    const getActiveListInfo = () => {
-        return activeListInfo;
-    }
-
     useEffect(() => {
         if(data.length > 0) {
             let allLists = [];
@@ -104,7 +92,7 @@ export default function DisplayLists(props) {
                         listid={list.id}
                         position={list.position} 
                         name={list.name}
-                        issuePopup={launchIssuePopup}/>;
+                        />;
                 } else {
                     allLists.push(<IssueList 
                         key={list.id} 
@@ -113,12 +101,13 @@ export default function DisplayLists(props) {
                         listid={list.id}
                         position={list.position} 
                         name={list.name}
-                        issuePopup={launchIssuePopup}/>);
+                        />);
                 }
             }
             setLists(allLists);
         }
     }, [data]);
+
 
     useEffect(() => {
         getLists();
@@ -128,11 +117,6 @@ export default function DisplayLists(props) {
         <div className="IssueListsContainer">
             { lists }
             <button className="NewListBtn" onClick={createNewList}>New list</button>
-            <IssuePopup
-                currentlist={getActiveListInfo}
-                show={issuePopupShow}
-                onHide={() => {setIssuePopupShow(false)}}
-            />
         </div>
     )
 }

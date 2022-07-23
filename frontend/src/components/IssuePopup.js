@@ -23,6 +23,7 @@ export default function IssuePopup(props) {
                     position: listinfo.position,
                     listid: listinfo.listid
                 });
+            props.issueCreated();
             props.onHide();
         } catch (err) {
             console.log(err);
