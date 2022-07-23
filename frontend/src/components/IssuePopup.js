@@ -34,7 +34,8 @@ export default function IssuePopup(props) {
     return (
         <div className="NewIssuePopup">
             <Modal 
-                {...props}
+                show={props.show}
+                onHide={props.onHide}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
