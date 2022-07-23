@@ -39,17 +39,17 @@ module.exports = function(app) {
 
         const name = req.body.name;
         const position = req.body.position;
-        const containerID = req.body.containerid;
-        const listid = req.body.listid;
+        const id = req.body.id;
         
-        db.query('UPDATE issueList SET (?,?,?) WHERE id = (?)',
-            [name, position, containerID, listid],
+        console.log(req.body);
+        db.query('UPDATE issueList SET name = ?, position = ? WHERE id = ?',
+            [name, position, id],
             (err, result) => {
                 if(err) {
                     console.log(err);
                     return res.sendStatus(500);
                 } else {
-                    return res.status(200);
+                    return res.sendStatus(200);
                 }
             });
     });
@@ -64,7 +64,7 @@ module.exports = function(app) {
                     console.log(err);
                     return res.sendStatus(500);
                 } else {
-                    return res.status(200);
+                    return res.sendStatus(200);
                 }
             });
     });

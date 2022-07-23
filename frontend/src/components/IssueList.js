@@ -43,6 +43,14 @@ export default function IssueList(props) {
         }
     }
 
+    const sendUpdateList = () => {
+        props.update({
+            name: name,
+            id: props.listid,
+            position: props.position,
+        });
+    }
+
     const removeList = () => {
         props.remove(props.listid);
     }
@@ -76,7 +84,7 @@ export default function IssueList(props) {
     return (
         <div className="issue-list">
             <div className="list-name-wrapper">
-                <input className="list-name" value={name} placeholder={name} onChange={(e) => (setName(e.target.value))}/>
+                <input className="list-name" onBlur={sendUpdateList} value={name} placeholder={name} onChange={(e) => (setName(e.target.value))}/>
                 <button className="" onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
             </div>
 

@@ -38,7 +38,6 @@ export default function DisplayLists(props) {
             if(response?.data !== data) {
                 setData(response?.data);
             }
-
         } catch (err) {
             console.log(err);
             navigate('/login', { state: { from: location }, replace: true });
@@ -50,10 +49,34 @@ export default function DisplayLists(props) {
 
         try {
             const response = await axiosPrivate.get('/issueList/remove?listid=' + listid);
+            syncListPosition(listid);
 
         } catch (err) {
             console.log(err);
             navigate('/login', { state: { from: location }, replace: true });
+        }
+    }
+
+    const updateList = async (list) => {
+        try {
+            const response = await axiosPrivate.post('/issueList/update', {
+                id: list.id,
+                name: list.name,
+                position: list.position,
+            });
+        } catch (err) {
+            console.log(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+    }
+
+    const syncListPosition = (listid) => {
+        let allData = data.filter((list) => {return list.id !== listid});
+        for (let i = 0; i < allData.length; i++) {
+            if(allData[i].position !== i) {
+                allData[i].position = i;
+                updateList(allData[i]);
+            }
         }
     }
 
@@ -71,13 +94,27 @@ export default function DisplayLists(props) {
             let allLists = [];
             for (let i = 0; i < data.length; i++) {
                 let list = data[i];
-                allLists.push(<IssueList 
-                    key={list.id} 
-                    remove={removeList}
-                    listid={list.id}
-                    postition={list.position} 
-                    name={list.name}
-                    issuePopup={launchIssuePopup}/>);
+                // Sort if needed
+                if (list.position < i) {
+                    allLists.push(allLists[list.position]);
+                    allLists[list.position] = <IssueList 
+                        key={list.id} 
+                        remove={removeList}
+                        update={updateList}
+                        listid={list.id}
+                        position={list.position} 
+                        name={list.name}
+                        issuePopup={launchIssuePopup}/>;
+                } else {
+                    allLists.push(<IssueList 
+                        key={list.id} 
+                        remove={removeList}
+                        update={updateList}
+                        listid={list.id}
+                        position={list.position} 
+                        name={list.name}
+                        issuePopup={launchIssuePopup}/>);
+                }
             }
             setLists(allLists);
         }
