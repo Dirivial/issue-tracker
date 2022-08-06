@@ -10,6 +10,7 @@ export default function DisplayLists(props) {
 
     const [data, setData] = useState([]);
     const [lists, setLists] = useState([]);
+    const [isDragging, setIsDragging] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const axiosPrivate = useAxiosPrivate();
@@ -77,33 +78,34 @@ export default function DisplayLists(props) {
         }
     }
 
+    const handleDragStart = (e, params) => {
+        console.log(params);
+    }
+
+    const handleDragEnter = (e, params) => {
+        console.log(params);
+    }
+
     useEffect(() => {
         if(data.length > 0) {
             let allLists = [];
             for (let i = 0; i < data.length; i++) {
                 let list = data[i];
-                // Sort if needed
-                if (list.position < i) {
-                    allLists.push(allLists[list.position]);
-                    allLists[list.position] = <IssueList 
-                        key={list.id} 
-                        remove={removeList}
-                        update={updateList}
-                        listid={list.id}
-                        position={list.position} 
-                        name={list.name}
-                        />;
-                } else {
-                    allLists.push(<IssueList 
-                        key={list.id} 
-                        remove={removeList}
-                        update={updateList}
-                        listid={list.id}
-                        position={list.position} 
-                        name={list.name}
-                        />);
-                }
+                allLists.push(allLists[list.position]);
+                allLists[list.position] = <IssueList 
+                    key={list.id} 
+                    remove={removeList}
+                    update={updateList}
+                    listid={list.id}
+                    position={list.position} 
+                    name={list.name}
+                    isDragging={() => isDragging}
+                    dragStart={handleDragStart}
+                    dragEnter={handleDragEnter}
+                    />;
             }
+            // Sort according to position
+            allLists.sort((a, b) => {return a.props.position < b.props.position ? -1 : 1})
             setLists(allLists);
         }
     }, [data]);

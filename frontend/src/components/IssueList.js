@@ -10,9 +10,9 @@ import IssuePopup from '../components/IssuePopup.js';
 import IssueListItem from '../components/IssueListItem.js';
 import './IssueList.css';
 
-export default function IssueList(props) {
+export default function IssueList({name, remove, update, listid, position, dragStart, dragEnter, isDragging}) {
     
-    const [name, setName] = useState(props.name ? props.name : 'New list');
+    const [listName, setListName] = useState(name ? name : 'New list');
     const [issues, setIssues] = useState([]);
     const [data, setData] = useState([]);
     const [issuePopupShow, setIssuePopupShow] = useState(false);
@@ -22,7 +22,7 @@ export default function IssueList(props) {
 
     const getIssues = async () => {
         try {
-            const response = await axiosPrivate.get('/issue/?listid=' + props.listid);
+            const response = await axiosPrivate.get('/issue/?listid=' + listid);
             if(response?.data !== data) {
                 setData(response.data);
             }
@@ -46,15 +46,15 @@ export default function IssueList(props) {
     }
 
     const sendUpdateList = () => {
-        props.update({
+        update({
             name: name,
-            id: props.listid,
-            position: props.position,
+            id: listid,
+            position: position,
         });
     }
 
     const removeList = () => {
-        props.remove(props.listid);
+        remove(listid);
     }
 
 
@@ -62,6 +62,13 @@ export default function IssueList(props) {
         setIssuePopupShow(true);
     }
 
+    const handleDragStart = (e, params) => {
+        dragStart(e, params);
+    }
+
+    const handleDragEnter = (e, params) => {
+        dragEnter(e, params);
+    }
     useEffect(() => {
         getIssues();
     }, [])
@@ -86,17 +93,21 @@ export default function IssueList(props) {
     return (
         <div className="issue-list">
             <div className="list-name-wrapper">
-                <input className="list-name" onBlur={sendUpdateList} value={name} placeholder={name} onChange={(e) => (setName(e.target.value))}/>
+                <input className="list-name" onBlur={sendUpdateList} value={name} placeholder={name} onChange={(e) => (setListName(e.target.value))}/>
                 <button className="" onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
             </div>
 
             <div className="list-of-items">
-                {issues}
+                {issues.map((item, itemI) => (
+                    <div draggable key={itemI} onDragStart={(e) => handleDragStart(e, {position, itemI})} onDragEnter={isDragging?(e)=>{handleDragEnter(e, {position, itemI})}:null}>
+                        {item}
+                    </div>
+                ))}
             </div>
 
             <button className="new-issue-button" onClick={launchIssuePopup}>New Issue</button>
             <IssuePopup
-                currentlist={() => {return {listid: props.listid, position: issues.length}}}
+                currentlist={() => {return {listid: listid, position: issues.length}}}
                 issueCreated={getIssues}
                 show={issuePopupShow}
                 onHide={() => {setIssuePopupShow(false)}}
