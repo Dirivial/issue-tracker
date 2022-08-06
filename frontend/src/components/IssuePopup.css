@@ -1,4 +1,45 @@
-.normal-background {
+.customFoot {
+    display: flex;
+    justify-content: flex-end;
+    row-gap: 1rem;
+
+    padding: 10px;
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.closeButton {
+    margin-right: 1vh;
+    padding: 0.5vh;
+    color: var(--main-bg-hard);
+    background-color: var(--accent-red);
+    transition: background-color 0.2s;
+    border-radius: 3px;
+    border-style: none;
+}
+
+.closeButton:hover {
+    background-color: var(--main-red);
+    transition: background-color 0.2s;
+}
+
+.saveButton {
+    margin-right: 1vh;
+    padding: 0.5vh;
+    color: var(--main-bg-hard);
+    background-color: var(--accent-orange);
+    transition: background-color 0.2s;
+    border-radius: 3px;
+    border-style: none;
+}
+
+.saveButton:hover {
+    background-color: var(--main-orange);
+    transition: background-color 0.2s;
+}
+
+.normalBackground {
     background-color: var(--bg2);
     color: var(--fg1);
 }
