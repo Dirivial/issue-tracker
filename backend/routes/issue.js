@@ -36,6 +36,22 @@ module.exports = function(app) {
             })
     });
 
+    app.post(PATH + '/multi', (req, res) => {
+        if (!req.body.listids) return res.sendStatus(400);
+
+        const ids = req.body.listids;
+
+        db.query('SELECT * FROM issue WHERE listid IN (?)',
+            [ids],
+            (err, result) => {
+                if(err) {
+                    return res.sendStatus(500);
+                } else {
+                    return res.status(200).send(result);
+                }
+            })
+    });
+
     app.get(PATH + '/remove', (req, res) => {
         if (!req.query?.issueid) return res.sendStatus(400);
         
