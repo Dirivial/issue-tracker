@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import DisplayLists from '../components/DisplayLists.js';
+import ListViewer from '../components/ListViewer.js';
 import './Container.css';
 
 
@@ -59,7 +60,7 @@ export default function Container() {
             <input className="containerTitle" onBlur={sendContainerUpdate} value={name} onChange={(e) => {setName(e.target.value)}} />
             <textarea className="containerDescription" value={desc} onBlur={sendContainerUpdate} onChange={(e) => {setDesc(e.target.value)}}/>
         </div>
-        <DisplayLists containerid={id}/>
+        <ListViewer containerid={id}/>
 
     </div>
     )
