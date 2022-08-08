@@ -41,7 +41,6 @@ module.exports = function(app) {
         const position = req.body.position;
         const id = req.body.id;
         
-        console.log(req.body);
         db.query('UPDATE issueList SET name = ?, position = ? WHERE id = ?',
             [name, position, id],
             (err, result) => {
