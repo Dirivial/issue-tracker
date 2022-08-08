@@ -38,6 +38,7 @@ module.exports = function(app) {
 
     app.post(PATH + '/multi', (req, res) => {
         if (!req.body.listids) return res.sendStatus(400);
+        if (req.body.listids.length === 0) return res.sendStatus(200);
 
         const ids = req.body.listids;
 
