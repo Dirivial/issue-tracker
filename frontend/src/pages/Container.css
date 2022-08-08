@@ -2,12 +2,7 @@
 .container {
     margin-top: 5vh;
     color: var(--main-fg);
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: 2vh;
+    width: 100%;
 
     padding-top: 2vh;
     padding-bottom: 5vh;
@@ -56,15 +51,13 @@
 
 .IssueListsContainer {
     color: var(--main-fg);
+    width: 100%;
 
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: flex-start;
     column-gap: 2vh;
-    row-gap: 2vh;
-
-    margin-left: 1vh;
 
     padding-top: 2vh;
     padding-bottom: 5vh;
@@ -73,7 +66,7 @@
 
 .NewListBtn {
     width: 12rem;
-    padding: 3vh 0vh 3vh 0vh;
+    padding: 3vh 5vh 3vh 5vh;
     color: var(--fg2);
     background-color: var(--bg2);
     transition: background-color 0.2s;

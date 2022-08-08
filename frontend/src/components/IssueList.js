@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons';
-import { Droppable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 
@@ -49,15 +49,6 @@ export default function IssueList(props) {
     const launchIssuePopup = () => {
         setIssuePopupShow(true);
     }
-
-    const handleDragStart = (e, issueIndex) => {
-        props.dragStart(e, {issueI: issueIndex, listI: props.index});
-    }
-
-    const handleDragEnter = (e, issueIndex) => {
-        props.dragEnter(e, {issueI: issueIndex, listI: props.index});
-    }
-
     return (
         <div className="issue-list">
             <div className="list-name-wrapper">
@@ -65,21 +56,41 @@ export default function IssueList(props) {
                 <button className="" onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
             </div>
 
-            <Droppable className="list-of-items">
-                {props.issues.map((issue, issueI) => (
-                    <IssueListItem 
-                        key={issue.id}
-                        listid={issue.listid}
-                        issueid={issue.id}
-                        position={issue.position}
-                        name={issue.name}
-                        description={issue.description}
-                        issueIndex={issueI}
-                        dragStart={handleDragStart}
-                        dragEnter={handleDragEnter}
-                        />
-                ))}
-            </Droppable>
+            <div className="list-of-issues">
+                {props.issues.map((issue, index) => {
+                    return (
+                        <Draggable
+                            key={issue.id}
+                            draggableId={"" + issue.id}
+                            index={index}
+                        >
+                            {(provided, snapshot) => {
+                                return (
+                                    <div
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                        style={{
+                                            userSelect: "none",
+                                            ...provided.draggableProps.style
+                                        }}
+                                        
+                                    >
+                                        <IssueListItem
+                                            listid={issue.listid}
+                                            issueid={issue.id}
+                                            position={issue.position}
+                                            name={issue.name}
+                                            description={issue.description}
+                                        />
+                                        {provided.placeholder}
+                                    </div>
+                                )
+                            }}
+                        </Draggable>
+                    );
+                })}
+            </div>
 
             <button className="new-issue-button" onClick={launchIssuePopup}>New Issue</button>
             <IssuePopup

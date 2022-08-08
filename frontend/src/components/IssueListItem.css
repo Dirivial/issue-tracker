@@ -5,7 +5,7 @@
     margin: 5px 0px 0px 0px;
     margin-bottom: 5px;
     border-radius: 3px;
-    width: 300px;
+    width: 280px;
 
     display: flex;
     justify-content: space-between;
@@ -30,7 +30,6 @@
     color: var(--main-fg);
     border-style: none;
     margin-bottom: 1vh;
-    margin-right: 5px;
 }
 
 .issue-name::placeholder {

@@ -44,6 +44,7 @@ html {
 
 body {
     height: 100%;
+    background-color: var(--main-bg);
 }
 
 
@@ -53,4 +54,24 @@ body {
 }
 .background {
     background-color: var(--main-bg);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--main-bg);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--fg3);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg4);
 }

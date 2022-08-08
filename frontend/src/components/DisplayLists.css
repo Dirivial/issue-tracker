@@ -1,8 +1,8 @@
 
 .IssueListsContainer {
-    border: 1px solid var(--main-bg-soft);
+    border: 2px solid var(--main-bg-soft);
     padding: 1vh 1vh 1vh 1vh;
-
+    overflow-x: scroll;
 }
 
 

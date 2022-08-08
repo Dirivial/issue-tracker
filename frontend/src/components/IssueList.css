@@ -4,10 +4,10 @@
     padding: 1vh;
     background-color: var(--bg3);
     border-radius: 3px;
-    box-shadow: 5px 5px 2px 1px var(--bg1);
 
     display: flex;
     flex-direction: column;
+    justify-content: center;
     row-gap: 5px;
 }
 
@@ -35,7 +35,37 @@
     outline: 2px solid var(--fg4);
 }
 
+.list-of-issues {
+    height: 450px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* width */
+.list-of-issues::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+.list-of-issues::-webkit-scrollbar-track {
+    background: var(--bg3);
+    opacity: 25%;
+}
+
+/* Handle */
+.list-of-issues::-webkit-scrollbar-thumb {
+  background: var(--main-bg);
+}
+
+/* Handle on hover */
+.list-of-issues::-webkit-scrollbar-thumb:hover {
+  background: var(--main-bg-hard);
+}
+
+
 .new-issue-button {
+    align-self: flex-end;
+    width: 100%;
     padding: 1vh 0vh 1vh 0vh;
     color: var(--fg2);
     background-color: var(--bg1);

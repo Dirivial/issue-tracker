@@ -118,8 +118,6 @@ export default function ListViewer({containerid}) {
                 {Object.values(listData).map((list, listIndex) => {
                     return (
                         <div key={listIndex}>
-                            <h2>{list.name}</h2>
-
                             <Droppable droppableId={"" + list.id} key={listIndex}>
                                 {(provided, snapshot) => {
                                     return (
@@ -131,38 +129,15 @@ export default function ListViewer({containerid}) {
                                                 minHeigth: 500
                                             }}
                                         >
-                                            {list.issues.map((issue, index) => {
-                                                return (
-                                                    <Draggable
-                                                        key={issue.id}
-                                                        draggableId={"" + issue.id}
-                                                        index={index}
-                                                    >
-                                                        {(provided, snapshot) => {
-                                                            return (
-                                                                <div
-                                                                    ref={provided.innerRef}
-                                                                    {...provided.draggableProps}
-                                                                    {...provided.dragHandleProps}
-                                                                    style={{
-                                                                        userSelect: "none",
-                                                                        ...provided.draggableProps.style
-                                                                    }}
-                                                                    
-                                                                >
-                                                                    <IssueListItem
-                                                                        listid={issue.listid}
-                                                                        issueid={issue.id}
-                                                                        position={issue.position}
-                                                                        name={issue.name}
-                                                                        description={issue.description}
-                                                                    />
-                                                                </div>
-                                                            )
-                                                        }}
-                                                    </Draggable>
-                                                );
-                                            })}
+                                            <IssueList 
+                                                key={list.id}
+                                                update={updateList}
+                                                remove={removeList}
+                                                name={list.name}
+                                                listid={list.id}
+                                                position={list.position}
+                                                issues={list.issues}
+                                                />
                                             {provided.placeholder}
                                         </div>
                                     )
@@ -172,23 +147,6 @@ export default function ListViewer({containerid}) {
                     )
                 })}
             </DragDropContext>
-            {/*<DragDropContext>
-                {listData.map((list, listI) => (
-                    <IssueList 
-                        key={listI}
-                        update={updateList}
-                        remove={removeList}
-                        name={list.name}
-                        listid={list.id}
-                        position={list.position}
-                        issues={list.issues}
-                        index={listI}
-                        dragEnter={handleDragEnter}
-                        dragStart={handleDragStart}
-                    />
-                ))}
-            </DragDropContext>
-            */}
             <button className="NewListBtn" onClick={createNewList}>New list</button>
         </div>
     )
