@@ -51,7 +51,7 @@ export default function IssueList(props) {
     }
     return (
         <div className="issue-list">
-            <div className="list-name-wrapper">
+            <div key={'list-name-wrapper'} className="list-name-wrapper">
                 <input className="list-name" onBlur={sendUpdateList} value={listName} placeholder={listName} onChange={(e) => (setListName(e.target.value))}/>
                 <button className="" onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
             </div>
@@ -77,11 +77,13 @@ export default function IssueList(props) {
                                         
                                     >
                                         <IssueListItem
+                                            key={issue.id}
                                             listid={issue.listid}
                                             issueid={issue.id}
                                             position={issue.position}
                                             name={issue.name}
                                             description={issue.description}
+                                            remove={removeIssue}
                                         />
                                         {provided.placeholder}
                                     </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import './DisplayLists.css';
@@ -105,20 +105,41 @@ export default function ListViewer({containerid}) {
         getLists();
     }, []);
 
-    const buildIssue = (issue) => {
-        return (
-            <div>
-            </div>
-        )
+    const onDragEnd = (result) => {
+        if(!result.destination) return;
+
+        setListData(oldLists => {
+
+            // Each contains index and droppableId
+            let source = result.source;
+            let destination = result.destination;
+            
+            if (source.droppableId === destination.droppableId) {
+                // Same droppable
+
+                let issue = oldLists[source.droppableId].issues.splice(source.index, 1)[0];
+
+                for(let i = source.index; i < destination.index; i++) {
+                    oldLists[source.droppableId].issues[i].position -= 1;
+                }
+                
+                issue.position = destination.index;
+                oldLists[source.droppableId].issues.splice(destination.index, 0, issue);
+
+                console.log(oldLists);
+            }
+
+            return oldLists;
+        });
     }
 
     return (
         <div className="IssueListsContainer">
-            <DragDropContext>
+            <DragDropContext onDragEnd={result => onDragEnd({destination: result.destination, source: result.source})}>
                 {Object.values(listData).map((list, listIndex) => {
                     return (
                         <div key={listIndex}>
-                            <Droppable droppableId={"" + list.id} key={listIndex}>
+                            <Droppable droppableId={"" + listIndex} key={listIndex}>
                                 {(provided, snapshot) => {
                                     return (
                                         <div
