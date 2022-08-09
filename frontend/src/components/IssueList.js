@@ -56,7 +56,6 @@ export default function IssueList(props) {
     }
 
     const addIssue = (issue) => {
-        console.log(issue);
         setIssues(issues => {
             issues.push(issue)
             return issues;
