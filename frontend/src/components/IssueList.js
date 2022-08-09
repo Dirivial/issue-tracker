@@ -15,7 +15,6 @@ export default function IssueList(props) {
     
     const [listName, setListName] = useState(props.name ? props.name : 'New list');
     const [issues, setIssues] = useState(props.issues);
-    const [data, setData] = useState([]);
     const [issuePopupShow, setIssuePopupShow] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
@@ -56,10 +55,7 @@ export default function IssueList(props) {
     }
 
     const addIssue = (issue) => {
-        setIssues(issues => {
-            issues.push(issue)
-            return issues;
-        });
+        props.addIssue(issue)
     }
 
     const launchIssuePopup = () => {
@@ -77,10 +73,10 @@ export default function IssueList(props) {
                     {(provided, snapshot) => {
                         return (
                             <div 
-                                {...props.providedThing.droppableProps}
-                                className="list-of-issues"
-                                ref={provided.innerRef}>
-                                {issues.map((issue, index) => {
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                                className="list-of-issues">
+                                {props.issues.map((issue, index) => {
                                     return (
                                         <IssueListItem
                                             key={issue.id}
@@ -95,7 +91,7 @@ export default function IssueList(props) {
                                 })}
                                 {provided.placeholder}
                             </div>
-                        )
+                        );
                     }}
                 </Droppable>
             </div>
@@ -103,7 +99,7 @@ export default function IssueList(props) {
             <button className="new-issue-button" onClick={launchIssuePopup}>New Issue</button>
             <IssuePopup
                 currentlist={() => {return {listid: props.listid, position: issues.length}}}
-                position={() => {return issues.length}}
+                position={() => {return props.issues.length}}
                 listid={props.listid}
                 onCreated={(issue) => {addIssue(issue)}}
                 show={issuePopupShow}

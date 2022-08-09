@@ -36,9 +36,14 @@
     outline: 2px solid var(--fg4);
 }
 
+.list-of-issues-wrapper {
+    min-height: 1vh;
+}
+
 .list-of-issues {
     padding-top: 3px;
     min-height: 1.5vh;
+    border-style: solid;
 }
 
 .new-issue-button {

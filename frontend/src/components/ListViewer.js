@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons';
@@ -110,13 +110,15 @@ export default function ListViewer({containerid}) {
 
     const onDragEnd = (result) => {
         if(!result.destination) return;
+        console.log(result);
 
-        setListData(oldLists => {
+        setListData(old => {
 
             // Each contains index and droppableId
             let source = result.source;
             let destination = result.destination;
             
+            let oldLists = JSON.parse(JSON.stringify(old));
             let issue = oldLists[source.droppableId].issues.splice(source.index, 1)[0];
             
             if (source.droppableId === destination.droppableId) {
@@ -147,42 +149,38 @@ export default function ListViewer({containerid}) {
                 issue.listid = oldLists[destination.droppableId].id;
                 oldLists[destination.droppableId].issues.splice(destination.index, 0, issue);
             }
-
             return oldLists;
         });
     }
+
+    const addIssue = (issue, listIndex) => {
+        setListData(old => {
+            old[listIndex].issues.push(issue);
+            return old;
+        });
+    }
+
+    useEffect(() => {
+        console.log(listData);
+    }, [listData]);
 
     return (
         <div className="IssueListsContainer">
             <DragDropContext onDragEnd={result => onDragEnd({destination: result.destination, source: result.source})}>
                 {Object.values(listData).map((list, listIndex) => {
                     return (
-                        <div key={listIndex}>
-                            <Droppable droppableId={"" + listIndex} key={listIndex}>
-                                {(provided, snapshot) => {
-                                    return (
-                                        <div 
-                                            ref={provided.innerRef}
-                                            style={{margin: "0 0 20px 0"}}
-
-                                        >
-                                            <IssueList 
-                                                key={list.id}
-                                                update={updateList}
-                                                remove={removeList}
-                                                name={list.name}
-                                                listid={list.id}
-                                                position={list.position}
-                                                issues={list.issues}
-                                                providedThing={provided}
-                                                />
-                                            {provided.placeholder}
-                                        </div>
-                                    )
-                                }}
-                            </Droppable>
-                        </div>
-                    )
+                        <IssueList 
+                            key={list.id}
+                            update={updateList}
+                            remove={removeList}
+                            name={list.name}
+                            listid={list.id}
+                            position={listIndex}
+                            issues={list.issues}
+                            index={listIndex}
+                            addIssue={(issue) => addIssue(issue, listIndex)}
+                            />
+                    );
                 })}
             </DragDropContext>
             <button className="NewListBtn" onClick={createNewList}>New list</button>
