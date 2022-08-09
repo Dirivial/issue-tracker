@@ -89,7 +89,6 @@ export default function IssueList(props) {
 
             <button className="new-issue-button" onClick={launchIssuePopup}>New Issue</button>
             <IssuePopup
-                currentlist={props.listid}
                 position={() => {return props.issues.length}}
                 listid={props.listid}
                 onCreated={(issue) => {addIssue(issue)}}
