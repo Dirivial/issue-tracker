@@ -14,27 +14,18 @@ import './IssueList.css';
 export default function IssueList(props) {
     
     const [listName, setListName] = useState(props.name ? props.name : 'New list');
-    const [issues, setIssues] = useState(props.issues);
     const [issuePopupShow, setIssuePopupShow] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const axiosPrivate = useAxiosPrivate();
 
-    const removeIssue = async (position) => {
+    const removeIssue = async (id, position) => {
 
+        props.removeIssue(position);
         let issue = null;
 
-        setIssues(old => {
-            let newIssues = old;
-            issue = newIssues.splice(position, 1)[0];
-            for(let i = position; i < newIssues.length; i++) {
-                newIssues[i].position -= 1;
-            }
-            return newIssues;
-        });
-
         try {
-            const response = await axiosPrivate.get('/issue/remove?issueid=' + issue.id);
+            const response = await axiosPrivate.get('/issue/remove?issueid=' + id);
 
         } catch (err) {
             console.log(err);
@@ -55,7 +46,7 @@ export default function IssueList(props) {
     }
 
     const addIssue = (issue) => {
-        props.addIssue(issue)
+        props.addIssue(issue);
     }
 
     const launchIssuePopup = () => {
@@ -85,7 +76,7 @@ export default function IssueList(props) {
                                             position={index}
                                             name={issue.name}
                                             description={issue.description}
-                                            remove={removeIssue}
+                                            remove={() => removeIssue(issue.id, index)}
                                         />
                                     );
                                 })}
@@ -98,7 +89,7 @@ export default function IssueList(props) {
 
             <button className="new-issue-button" onClick={launchIssuePopup}>New Issue</button>
             <IssuePopup
-                currentlist={() => {return {listid: props.listid, position: issues.length}}}
+                currentlist={props.listid}
                 position={() => {return props.issues.length}}
                 listid={props.listid}
                 onCreated={(issue) => {addIssue(issue)}}

@@ -156,7 +156,18 @@ export default function ListViewer({containerid}) {
     const addIssue = (issue, listIndex) => {
         setListData(old => {
             old[listIndex].issues.push(issue);
-            return old;
+            return [...old];
+        });
+    }
+
+    const removeIssue = (issueIndex, listIndex) => {
+        setListData(old => {
+            let data = JSON.parse(JSON.stringify(old));
+            data[listIndex].issues.splice(issueIndex, 1);
+            for(let i = issueIndex; i < data[listIndex].issues.length; i++) {
+                data[listIndex].issues[i].position -= 1;
+            }
+            return data;
         });
     }
 
@@ -179,6 +190,7 @@ export default function ListViewer({containerid}) {
                             issues={list.issues}
                             index={listIndex}
                             addIssue={(issue) => addIssue(issue, listIndex)}
+                            removeIssue={(issueIndex) => removeIssue(issueIndex, listIndex)}
                             />
                     );
                 })}
