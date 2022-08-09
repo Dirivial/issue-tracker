@@ -55,10 +55,10 @@ export default function Container() {
     }, [])
 
     return (
-    <div className="container">
-        <div className="containerHeader">
-            <input className="containerTitle" onBlur={sendContainerUpdate} value={name} onChange={(e) => {setName(e.target.value)}} />
-            <textarea className="containerDescription" value={desc} onBlur={sendContainerUpdate} onChange={(e) => {setDesc(e.target.value)}}/>
+    <div className="user-container">
+        <div className="container-header">
+            <input className="container-title" onBlur={sendContainerUpdate} value={name} onChange={(e) => {setName(e.target.value)}} />
+            {/* <textarea className="container-description" value={desc} onBlur={sendContainerUpdate} onChange={(e) => {setDesc(e.target.value)}}/> */}
         </div>
         <ListViewer containerid={id}/>
 

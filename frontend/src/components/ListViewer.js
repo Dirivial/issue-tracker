@@ -3,6 +3,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faX } from '@fortawesome/free-solid-svg-icons';
+
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import './DisplayLists.css';
 
@@ -114,19 +117,35 @@ export default function ListViewer({containerid}) {
             let source = result.source;
             let destination = result.destination;
             
+            let issue = oldLists[source.droppableId].issues.splice(source.index, 1)[0];
+            
             if (source.droppableId === destination.droppableId) {
                 // Same droppable
 
-                let issue = oldLists[source.droppableId].issues.splice(source.index, 1)[0];
-
+                // Set positions for other issues in list
                 for(let i = source.index; i < destination.index; i++) {
                     oldLists[source.droppableId].issues[i].position -= 1;
                 }
                 
+                // Inser issue again, with new position
                 issue.position = destination.index;
                 oldLists[source.droppableId].issues.splice(destination.index, 0, issue);
+            } else {
+                // Between droppables
 
-                console.log(oldLists);
+                // -1 on position for all issues following the issue in source list
+                for(let i = source.index; i < oldLists[source.droppableId].issues.length; i++) {
+                    oldLists[source.droppableId].issues[i].position -= 1;
+                }
+                // +1 on position on all issues following the issue in destination list
+                for(let i = destination.index; i < oldLists[destination.droppableId].issues.length; i++) {
+                    oldLists[destination.droppableId].issues[i].position += 1;
+                }
+
+                // Insert issue in new list
+                issue.position = destination.index;
+                issue.listid = oldLists[destination.droppableId].id;
+                oldLists[destination.droppableId].issues.splice(destination.index, 0, issue);
             }
 
             return oldLists;
@@ -142,13 +161,10 @@ export default function ListViewer({containerid}) {
                             <Droppable droppableId={"" + listIndex} key={listIndex}>
                                 {(provided, snapshot) => {
                                     return (
-                                        <div
-                                            {...provided.droppableProps}
+                                        <div 
                                             ref={provided.innerRef}
-                                            style={{
-                                                padding: 4,
-                                                minHeigth: 500
-                                            }}
+                                            style={{margin: "0 0 20px 0"}}
+
                                         >
                                             <IssueList 
                                                 key={list.id}
@@ -158,6 +174,7 @@ export default function ListViewer({containerid}) {
                                                 listid={list.id}
                                                 position={list.position}
                                                 issues={list.issues}
+                                                providedThing={provided}
                                                 />
                                             {provided.placeholder}
                                         </div>

@@ -1,9 +1,9 @@
 
 .issue-list {
     width: 20rem;
-    padding: 1vh;
     background-color: var(--bg3);
     border-radius: 3px;
+    padding: 2px;
 
     display: flex;
     flex-direction: column;
@@ -12,6 +12,8 @@
 }
 
 .list-name-wrapper {
+    border-bottom-style: solid;
+    border-color: var(--main-orange);
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -36,9 +38,8 @@
 }
 
 .list-of-issues {
-    height: 450px;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    padding-top: 3px;
+    min-height: 1.5vh;
 }
 
 /* width */
@@ -64,8 +65,8 @@
 
 
 .new-issue-button {
-    align-self: flex-end;
-    width: 100%;
+    align-self: center;
+    width: 95%;
     padding: 1vh 0vh 1vh 0vh;
     color: var(--fg2);
     background-color: var(--bg1);

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { Draggable } from 'react-beautiful-dnd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisVertical, faCheck } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,12 +15,30 @@ export default function IssueListItem({name, remove, issueIndex, listid, issueid
     }
 
     return (
-        <div 
-            className="issue-list-item" 
-            draggable
+        <Draggable
+            key={issueid}
+            draggableId={"" + issueid}
+            index={position}
         >
-            <input type='text' value={issueName} className="issue-name" onChange={(e) => (setIssueName(e.target.value))}/>
-            <button onClick={removeIssue}><FontAwesomeIcon icon={faEllipsisVertical} /></button>
-        </div>
+            {(provided, snapshot) => {
+                return (
+                    <div
+                        className="issue-list-item"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={{
+                            userSelect: "none",
+                            ...provided.draggableProps.style
+                        }}
+                        
+                    >
+                        <input type='text' value={issueName} className="issue-name" onChange={(e) => (setIssueName(e.target.value))}/>
+                        <button onClick={removeIssue}><FontAwesomeIcon icon={faEllipsisVertical} /></button>
+                        {provided.placeholder}
+                    </div>
+                )
+            }}
+        </Draggable>
     )
 }

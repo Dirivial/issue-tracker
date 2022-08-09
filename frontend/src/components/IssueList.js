@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons';
-import { Draggable } from 'react-beautiful-dnd';
+import { Droppable } from 'react-beautiful-dnd';
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 
@@ -56,42 +56,32 @@ export default function IssueList(props) {
                 <button className="" onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
             </div>
 
-            <div className="list-of-issues">
-                {props.issues.map((issue, index) => {
-                    return (
-                        <Draggable
-                            key={issue.id}
-                            draggableId={"" + issue.id}
-                            index={index}
-                        >
-                            {(provided, snapshot) => {
-                                return (
-                                    <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        style={{
-                                            userSelect: "none",
-                                            ...provided.draggableProps.style
-                                        }}
-                                        
-                                    >
+            <div className="list-of-issues-wrapper">
+                <Droppable droppableId={props.position.toString()} key={props.position}>
+                    {(provided, snapshot) => {
+                        return (
+                            <div 
+                                {...props.providedThing.droppableProps}
+                                className="list-of-issues"
+                                ref={provided.innerRef}>
+                                {props.issues.map((issue, index) => {
+                                    return (
                                         <IssueListItem
                                             key={issue.id}
                                             listid={issue.listid}
                                             issueid={issue.id}
-                                            position={issue.position}
+                                            position={index}
                                             name={issue.name}
                                             description={issue.description}
                                             remove={removeIssue}
                                         />
-                                        {provided.placeholder}
-                                    </div>
-                                )
-                            }}
-                        </Draggable>
-                    );
-                })}
+                                    );
+                                })}
+                                {provided.placeholder}
+                            </div>
+                        )
+                    }}
+                </Droppable>
             </div>
 
             <button className="new-issue-button" onClick={launchIssuePopup}>New Issue</button>

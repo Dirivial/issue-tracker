@@ -1,39 +1,37 @@
 
-.container {
-    margin-top: 5vh;
+.user-container {
+    margin-bottom: 0;
     color: var(--main-fg);
     width: 100%;
-
-    padding-top: 2vh;
-    padding-bottom: 5vh;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
-.containerHeader {
-    height: 10rem;
+.container-header {
     display: flex;
     align-content: center;
 }
 
-.containerTitle {
+.container-title {
     font-size: 24px;
     background-color: var(--main-bg);
     color: var(--main-fg);
     border-style: none;
-    margin-right: 5px;
-    margin-top: auto;
-    margin-bottom: auto;
+    outline: 1px solid var(--fg4);
+    margin: 2vh;
 }
 
-.containerTitle::placeholder {
+.container-title::placeholder {
     opacity: 1;
     color: var(--main-fg);
 }
 
-.containerTitle:focus {
+.container-title:focus {
     outline: 2px solid var(--fg4);
 }
 
-.containerDescription {
+.container-description {
     font-size: 18px;
     resize: none;
     max-height: 12rem;
@@ -53,6 +51,7 @@
     color: var(--main-fg);
     width: 100%;
 
+    flex: 1;
     display: flex;
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -60,8 +59,6 @@
     column-gap: 2vh;
 
     padding-top: 2vh;
-    padding-bottom: 5vh;
-
 }
 
 .NewListBtn {
