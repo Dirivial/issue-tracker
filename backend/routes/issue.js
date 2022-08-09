@@ -17,7 +17,9 @@ module.exports = function(app) {
                     console.error(err);
                     return res.sendStatus(500);
                 } else {
-                    return res.sendStatus(201);
+                    return res.status(201).send({
+                        id: result.insertId
+                    });
                 }
             });
     });
