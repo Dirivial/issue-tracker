@@ -53,7 +53,7 @@ export default function IssueList(props) {
         <div className="issue-list">
             <div key={'list-name-wrapper'} className="list-name-wrapper">
                 <input className="list-name" onBlur={sendUpdateList} value={listName} placeholder={listName} onChange={(e) => (setListName(e.target.value))}/>
-                <button className="" onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
+                <button className="list-delete-button" onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
             </div>
 
             <div className="list-of-issues-wrapper">

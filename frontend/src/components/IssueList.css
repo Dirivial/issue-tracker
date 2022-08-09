@@ -24,8 +24,7 @@
     color: var(--main-fg);
     border-style: none;
     padding: 3px 0px 2px 10px;
-    margin-bottom: 1vh;
-    margin-right: 5px;
+    margin: 1vh 1vh 1vh 1vh;
 }
 
 .list-name::placeholder {
@@ -41,28 +40,6 @@
     padding-top: 3px;
     min-height: 1.5vh;
 }
-
-/* width */
-.list-of-issues::-webkit-scrollbar {
-  width: 8px;
-}
-
-/* Track */
-.list-of-issues::-webkit-scrollbar-track {
-    background: var(--bg3);
-    opacity: 25%;
-}
-
-/* Handle */
-.list-of-issues::-webkit-scrollbar-thumb {
-  background: var(--main-bg);
-}
-
-/* Handle on hover */
-.list-of-issues::-webkit-scrollbar-thumb:hover {
-  background: var(--main-bg-hard);
-}
-
 
 .new-issue-button {
     align-self: center;
@@ -84,6 +61,7 @@
     color: var(--fg2);
     background-color: var(--bg2);
     transition: background-color 0.2s;
+    margin: 0 1vh 0 0;
     border-radius: 3px;
     border-style: none;
 }
