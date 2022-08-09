@@ -110,7 +110,6 @@ export default function ListViewer({containerid}) {
 
     const onDragEnd = (result) => {
         if(!result.destination) return;
-        console.log(result);
 
         setListData(old => {
 
@@ -170,10 +169,6 @@ export default function ListViewer({containerid}) {
             return data;
         });
     }
-
-    useEffect(() => {
-        console.log(listData);
-    }, [listData]);
 
     return (
         <div className="IssueListsContainer">
