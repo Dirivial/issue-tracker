@@ -14,18 +14,28 @@ import './IssueList.css';
 export default function IssueList(props) {
     
     const [listName, setListName] = useState(props.name ? props.name : 'New list');
-    const [issues, setIssues] = useState([]);
+    const [issues, setIssues] = useState(props.issues);
     const [data, setData] = useState([]);
     const [issuePopupShow, setIssuePopupShow] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const axiosPrivate = useAxiosPrivate();
 
-    const removeIssue = async (issueid) => {
-        setIssues(prev => prev.filter((issue) => {return issue.props.issueid !== issueid}));
+    const removeIssue = async (position) => {
+
+        let issue = null;
+
+        setIssues(old => {
+            let newIssues = old;
+            issue = newIssues.splice(position, 1)[0];
+            for(let i = position; i < newIssues.length; i++) {
+                newIssues[i].position -= 1;
+            }
+            return newIssues;
+        });
 
         try {
-            const response = await axiosPrivate.get('/issue/remove?issueid=' + issueid);
+            const response = await axiosPrivate.get('/issue/remove?issueid=' + issue.id);
 
         } catch (err) {
             console.log(err);
@@ -45,6 +55,13 @@ export default function IssueList(props) {
         props.remove(props.listid);
     }
 
+    const addIssue = (issue) => {
+        console.log(issue);
+        setIssues(issues => {
+            issues.push(issue)
+            return issues;
+        });
+    }
 
     const launchIssuePopup = () => {
         setIssuePopupShow(true);
@@ -64,7 +81,7 @@ export default function IssueList(props) {
                                 {...props.providedThing.droppableProps}
                                 className="list-of-issues"
                                 ref={provided.innerRef}>
-                                {props.issues.map((issue, index) => {
+                                {issues.map((issue, index) => {
                                     return (
                                         <IssueListItem
                                             key={issue.id}
@@ -87,7 +104,9 @@ export default function IssueList(props) {
             <button className="new-issue-button" onClick={launchIssuePopup}>New Issue</button>
             <IssuePopup
                 currentlist={() => {return {listid: props.listid, position: issues.length}}}
-                issueCreated={null}
+                position={() => {return issues.length}}
+                listid={props.listid}
+                onCreated={(issue) => {addIssue(issue)}}
                 show={issuePopupShow}
                 onHide={() => {setIssuePopupShow(false)}}
             />

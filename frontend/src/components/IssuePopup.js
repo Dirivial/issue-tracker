@@ -6,25 +6,31 @@ import Modal from 'react-bootstrap/Modal';
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import './IssuePopup.css';
 
-export default function IssuePopup(props) {
+export default function IssuePopup({position, listid, onCreated, show, onHide}) {
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const axiosPrivate = useAxiosPrivate();
 
-    const submit = () => {
+    const submit = async () => {
 
         try {
-            const listinfo = props.currentlist();
-            const response = axiosPrivate.post('/issue/create', 
+            let issue = {
+                name: name,
+                description: description,
+                position: position(),
+                listid: listid
+            }
+            const response = await axiosPrivate.post('/issue/create', 
                 {
                     name: name,
                     description: description,
-                    position: listinfo.position,
-                    listid: listinfo.listid
+                    position: position(),
+                    listid: listid
                 });
-            props.issueCreated();
-            props.onHide();
+            issue.id = response.data.id;
+            onCreated(issue);
+            onHide();
         } catch (err) {
             console.log(err);
             //navigate('/login', { state: { from: location }, replace: true });
@@ -35,8 +41,8 @@ export default function IssuePopup(props) {
     return (
         <div className="NewIssuePopup">
             <Modal 
-                show={props.show}
-                onHide={props.onHide}
+                show={show}
+                onHide={onHide}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
@@ -58,7 +64,7 @@ export default function IssuePopup(props) {
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer bsPrefix="normalBackground customFoot">
-                    <button onClick={props.onHide} className="closeButton">Close</button>
+                    <button onClick={onHide} className="closeButton">Close</button>
                     <button onClick={submit} className="saveButton">Save</button>
                 </Modal.Footer>
             </Modal>

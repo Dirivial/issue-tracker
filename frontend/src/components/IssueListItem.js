@@ -6,12 +6,12 @@ import { faEllipsisVertical, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 import "./IssueListItem.css";
 
-export default function IssueListItem({name, remove, issueIndex, listid, issueid, position, description, dragStart, dragEnter}) {
+export default function IssueListItem({name, remove, issueid, position, description}) {
 
     const [issueName, setIssueName] = useState(name);
     
     const removeIssue = () => {
-        remove(issueid);
+        remove(position);
     }
 
     return (
@@ -28,7 +28,6 @@ export default function IssueListItem({name, remove, issueIndex, listid, issueid
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         style={{
-                            userSelect: "none",
                             ...provided.draggableProps.style
                         }}
                         
