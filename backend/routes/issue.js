@@ -38,6 +38,33 @@ module.exports = function(app) {
             })
     });
 
+    app.post(PATH + '/organize', (req, res) => {
+        if(!req.body.issues) return res.sendStatus(400);
+
+        const issues = req.body.issues;
+        const ids = issues.map(issue => issue.id);
+        let i = 0;
+    
+        var query = db.query('SELECT * FROM issue WHERE id IN (?)', [ids]);
+        query
+            .on('error', function(err) {
+                console.log(err);
+                res.status(500);
+            }).on('result', function(result) {
+                db.query('UPDATE issue SET position = (?), listid = (?) WHERE id = (?)',
+                [issues[i].position, issues[i].listid, issues[i].id], 
+                (err, result) => {
+                    if (err) {
+                        console.log(err);
+                        res.status(500);
+                    }
+                });
+                i += 1;
+            }).on('end', function(end){
+                return res.send();
+            });
+    });
+
     app.post(PATH + '/multi', (req, res) => {
         if (!req.body.listids) return res.sendStatus(400);
         if (req.body.listids.length === 0) return res.sendStatus(200);
