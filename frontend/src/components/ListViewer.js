@@ -15,6 +15,7 @@ import IssueListItem from './IssueListItem.js';
 export default function ListViewer({containerid}) {
 
     const [listData, setListData] = useState([]);
+    const [listsChanged, setListsChanged] = useState([]);
     const [isDragging, setIsDragging] = useState(false);
 
     const dragItem = useRef();
@@ -32,6 +33,24 @@ export default function ListViewer({containerid}) {
                 containerid: containerid
             });
             getLists();
+
+        } catch (err) {
+            console.log(err);
+            navigate('/login', { state: { from: location }, replace: true });
+        }
+    }
+
+    const syncList = async () => {
+        try {
+            let data = []; 
+            listsChanged.forEach(i => {
+                data.push(...listData.at(parseInt(i)).issues);
+            });
+            setListsChanged([]);
+            const response = await axiosPrivate.post('/issue/organize', {
+                issues: data
+            });
+            
 
         } catch (err) {
             console.log(err);
@@ -108,6 +127,12 @@ export default function ListViewer({containerid}) {
         getLists();
     }, []);
 
+    useEffect(() => {
+        if(listsChanged.length > 0) {
+            syncList();
+        }
+    }, [listsChanged])
+
     const onDragEnd = (result) => {
         if(!result.destination) return;
 
@@ -124,11 +149,15 @@ export default function ListViewer({containerid}) {
                 // Same droppable
 
                 // Set positions for other issues in list
-                for(let i = source.index; i < destination.index; i++) {
-                    oldLists[source.droppableId].issues[i].position -= 1;
+                let pos = (source.index < destination.index) ? 
+                    {low: source.index, high: destination.index, dir: -1} 
+                    : {low: destination.index, high: source.index, dir: 1}
+
+                for(let i = pos.low; i < pos.high; i++) {
+                    oldLists[source.droppableId].issues[i].position += pos.dir;
                 }
                 
-                // Inser issue again, with new position
+                // Insert issue again, with new position
                 issue.position = destination.index;
                 oldLists[source.droppableId].issues.splice(destination.index, 0, issue);
             } else {
@@ -150,6 +179,12 @@ export default function ListViewer({containerid}) {
             }
             return oldLists;
         });
+
+        if(result.source.droppableId !== result.destination.droppableId) {
+            setListsChanged([result.source.droppableId, result.destination.droppableId]);
+        } else {
+            setListsChanged([result.source.droppableId]);
+        }
     }
 
     const addIssue = (issue, listIndex) => {
