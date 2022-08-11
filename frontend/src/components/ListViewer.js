@@ -71,7 +71,6 @@ export default function ListViewer({containerid}) {
 
     const syncListPositions = (listid) => {
         let allData = state.filter(list => list.id !== listid);
-        console.log(allData);
         for (let i = 0; i < allData.length; i++) {
             if(allData[i].position !== i) {
                 updateList({id: allData[i].id, name: allData[i].name, position: i});
@@ -80,7 +79,6 @@ export default function ListViewer({containerid}) {
     }
 
     const updateList = async (list) => {
-        console.log(list);
         await axiosList('/issueList/update', {
             id: list.id,
             name: list.name,
