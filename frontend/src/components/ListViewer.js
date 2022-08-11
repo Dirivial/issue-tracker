@@ -1,126 +1,91 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { DragDropContext } from 'react-beautiful-dnd';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faX } from '@fortawesome/free-solid-svg-icons';
-
-import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
+import useListViewerReducer from '../reducers/listViewerReducer.js';
+import useAxiosList from '../hooks/useAxiosList.js';
 import './DisplayLists.css';
 
 import IssueList from './IssueList.js';
-import IssueListItem from './IssueListItem.js';
 
 export default function ListViewer({containerid}) {
 
-    const [listData, setListData] = useState([]);
+    const [state, dispatch] = useListViewerReducer();
     const [listsChanged, setListsChanged] = useState([]);
-    const [isDragging, setIsDragging] = useState(false);
-
-    const dragItem = useRef();
-    const dragItemNode = useRef();
 
     const navigate = useNavigate();
     const location = useLocation();
-    const axiosPrivate = useAxiosPrivate();
+    const axiosList = useAxiosList();
 
     const createNewList = async () => {
-        try {
-            const response = await axiosPrivate.post('/issueList/create', {
-                name: 'New list',
-                position: listData.length,
-                containerid: containerid
-            });
-            getLists();
-
-        } catch (err) {
-            console.log(err);
-            navigate('/login', { state: { from: location }, replace: true });
-        }
+        const result = await axiosList('/issueList/create', {
+            name: 'New list',
+            position: state.length,
+            containerid: containerid,
+        });
+        // Reducer expects lists to have issues property
+        result.issues = [];
+        dispatch({type: 'addList', payload: result});
     }
 
     const syncList = async () => {
-        try {
-            let data = []; 
-            listsChanged.forEach(i => {
-                data.push(...listData.at(parseInt(i)).issues);
-            });
-            setListsChanged([]);
-            const response = await axiosPrivate.post('/issue/organize', {
-                issues: data
-            });
-            
-
-        } catch (err) {
-            console.log(err);
-            navigate('/login', { state: { from: location }, replace: true });
-        }
+        // Create long list of issues to update
+        let data = []; 
+        listsChanged.forEach(i => {
+            data.push(...state.at(parseInt(i)).issues);
+        });
+        setListsChanged([]);
+        // Send issues to update
+        axiosList('/issue/organize', {issues: data});
     }
 
     const getLists = async () => {
-        try {
-            const response = await axiosPrivate.get('/issueList/?containerid=' + containerid);
-            if(response?.data !== listData) {
+        const result = await axiosList('/issueList/?containerid=' + containerid);
+        if(result) {
+            let ids = [];
+            result.forEach(e => ids.push(e.id));
 
-                let ids = [];
-                response.data.forEach(e => ids.push(e.id));
+            const result2 = await axiosList('/issue/multi', {
+                listids: ids
+            });
 
-                const response2 = await axiosPrivate.post('/issue/multi', {
-                    listids: ids
-                });
+            if(result2) {
+                let data = result;
 
-                if(response2?.data) {
-                    let data = response.data;
-
-                    data.forEach(list => {
-                        list.issues = response2.data.filter(issue => issue.listid === list.id);
-                        list.issues.sort((issueA, issueB) => issueA.position > issueB.position ? 1:-1);
-                    })
-                    setListData(data);
-                }
+                data.forEach(list => {
+                    list.issues = result2.filter(issue => issue.listid === list.id);
+                    list.issues.sort((issueA, issueB) => issueA.position > issueB.position ? 1:-1);
+                })
+                dispatch({type: 'load', payload: data});
             }
-
-        } catch (err) {
-            console.log(err);
-            navigate('/login', { state: { from: location }, replace: true });
         }
     }
 
     const removeList = async (listid) => {
-        setListData(prev => prev.filter((list) => {return list.listid !== listid}));
+        syncListPositions(listid);
+        dispatch({type: 'removeList', payload: listid});
 
-        try {
-            const response = await axiosPrivate.get('/issueList/remove?listid=' + listid);
-            syncListPosition(listid);
+        await axiosList('/issueList/remove?listid=' + listid);
+    }
 
-        } catch (err) {
-            console.log(err);
-            navigate('/login', { state: { from: location }, replace: true });
+    const syncListPositions = (listid) => {
+        let allData = state.filter(list => list.id !== listid);
+        console.log(allData);
+        for (let i = 0; i < allData.length; i++) {
+            if(allData[i].position !== i) {
+                updateList({id: allData[i].id, name: allData[i].name, position: i});
+            }
         }
     }
 
     const updateList = async (list) => {
-        try {
-            const response = await axiosPrivate.post('/issueList/update', {
-                id: list.id,
-                name: list.name,
-                position: list.position,
-            });
-        } catch (err) {
-            console.log(err);
-            navigate('/login', { state: { from: location }, replace: true });
-        }
-    }
-
-    const syncListPosition = (listid) => {
-        let allData = listData.filter((list) => {return list.id !== listid});
-        for (let i = 0; i < allData.length; i++) {
-            if(allData[i].position !== i) {
-                allData[i].position = i;
-                updateList(allData[i]);
-            }
-        }
+        console.log(list);
+        await axiosList('/issueList/update', {
+            id: list.id,
+            name: list.name,
+            position: list.position,
+        })
     }
 
     useEffect(() => {
@@ -136,49 +101,7 @@ export default function ListViewer({containerid}) {
     const onDragEnd = (result) => {
         if(!result.destination) return;
 
-        setListData(old => {
-
-            // Each contains index and droppableId
-            let source = result.source;
-            let destination = result.destination;
-            
-            let oldLists = JSON.parse(JSON.stringify(old));
-            let issue = oldLists[source.droppableId].issues.splice(source.index, 1)[0];
-            
-            if (source.droppableId === destination.droppableId) {
-                // Same droppable
-
-                // Set positions for other issues in list
-                let pos = (source.index < destination.index) ? 
-                    {low: source.index, high: destination.index, dir: -1} 
-                    : {low: destination.index, high: source.index, dir: 1}
-
-                for(let i = pos.low; i < pos.high; i++) {
-                    oldLists[source.droppableId].issues[i].position += pos.dir;
-                }
-                
-                // Insert issue again, with new position
-                issue.position = destination.index;
-                oldLists[source.droppableId].issues.splice(destination.index, 0, issue);
-            } else {
-                // Between droppables
-
-                // -1 on position for all issues following the issue in source list
-                for(let i = source.index; i < oldLists[source.droppableId].issues.length; i++) {
-                    oldLists[source.droppableId].issues[i].position -= 1;
-                }
-                // +1 on position on all issues following the issue in destination list
-                for(let i = destination.index; i < oldLists[destination.droppableId].issues.length; i++) {
-                    oldLists[destination.droppableId].issues[i].position += 1;
-                }
-
-                // Insert issue in new list
-                issue.position = destination.index;
-                issue.listid = oldLists[destination.droppableId].id;
-                oldLists[destination.droppableId].issues.splice(destination.index, 0, issue);
-            }
-            return oldLists;
-        });
+        dispatch({type: 'moveIssue', payload: result});
 
         if(result.source.droppableId !== result.destination.droppableId) {
             setListsChanged([result.source.droppableId, result.destination.droppableId]);
@@ -188,27 +111,17 @@ export default function ListViewer({containerid}) {
     }
 
     const addIssue = (issue, listIndex) => {
-        setListData(old => {
-            old[listIndex].issues.push(issue);
-            return [...old];
-        });
+        dispatch({type: 'addIssue', payload: {issue, listIndex}})
     }
 
     const removeIssue = (issueIndex, listIndex) => {
-        setListData(old => {
-            let data = JSON.parse(JSON.stringify(old));
-            data[listIndex].issues.splice(issueIndex, 1);
-            for(let i = issueIndex; i < data[listIndex].issues.length; i++) {
-                data[listIndex].issues[i].position -= 1;
-            }
-            return data;
-        });
+        dispatch({type: 'removeIssue', payload: {issueIndex, listIndex}});
     }
 
     return (
         <div className="IssueListsContainer">
             <DragDropContext onDragEnd={result => onDragEnd({destination: result.destination, source: result.source})}>
-                {Object.values(listData).map((list, listIndex) => {
+                {Object.values(state).map((list, listIndex) => {
                     return (
                         <IssueList 
                             key={list.id}

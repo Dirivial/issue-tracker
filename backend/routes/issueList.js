@@ -16,7 +16,12 @@ module.exports = function(app) {
                 if(err) {
                     return res.sendStatus(500);
                 } else {
-                    return res.sendStatus(201);
+                    return res.status(201).send({
+                        name: name,
+                        position: position,
+                        containerid: containerID,
+                        id: result.insertId
+                    });
                 }
             });
     });
