@@ -5,7 +5,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 
 import useListViewerReducer from '../reducers/listViewerReducer.js';
 import useAxiosList from '../hooks/useAxiosList.js';
-import './DisplayLists.css';
+import './ListViewer.css';
 
 import IssueList from './IssueList.js';
 
