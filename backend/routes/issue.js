@@ -112,7 +112,7 @@ module.exports = function(app) {
                     console.log(err);
                     return res.sendStatus(500);
                 } else {
-                    return res.status(200);
+                    return res.sendStatus(200);
                 }
             });
     });
