@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
-import DisplayLists from '../components/DisplayLists.js';
 import ListViewer from '../components/ListViewer.js';
 import './Container.css';
 

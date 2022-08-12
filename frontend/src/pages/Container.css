@@ -56,8 +56,6 @@
     flex-flow: row nowrap;
     justify-content: flex-start;
     align-items: flex-start;
-    column-gap: 2vh;
-
     padding-top: 2vh;
 }
 

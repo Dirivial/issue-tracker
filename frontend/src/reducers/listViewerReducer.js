@@ -10,9 +10,27 @@ function reducerFunction(state, action) {
     switch(action.type) {
         case 'load':
             newState = action.payload;
+            newState.sort((listA, listB) => listA.position < listB.position ? -1:1);
+            break;
+        case 'addList':
+            const newList = action.payload;
+            newState = [...newState, newList];
+            break;
+        case 'removeList':
+            newState.splice(action.payload, 1);
+            for(let i = action.payload; i < newState.length; i++) {
+                newState[i].position = i;
+            }
+            break;
+        case 'moveList':
+            const list = newState.splice(action.payload.source, 1)[0];
+            newState.splice(action.payload.destination, 0, list);
             break;
         case 'addIssue':
-            newState[action.payload.listIndex].issues.push(action.payload.issue);
+            // Since it's called twice with strict mode, we can't just add it, or errors will occur
+            if(!newState[action.payload.listIndex].issues.find(issue => issue.id === action.payload.issue.id)) {
+                newState[action.payload.listIndex].issues = [...state[action.payload.listIndex].issues, action.payload.issue];
+            }
             break;
         case 'removeIssue':
             let data = JSON.parse(JSON.stringify(state));
@@ -23,17 +41,6 @@ function reducerFunction(state, action) {
                 data[listIndex].issues[i].position -= 1;
             }
             newState = data;
-            break;
-        case 'addList':
-            const newList = action.payload;
-            newState = [...newState, newList];
-            break;
-        case 'removeList':
-            const index = newState.findIndex(list => list.id === action.payload);
-            newState.splice(index, 1);
-            for(let i = index; i < newState.length; i++) {
-                newState[i].position = i;
-            }
             break;
         case 'moveIssue':
             // Each contains index and droppableId

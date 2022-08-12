@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import useListViewerReducer from '../reducers/listViewerReducer.js';
 import useAxiosList from '../hooks/useAxiosList.js';
@@ -62,19 +62,19 @@ export default function ListViewer({containerid}) {
         }
     }
 
-    const removeList = async (listid) => {
-        syncListPositions(listid);
-        dispatch({type: 'removeList', payload: listid});
-
-        await axiosList('/issueList/remove?listid=' + listid);
+    const removeList = async (position) => {
+        let allData = [...state];
+        for (let i = position+1; i < allData.length; i++) {
+            updateList({id: allData[i].id, name: allData[i].name, position: i-1});
+        }
+        dispatch({type: 'removeList', payload: position});
     }
 
-    const syncListPositions = (listid) => {
-        let allData = state.filter(list => list.id !== listid);
-        for (let i = 0; i < allData.length; i++) {
-            if(allData[i].position !== i) {
-                updateList({id: allData[i].id, name: allData[i].name, position: i});
-            }
+    const moveList = (source, destination) => {
+        let lists = [...state];
+        lists.splice(destination, 0, lists.splice(source, 1)[0]);
+        for (let i = 0; i < lists.length; i++) {
+            updateList({id: lists[i].id, name: lists[i].name, position: i});
         }
     }
 
@@ -99,12 +99,20 @@ export default function ListViewer({containerid}) {
     const onDragEnd = (result) => {
         if(!result.destination) return;
 
-        dispatch({type: 'moveIssue', payload: result});
+        if(result.source.droppableId !== "ListsContainer") {
+            dispatch({type: 'moveIssue', payload: result});
 
-        if(result.source.droppableId !== result.destination.droppableId) {
-            setListsChanged([result.source.droppableId, result.destination.droppableId]);
+            if(result.source.droppableId !== result.destination.droppableId) {
+                setListsChanged([result.source.droppableId, result.destination.droppableId]);
+            } else {
+                setListsChanged([result.source.droppableId]);
+            }
         } else {
-            setListsChanged([result.source.droppableId]);
+            dispatch({type: 'moveList', payload: {
+                source: result.source.index, 
+                destination: result.destination.index
+            }});
+            moveList(result.source.index, result.destination.index);
         }
     }
 
@@ -117,26 +125,37 @@ export default function ListViewer({containerid}) {
     }
 
     return (
-        <div className="IssueListsContainer">
-            <DragDropContext onDragEnd={result => onDragEnd({destination: result.destination, source: result.source})}>
-                {Object.values(state).map((list, listIndex) => {
+        <DragDropContext onDragEnd={result => onDragEnd({destination: result.destination, source: result.source})}>
+            <Droppable droppableId="ListsContainer" direction="horizontal" type="LIST">
+                {(provided, snapshot) => {
+
                     return (
-                        <IssueList 
-                            key={list.id}
-                            update={updateList}
-                            remove={removeList}
-                            name={list.name}
-                            listid={list.id}
-                            position={listIndex}
-                            issues={list.issues}
-                            index={listIndex}
-                            addIssue={(issue) => addIssue(issue, listIndex)}
-                            removeIssue={(issueIndex) => removeIssue(issueIndex, listIndex)}
-                            />
-                    );
-                })}
-            </DragDropContext>
-            <button className="NewListBtn" onClick={createNewList}>New list</button>
-        </div>
+                        <div
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                            className="IssueListsContainer">
+                            {Object.values(state).map((list, listIndex) => {
+                                return (
+                                    <IssueList 
+                                        key={list.id}
+                                        update={updateList}
+                                        remove={removeList}
+                                        name={list.name}
+                                        listid={list.id}
+                                        position={listIndex}
+                                        issues={list.issues}
+                                        index={listIndex}
+                                        addIssue={(issue) => addIssue(issue, listIndex)}
+                                        removeIssue={(issueIndex) => removeIssue(issueIndex, listIndex)}
+                                        />
+                                );
+                            })}
+                            {provided.placeholder}
+                            <button className="NewListBtn" onClick={createNewList}>New list</button>
+                        </div>
+                    )
+                }}
+            </Droppable>
+        </DragDropContext>
     )
 }

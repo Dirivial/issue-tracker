@@ -19,6 +19,7 @@ export default function IssueListItem({name, remove, issueid, position, descript
             key={issueid}
             draggableId={"" + issueid}
             index={position}
+            type="ISSUE"
         >
             {(provided, snapshot) => {
                 return (
@@ -32,7 +33,7 @@ export default function IssueListItem({name, remove, issueid, position, descript
                         }}
                         
                     >
-                        <input type='text' value={issueName} className="issue-name" onChange={(e) => (setIssueName(e.target.value))}/>
+                        <h4 className="issue-name">{issueName}</h4>
                         <button onClick={removeIssue}><FontAwesomeIcon icon={faEllipsisVertical} /></button>
                         {provided.placeholder}
                     </div>

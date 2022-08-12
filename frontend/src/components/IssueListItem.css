@@ -2,7 +2,7 @@
 .issue-list-item {
     background-color: var(--main-bg-soft);
     height: 5vh;
-    margin: 5px 5px 5px 5px;
+    margin-bottom: 2px;
     border-radius: 3px;
     user-select: none;
 

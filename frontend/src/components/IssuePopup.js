@@ -21,13 +21,7 @@ export default function IssuePopup({position, listid, onCreated, show, onHide}) 
                 position: position(),
                 listid: listid
             }
-            const response = await axiosPrivate.post('/issue/create', 
-                {
-                    name: name,
-                    description: description,
-                    position: position(),
-                    listid: listid
-                });
+            const response = await axiosPrivate.post('/issue/create', issue);
             issue.id = response.data.id;
             onCreated(issue);
             onHide();

@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faX } from '@fortawesome/free-solid-svg-icons';
-import { Droppable } from 'react-beautiful-dnd';
+import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
+import useAxiosList from '../hooks/useAxiosList.js';
 
 import IssuePopup from '../components/IssuePopup.js';
 import IssueListItem from '../components/IssueListItem.js';
@@ -15,22 +15,11 @@ export default function IssueList(props) {
     
     const [listName, setListName] = useState(props.name ? props.name : 'New list');
     const [issuePopupShow, setIssuePopupShow] = useState(false);
-    const navigate = useNavigate();
-    const location = useLocation();
-    const axiosPrivate = useAxiosPrivate();
+    const axiosList = useAxiosList();
 
     const removeIssue = async (id, position) => {
-
         props.removeIssue(position);
-        let issue = null;
-
-        try {
-            const response = await axiosPrivate.get('/issue/remove?issueid=' + id);
-
-        } catch (err) {
-            console.log(err);
-            navigate('/login', { state: { from: location }, replace: true });
-        }
+        await axiosList('/issue/remove?issueid=' + id);
     }
 
     const sendUpdateList = () => {
@@ -41,8 +30,9 @@ export default function IssueList(props) {
         });
     }
 
-    const removeList = () => {
-        props.remove(props.listid);
+    const removeList = async () => {
+        props.remove(props.position);
+        await axiosList('/issueList/remove?listid=' + props.listid);
     }
 
     const addIssue = (issue) => {
@@ -53,48 +43,67 @@ export default function IssueList(props) {
         setIssuePopupShow(true);
     }
     return (
-        <div className="issue-list">
-            <div key={'list-name-wrapper'} className="list-name-wrapper">
-                <input className="list-name" onBlur={sendUpdateList} value={listName} placeholder={listName} onChange={(e) => (setListName(e.target.value))}/>
-                <button onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
-            </div>
+        <Draggable
+            draggableId={props.listid + ""}    
+            index={props.position}
+            type="LIST"
+        >
+            {(provided, snapshot) => {
+                return (
+                    <div 
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={{
+                            margin: "0px 10px 0px 0px",
+                            ...provided.draggableProps.style
+                        }}
+                        className="issue-list">
+                        <div key={'list-name-wrapper'} className="list-name-wrapper">
+                            <input className="list-name" onBlur={sendUpdateList} value={listName} placeholder={listName} onChange={(e) => (setListName(e.target.value))}/>
+                            <button onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
+                        </div>
 
-            <div className="list-of-issues-wrapper">
-                <Droppable droppableId={props.position.toString()} key={props.position}>
-                    {(provided, snapshot) => {
-                        return (
-                            <div 
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                                className="list-of-issues">
-                                {props.issues.map((issue, index) => {
+                        <div className="list-of-issues-wrapper">
+                            <Droppable type="ISSUE" droppableId={props.position.toString()} key={props.position}>
+                                {(provided, snapshot) => {
                                     return (
-                                        <IssueListItem
-                                            key={issue.id}
-                                            listid={issue.listid}
-                                            issueid={issue.id}
-                                            position={index}
-                                            name={issue.name}
-                                            description={issue.description}
-                                            remove={() => removeIssue(issue.id, index)}
-                                        />
+                                        <div 
+                                            ref={provided.innerRef}
+                                            {...provided.droppableProps}
+                                            className="list-of-issues">
+                                            {props.issues.map((issue, index) => {
+                                                return (
+                                                    <IssueListItem
+                                                        key={issue.id}
+                                                        listid={issue.listid}
+                                                        issueid={issue.id}
+                                                        position={index}
+                                                        name={issue.name}
+                                                        description={issue.description}
+                                                        remove={() => removeIssue(issue.id, index)}
+                                                    />
+                                                );
+                                            })}
+                                            {provided.placeholder}
+                                        </div>
                                     );
-                                })}
-                                {provided.placeholder}
-                            </div>
-                        );
-                    }}
-                </Droppable>
-            </div>
+                                }}
+                            </Droppable>
+                        </div>
 
-            <button className="new-issue-button" onClick={launchIssuePopup}>New Issue</button>
-            <IssuePopup
-                position={() => {return props.issues.length}}
-                listid={props.listid}
-                onCreated={(issue) => {addIssue(issue)}}
-                show={issuePopupShow}
-                onHide={() => {setIssuePopupShow(false)}}
-            />
-        </div>
+                        <button className="new-issue-button" onClick={launchIssuePopup}><FontAwesomeIcon icon={faPlus}/></button>
+                        <IssuePopup
+                            position={() => {return props.issues.length}}
+                            listid={props.listid}
+                            onCreated={(issue) => {addIssue(issue)}}
+                            show={issuePopupShow}
+                            onHide={() => {setIssuePopupShow(false)}}
+                        />
+                        {provided.placeholder}
+                    </div>
+                );
+            }}
+        </Draggable>
     )
 }
