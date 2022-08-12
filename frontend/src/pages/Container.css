@@ -14,11 +14,10 @@
 }
 
 .container-title {
-    font-size: 24px;
+    font-size: 32px;
     background-color: var(--main-bg);
     color: var(--main-fg);
     border-style: none;
-    outline: 1px solid var(--fg4);
     margin: 2vh;
 }
 
