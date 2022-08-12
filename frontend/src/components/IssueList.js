@@ -14,6 +14,7 @@ import './IssueList.css';
 export default function IssueList(props) {
     
     const [listName, setListName] = useState(props.name ? props.name : 'New list');
+    const [listNameBefore, setListNameBefore] = useState(listName);
     const [issuePopupShow, setIssuePopupShow] = useState(false);
     const myRef = useRef();
     const axiosList = useAxiosList();
@@ -24,6 +25,7 @@ export default function IssueList(props) {
     }
 
     const sendUpdateList = () => {
+        setListNameBefore(listName);
         props.update({
             name: listName,
             id: props.listid,
@@ -45,7 +47,10 @@ export default function IssueList(props) {
     }
 
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter' || e.key === "Escape") {
+        if (e.key === 'Enter') {
+            myRef.current.blur();
+        } else if (e.key === 'Escape') {
+            setListName(listNameBefore);
             myRef.current.blur();
         }
     }
