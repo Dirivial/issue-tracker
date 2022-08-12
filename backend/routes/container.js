@@ -74,8 +74,6 @@ module.exports = function(app) {
         const description = req.body.description;
         const id = req.body.id;
         const position = req.body.position;
-        console.log(name);
-        console.log(position);
 
         db.query('UPDATE container SET name = ?, description = ?, position = ? WHERE id = ?',
             [name, description, position, id],
@@ -84,7 +82,6 @@ module.exports = function(app) {
                     console.log(err);
                     return res.sendStatus(500);
                 } else {
-                    console.log(result);
                     return res.sendStatus(201);
                 }
             });
