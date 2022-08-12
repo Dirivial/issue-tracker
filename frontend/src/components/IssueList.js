@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import TextAreaAuto from 'react-textarea-autosize';
 
-import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import useAxiosList from '../hooks/useAxiosList.js';
 
 import IssuePopup from '../components/IssuePopup.js';

@@ -60,6 +60,7 @@
 
 .NewListBtn {
     width: 12rem;
+    min-width: 12rem;
     padding: 3vh 5vh 3vh 5vh;
     color: var(--fg2);
     background-color: var(--bg2);

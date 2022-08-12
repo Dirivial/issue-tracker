@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
@@ -20,7 +20,7 @@ export default function Container() {
     const sendContainerUpdate = async () => {
         if(!allowUpdate) return;
         try {
-            const response = await axiosPrivate.post('/container/update', {
+            await axiosPrivate.post('/container/update', {
                 name: name,
                 description: desc,
                 id: id,

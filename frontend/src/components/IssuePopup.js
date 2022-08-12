@@ -32,7 +32,7 @@ export default function IssuePopup({sentIssue, position, listid, onCreated, show
 
     useEffect(() => {
         setIssue(sentIssue());
-    }, [show, sentIssue])
+    }, [sentIssue])
 
     useEffect(() => {
         if(issue != null) {

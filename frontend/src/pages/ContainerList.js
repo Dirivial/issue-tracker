@@ -33,7 +33,7 @@ export default function ContainerList() {
 
     const deleteContainer = async (containerid) => {
         try {
-            const response = await axiosPrivate.post('/container/remove',
+            await axiosPrivate.post('/container/remove',
                 {
                     containerid: containerid,
                     userid: auth.userid

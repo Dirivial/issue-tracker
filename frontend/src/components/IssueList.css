@@ -1,6 +1,7 @@
 
 .issue-list {
-    width: 20rem;
+    min-width: 18rem;
+    width: 18rem;
     max-width: 20rem;
     background-color: var(--bg3);
     border-radius: 3px;

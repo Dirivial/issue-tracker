@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
@@ -14,8 +13,6 @@ export default function ListViewer({containerid}) {
     const [state, dispatch] = useListViewerReducer();
     const [listsChanged, setListsChanged] = useState([]);
 
-    const navigate = useNavigate();
-    const location = useLocation();
     const axiosList = useAxiosList();
 
     const createNewList = async () => {
@@ -29,16 +26,6 @@ export default function ListViewer({containerid}) {
         dispatch({type: 'addList', payload: result});
     }
 
-    const syncList = async () => {
-        // Create long list of issues to update
-        let data = []; 
-        listsChanged.forEach(i => {
-            data.push(...state.at(parseInt(i)).issues);
-        });
-        setListsChanged([]);
-        // Send issues to update
-        axiosList('/issue/organize', {issues: data});
-    }
 
     const getLists = async () => {
         const result = await axiosList('/issueList/?containerid=' + containerid);
@@ -92,6 +79,16 @@ export default function ListViewer({containerid}) {
 
     useEffect(() => {
         if(listsChanged.length > 0) {
+            const syncList = async () => {
+                // Create long list of issues to update
+                let data = []; 
+                listsChanged.forEach(i => {
+                    data.push(...state.at(parseInt(i)).issues);
+                });
+                setListsChanged([]);
+                // Send issues to update
+                axiosList('/issue/organize', {issues: data});
+            }
             syncList();
         }
     }, [listsChanged])
