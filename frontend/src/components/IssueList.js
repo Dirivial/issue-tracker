@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,7 @@ export default function IssueList(props) {
     
     const [listName, setListName] = useState(props.name ? props.name : 'New list');
     const [issuePopupShow, setIssuePopupShow] = useState(false);
+    const myRef = useRef();
     const axiosList = useAxiosList();
 
     const removeIssue = async (id, position) => {
@@ -42,6 +43,13 @@ export default function IssueList(props) {
     const launchIssuePopup = () => {
         setIssuePopupShow(true);
     }
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter' || e.key === "Escape") {
+            myRef.current.blur();
+        }
+    }
+
     return (
         <Draggable
             draggableId={props.listid + ""}    
@@ -60,7 +68,7 @@ export default function IssueList(props) {
                         }}
                         className="issue-list">
                         <div key={'list-name-wrapper'} className="list-name-wrapper">
-                            <input className="list-name" onBlur={sendUpdateList} value={listName} placeholder={listName} onChange={(e) => (setListName(e.target.value))}/>
+                            <input ref={myRef} className="list-name" onKeyDown={e => {handleKeyDown(e)}} onBlur={sendUpdateList} value={listName} placeholder={listName} onChange={(e) => (setListName(e.target.value))}/>
                             <button onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
                         </div>
 
