@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import TextAreaAuto from 'react-textarea-autosize';
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import useAxiosList from '../hooks/useAxiosList.js';
@@ -16,7 +17,8 @@ export default function IssueList(props) {
     const [listName, setListName] = useState(props.name ? props.name : 'New list');
     const [listNameBefore, setListNameBefore] = useState(listName);
     const [issuePopupShow, setIssuePopupShow] = useState(false);
-    const myRef = useRef();
+    const [inputTitle, setInputTitle] = useState(false);
+    const myRef = useRef(null);
     const axiosList = useAxiosList();
 
     const removeIssue = async (id, position) => {
@@ -25,6 +27,10 @@ export default function IssueList(props) {
     }
 
     const sendUpdateList = () => {
+        changeTitle(false);
+        if (listName === listNameBefore) return;
+
+        console.log("Sending update");
         setListNameBefore(listName);
         props.update({
             name: listName,
@@ -49,10 +55,21 @@ export default function IssueList(props) {
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             myRef.current.blur();
+            changeTitle(false);
         } else if (e.key === 'Escape') {
             setListName(listNameBefore);
             myRef.current.blur();
+            changeTitle(false);
         }
+    }
+
+    const changeTitle = (value) => {
+        setInputTitle(prev => {
+            if(value != null) {
+                return value;
+            }
+            return !prev;
+        });
     }
 
     return (
@@ -71,9 +88,22 @@ export default function IssueList(props) {
                             margin: "0px 10px 0px 0px",
                             ...provided.draggableProps.style
                         }}
+                        onClick={() => changeTitle(true)}
                         className="issue-list">
                         <div key={'list-name-wrapper'} className="list-name-wrapper">
-                            <input ref={myRef} className="list-name" onKeyDown={e => {handleKeyDown(e)}} onBlur={sendUpdateList} value={listName} placeholder={listName} onChange={(e) => (setListName(e.target.value))}/>
+                            {inputTitle ? (
+                                <TextAreaAuto 
+                                    ref={myRef}
+                                    autoFocus
+                                    className="list-name"
+                                    onKeyDown={e => {handleKeyDown(e)}}
+                                    onBlur={sendUpdateList}
+                                    value={listName}
+                                    spellCheck={false}
+                                    onChange={(e) => (setListName(e.target.value))}/>
+                            ) : (
+                                <h3 className="list-name">{listName}</h3>
+                            )}
                             <button onClick={removeList}><FontAwesomeIcon icon={faX} /></button>
                         </div>
 

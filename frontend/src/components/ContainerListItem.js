@@ -1,28 +1,48 @@
 import { useNavigate } from 'react-router-dom';
 
+import { Draggable } from 'react-beautiful-dnd';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import './ContainerListItem.css';
 
-export default function ContainerListItem(props) {
+export default function ContainerListItem({containerid, name, position}) {
 
     const navigate = useNavigate();
 
     const openContainer = () => {
-        navigate("/containers/" + props.containerid);
+        navigate("/containers/" + containerid);
     }
 
     const deleteContainer = () => {
-        props.deleteContainer(props.containerid);
+        //deleteContainer(containerid);
+        console.log("Tried deleting container with id", containerid);
     }
 
     return (
-        <div className="containerCard">
-            <h4 className="cardTitle">
-                {props.name}
-            </h4>
-            <button className="openBtn cardBtn" onClick={openContainer}>Open</button>
-            <button className="deleteButton cardBtn" onClick={deleteContainer}><FontAwesomeIcon icon={faX} /></button>
-        </div>
+        <Draggable 
+            draggableId={"" + containerid}
+            index={position}
+            type="CONTAINER"
+        >
+            {(provided, snapshot) => {
+                return (
+                    <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={{
+                            ...provided.draggableProps.style
+                        }}
+                        className="containerCard"
+                        onClick={openContainer}
+                    >
+                        <h4 className="cardTitle">
+                            {name}
+                        </h4>
+                    </div>
+                );
+            }}
+        </Draggable>
     )
 }

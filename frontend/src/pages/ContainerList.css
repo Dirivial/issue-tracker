@@ -16,7 +16,6 @@
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 6rem;
-    gap: 15px 10px;
 }
 
 .ContainerGridWrapper {
