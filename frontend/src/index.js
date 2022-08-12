@@ -9,7 +9,6 @@ import './index.css';
 export default function IssueTracker() {
 
     return (
-        <React.StrictMode>
         <BrowserRouter>
             <AuthProvider>
                 <Routes>
@@ -17,7 +16,6 @@ export default function IssueTracker() {
                 </Routes>
             </AuthProvider>
         </BrowserRouter>
-        </React.StrictMode>
     )
 }
 
