@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -16,17 +16,9 @@ export default function IssueList(props) {
     const [listName, setListName] = useState(props.name ? props.name : 'New list');
     const [listNameBefore, setListNameBefore] = useState(listName);
     const [issuePopupShow, setIssuePopupShow] = useState(false);
-    const [inputTitle, setInputTitle] = useState(false);
-    const [issue, setIssue] = useState(null);
+    const [editTitle, setEditTitle] = useState(false);
     const myRef = useRef(null);
     const axiosList = useAxiosList();
-
-    const issueCallback = useCallback(
-        () => {
-            return issue;
-        },
-        [issue]
-    );
 
     const removeIssue = async (id, position) => {
         props.removeIssue(position);
@@ -37,7 +29,6 @@ export default function IssueList(props) {
         changeTitle(false);
         if (listName === listNameBefore) return;
 
-        console.log("Sending update");
         setListNameBefore(listName);
         props.update({
             name: listName,
@@ -59,11 +50,6 @@ export default function IssueList(props) {
         setIssuePopupShow(true);
     }
 
-    const openIssue = (issue) => {
-        setIssue(issue);
-        setIssuePopupShow(true);
-    }
-
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             myRef.current.blur();
@@ -76,7 +62,7 @@ export default function IssueList(props) {
     }
 
     const changeTitle = (value) => {
-        setInputTitle(prev => {
+        setEditTitle(prev => {
             if(value != null) {
                 return value;
             }
@@ -100,10 +86,12 @@ export default function IssueList(props) {
                             margin: "0px 10px 0px 0px",
                             ...provided.draggableProps.style
                         }}
-                        onClick={() => changeTitle(true)}
                         className="issue-list">
-                        <div key={'list-name-wrapper'} className="list-name-wrapper">
-                            {inputTitle ? (
+                        <div key={'list-name-wrapper'} className="list-name-wrapper"
+
+                            onClick={() => changeTitle(true)}
+                        >
+                            {editTitle ? (
                                 <TextAreaAuto 
                                     ref={myRef}
                                     autoFocus
@@ -135,8 +123,8 @@ export default function IssueList(props) {
                                                         issueid={issue.id}
                                                         position={index}
                                                         name={issue.name}
-                                                        open={() => openIssue(issue)}
                                                         description={issue.description}
+                                                        done={issue.done}
                                                         remove={() => removeIssue(issue.id, index)}
                                                     />
                                                 );
@@ -155,7 +143,6 @@ export default function IssueList(props) {
                             onCreated={(issue) => {addIssue(issue)}}
                             show={issuePopupShow}
                             onHide={() => {setIssuePopupShow(false)}}
-                            sentIssue={issueCallback}
                         />
                         {provided.placeholder}
                     </div>

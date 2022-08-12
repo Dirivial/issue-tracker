@@ -65,6 +65,11 @@ export default function ListViewer({containerid}) {
         }
     }
 
+    const updateListName = (list) => {
+        dispatch({type: "updateListName", payload: list});
+        updateList(list);
+    }
+
     const updateList = async (list) => {
         await axiosList('/issueList/update', {
             id: list.id,
@@ -134,7 +139,7 @@ export default function ListViewer({containerid}) {
                                 return (
                                     <IssueList 
                                         key={list.id}
-                                        update={updateList}
+                                        update={updateListName}
                                         remove={removeList}
                                         name={list.name}
                                         listid={list.id}

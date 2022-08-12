@@ -105,7 +105,7 @@ module.exports = function(app) {
         const listid = req.body.listid;
         const issueid = req.body.issueid;
         
-        db.query('UPDATE issue SET (?,?,?,?) WHERE id = (?)',
+        db.query('UPDATE issue SET name = ?, description = ?, position = ?, done = ?, listid = ? WHERE id = (?)',
             [name, description, position, done, listid, issueid],
             (err, result) => {
                 if(err) {

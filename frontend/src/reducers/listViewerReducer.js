@@ -26,6 +26,9 @@ function reducerFunction(state, action) {
             const list = newState.splice(action.payload.source, 1)[0];
             newState.splice(action.payload.destination, 0, list);
             break;
+        case 'updateListName':
+            newState[action.payload.position].name = action.payload.name;
+            break;
         case 'addIssue':
             // Since it's called twice with strict mode, we can't just add it, or errors will occur
             if(!newState[action.payload.listIndex].issues.find(issue => issue.id === action.payload.issue.id)) {

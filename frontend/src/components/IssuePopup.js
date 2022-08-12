@@ -5,24 +5,26 @@ import Modal from 'react-bootstrap/Modal';
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import './IssuePopup.css';
 
-export default function IssuePopup({sentIssue, position, listid, onCreated, show, onHide}) {
+export default function IssuePopup({issue, updateIssue, position, listid, onCreated, show, onHide}) {
 
-    const [issue, setIssue] = useState({});
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
+    const [name, setName] = useState(issue ? issue().name : '');
+    const [description, setDescription] = useState(issue ? issue().description : '');
+    const [done, setDone] = useState(issue ? issue().done : false);
     const axiosPrivate = useAxiosPrivate();
 
-    const submit = async () => {
-
+    const create = async () => {
         try {
-            let myIssue = {...issue};
-            myIssue.name = name;
-            myIssue.description = description;
-            myIssue.position = position();
+            let myIssue = {
+                name: name,
+                description: description,
+                position: position(),
+                listid: listid,
+                done: done
+            };
             const response = await axiosPrivate.post('/issue/create', myIssue);
 
             myIssue.id = response.data.id;
-            onCreated(issue);
+            onCreated(myIssue);
             onHide();
         } catch (err) {
             console.log(err);
@@ -30,16 +32,25 @@ export default function IssuePopup({sentIssue, position, listid, onCreated, show
         }
     }
 
-    useEffect(() => {
-        setIssue(sentIssue());
-    }, [sentIssue])
-
-    useEffect(() => {
-        if(issue != null) {
-            setName(issue.name);
-            setDescription(issue.description);
+    const update = async () => {
+        try {
+            let myIssue = {
+                name: name,
+                description: description,
+                position: issue().position,
+                listid: issue().listid,
+                issueid: issue().issueid,
+                done: issue().done
+            };
+            await axiosPrivate.post('/issue/update', myIssue);
+            
+            updateIssue(myIssue);
+            onHide();
+        } catch (err) {
+            console.log(err);
+            //navigate('/login', { state: { from: location }, replace: true });
         }
-    }, [issue])
+    }
 
     return (
         <div className="NewIssuePopup">
@@ -68,7 +79,7 @@ export default function IssuePopup({sentIssue, position, listid, onCreated, show
                 </Modal.Body>
                 <Modal.Footer bsPrefix="normalBackground customFoot">
                     <button onClick={onHide} className="closeButton">Close</button>
-                    <button onClick={submit} className="saveButton">Save</button>
+                    <button onClick={() => issue ? update() : create()} className="saveButton">Save</button>
                 </Modal.Footer>
             </Modal>
         </div>
