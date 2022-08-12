@@ -128,7 +128,6 @@ export default function ListViewer({containerid}) {
         <DragDropContext onDragEnd={result => onDragEnd({destination: result.destination, source: result.source})}>
             <Droppable droppableId="ListsContainer" direction="horizontal" type="LIST">
                 {(provided, snapshot) => {
-
                     return (
                         <div
                             ref={provided.innerRef}

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import './IssuePopup.css';
 
-export default function IssuePopup({position, listid, onCreated, show, onHide}) {
+export default function IssuePopup({sentIssue, position, listid, onCreated, show, onHide}) {
 
+    const [issue, setIssue] = useState({});
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const axiosPrivate = useAxiosPrivate();
@@ -15,14 +15,13 @@ export default function IssuePopup({position, listid, onCreated, show, onHide}) 
     const submit = async () => {
 
         try {
-            let issue = {
-                name: name,
-                description: description,
-                position: position(),
-                listid: listid
-            }
-            const response = await axiosPrivate.post('/issue/create', issue);
-            issue.id = response.data.id;
+            let myIssue = {...issue};
+            myIssue.name = name;
+            myIssue.description = description;
+            myIssue.position = position();
+            const response = await axiosPrivate.post('/issue/create', myIssue);
+
+            myIssue.id = response.data.id;
             onCreated(issue);
             onHide();
         } catch (err) {
@@ -31,6 +30,16 @@ export default function IssuePopup({position, listid, onCreated, show, onHide}) 
         }
     }
 
+    useEffect(() => {
+        setIssue(sentIssue());
+    }, [show, sentIssue])
+
+    useEffect(() => {
+        if(issue != null) {
+            setName(issue.name);
+            setDescription(issue.description);
+        }
+    }, [issue])
 
     return (
         <div className="NewIssuePopup">
@@ -54,7 +63,7 @@ export default function IssuePopup({position, listid, onCreated, show, onHide}) 
 
                     <Form.Group className="issueDescriptionForm" controlId="formDescription">
                         <Form.Label className="float-left">Description</Form.Label>
-                        <Form.Control type="textarea" value={description} placeholder="Description" onChange={e => {setDescription(e.target.value)}}/>
+                        <textarea value={description} placeholder="Description" onChange={e => {setDescription(e.target.value)}}/>
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer bsPrefix="normalBackground customFoot">

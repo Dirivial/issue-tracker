@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -18,8 +18,16 @@ export default function IssueList(props) {
     const [listNameBefore, setListNameBefore] = useState(listName);
     const [issuePopupShow, setIssuePopupShow] = useState(false);
     const [inputTitle, setInputTitle] = useState(false);
+    const [issue, setIssue] = useState(null);
     const myRef = useRef(null);
     const axiosList = useAxiosList();
+
+    const issueCallback = useCallback(
+        () => {
+            return issue;
+        },
+        [issue]
+    );
 
     const removeIssue = async (id, position) => {
         props.removeIssue(position);
@@ -52,6 +60,11 @@ export default function IssueList(props) {
         setIssuePopupShow(true);
     }
 
+    const openIssue = (issue) => {
+        setIssue(issue);
+        setIssuePopupShow(true);
+    }
+
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             myRef.current.blur();
@@ -74,7 +87,7 @@ export default function IssueList(props) {
 
     return (
         <Draggable
-            draggableId={props.listid + ""}    
+            draggableId={"List" + props.listid}    
             index={props.position}
             type="LIST"
         >
@@ -123,6 +136,7 @@ export default function IssueList(props) {
                                                         issueid={issue.id}
                                                         position={index}
                                                         name={issue.name}
+                                                        open={() => openIssue(issue)}
                                                         description={issue.description}
                                                         remove={() => removeIssue(issue.id, index)}
                                                     />
@@ -142,6 +156,7 @@ export default function IssueList(props) {
                             onCreated={(issue) => {addIssue(issue)}}
                             show={issuePopupShow}
                             onHide={() => {setIssuePopupShow(false)}}
+                            sentIssue={issueCallback}
                         />
                         {provided.placeholder}
                     </div>

@@ -6,7 +6,7 @@ import { faEllipsisVertical, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 import "./IssueListItem.css";
 
-export default function IssueListItem({name, remove, issueid, position, description}) {
+export default function IssueListItem({open, name, remove, issueid, position, description}) {
 
     const [issueName, setIssueName] = useState(name);
     
@@ -14,10 +14,14 @@ export default function IssueListItem({name, remove, issueid, position, descript
         remove(position);
     }
 
+    const openIssue = () => {
+        open();
+    }
+
     return (
         <Draggable
             key={issueid}
-            draggableId={"" + issueid}
+            draggableId={"Issue" + issueid}
             index={position}
             type="ISSUE"
         >
@@ -31,7 +35,7 @@ export default function IssueListItem({name, remove, issueid, position, descript
                         style={{
                             ...provided.draggableProps.style
                         }}
-                        
+                        onClick={openIssue}
                     >
                         <h4 className="issue-name">{issueName}</h4>
                         <button onClick={removeIssue}><FontAwesomeIcon icon={faEllipsisVertical} /></button>
