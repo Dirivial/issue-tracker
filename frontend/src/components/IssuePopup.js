@@ -45,7 +45,6 @@ export default function IssuePopup({issue, updateIssue, position, listid, onCrea
             await axiosPrivate.post('/issue/update', myIssue);
             
             updateIssue(myIssue);
-            onHide();
         } catch (err) {
             console.log(err);
             //navigate('/login', { state: { from: location }, replace: true });
@@ -64,7 +63,7 @@ export default function IssuePopup({issue, updateIssue, position, listid, onCrea
                 contentClassName="normalBackground"
                 >
                 <div className="modalHeader normalBackground">
-                    <h2 className="issueHeader">New Issue</h2>
+                    <h2 className="issueHeader">{issue ? "Edit Issue" : "New Issue"}</h2>
                 </div>
                 <Modal.Body className="normalBackground" >
                     <Form.Group className="issueNameForm" controlId="formName">
@@ -79,7 +78,7 @@ export default function IssuePopup({issue, updateIssue, position, listid, onCrea
                 </Modal.Body>
                 <Modal.Footer bsPrefix="normalBackground customFoot">
                     <button onClick={onHide} className="closeButton">Close</button>
-                    <button onClick={() => issue ? update() : create()} className="saveButton">Save</button>
+                    <button onClick={() => {issue ? update() : create()}} className="saveButton">Save</button>
                 </Modal.Footer>
             </Modal>
         </div>

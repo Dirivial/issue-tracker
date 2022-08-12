@@ -33,7 +33,9 @@ export default function IssueListItem({name, remove, issueid, position, descript
     }
 
     const updateIssue = (updatedIssue) => {
+        console.log(updatedIssue);
         setIssue(updatedIssue)
+        setIssuePopupShow(false);
     }
 
     return (
@@ -56,7 +58,7 @@ export default function IssueListItem({name, remove, issueid, position, descript
                             }}
                             onClick={() => openModal()}
                         >
-                            <h4 className="issue-name">{name}</h4>
+                            <h4 className="issue-name">{issue.name}</h4>
                             <button onClick={removeIssue}><FontAwesomeIcon icon={faEllipsisVertical} /></button>
                             {provided.placeholder}
                         </div>
@@ -65,7 +67,7 @@ export default function IssueListItem({name, remove, issueid, position, descript
             </Draggable>
             <IssuePopup 
                 issue={() => issue}
-                updateIssue={(updatedIssue) => updateIssue(updateIssue)}
+                updateIssue={(updatedIssue) => updateIssue(updatedIssue)}
                 show={issuePopupShow}
                 onHide={closeModal}
                 />
