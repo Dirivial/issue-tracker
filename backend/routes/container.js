@@ -72,15 +72,19 @@ module.exports = function(app) {
 
         const name = req.body.name;
         const description = req.body.description;
-        const id = req.body.containerid;
+        const id = req.body.id;
+        const position = req.body.position;
+        console.log(name);
+        console.log(position);
 
-        db.query('UPDATE container SET name = ?, description = ? WHERE id = ?',
-            [name, description, id],
+        db.query('UPDATE container SET name = ?, description = ?, position = ? WHERE id = ?',
+            [name, description, position, id],
             (err, result) => {
                 if(err) {
                     console.log(err);
                     return res.sendStatus(500);
                 } else {
+                    console.log(result);
                     return res.sendStatus(201);
                 }
             });
