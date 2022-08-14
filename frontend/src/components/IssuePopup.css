@@ -46,5 +46,77 @@
 
 .issueHeader {
     padding: 1vh;
+    text-align: center;
     border-bottom: 2px solid var(--main-orange);
 }
+
+.modalBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.modalBodyGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+}
+
+.nameLabel {
+}
+
+.modalInput {
+    width: 50%;
+    font-size: 18px;
+    background-color: var(--bg3);
+    color: var(--main-fg);
+    border-style: none;
+    border-radius: 2px;
+    padding: 0.5vh;
+}
+
+.modalInput:focus {
+    outline: 2px solid var(--fg4);
+}
+
+.modalTextArea {
+    width: 100%;
+    min-heigth: 4rem;
+}
+
+.renderedMarkdown {
+    width: 100%;
+}
+
+.renderedMarkdown > p {
+    text-align: left;
+}
+
+.renderedMarkdown > h1 {
+    text-align: left;
+    font-size: 28px;
+}
+
+.renderedMarkdown > h2 {
+    text-align: left;
+    font-size: 24px;
+}
+
+.renderedMarkdown > h3 {
+    text-align: left;
+    font-size: 20px;
+}
+
+.markdownWrapper {
+    width: 100%;
+    min-height: 2vh;
+    font-size: 18px;
+    padding: 1vh;
+    border: 1px solid var(--main-fg);
+}
+
+
+

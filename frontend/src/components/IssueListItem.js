@@ -33,7 +33,6 @@ export default function IssueListItem({name, remove, issueid, position, descript
     }
 
     const updateIssue = (updatedIssue) => {
-        console.log(updatedIssue);
         setIssue(updatedIssue)
         setIssuePopupShow(false);
     }
