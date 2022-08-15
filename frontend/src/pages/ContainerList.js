@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
@@ -17,19 +17,23 @@ export default function ContainerList() {
     const [containerData, setContainerData] = useState({});
     const axiosPrivate = useAxiosPrivate();
 
-    const getContainers = async () => {
-        try {
-            const response = await axiosPrivate.get('/container/my-containers', { 
-                    withCredentials: true
-                });
-            let data = response?.data?.containers;
-            data.sort((first, second) => first.position < second.position ? -1:1);
-            setContainerData(data);
 
-        } catch (err) {
-            navigate('/login', { state: { from: location }, replace: true });
+    const getContainersCallback = useCallback(() => {
+        const getContainers = async () => {
+            try {
+                const response = await axiosPrivate.get('/container/my-containers', { 
+                        withCredentials: true
+                    });
+                let data = response?.data?.containers;
+                data.sort((first, second) => first.position < second.position ? -1:1);
+                setContainerData(data);
+
+            } catch (err) {
+                navigate('/login', { state: { from: location }, replace: true });
+            }
         }
-    }
+        getContainers();
+    }, [axiosPrivate, navigate, location])
 
     const deleteContainer = async (containerid) => {
         try {
@@ -38,7 +42,7 @@ export default function ContainerList() {
                     containerid: containerid,
                     userid: auth.userid
                 });
-            getContainers();
+            getContainersCallback();
         } catch (err) {
             navigate('/login', { state: { from: location }, replace: true });
         }
@@ -53,8 +57,8 @@ export default function ContainerList() {
     }
 
     useEffect(() => {
-        getContainers();
-    }, []);
+        getContainersCallback();
+    }, [getContainersCallback]);
 
     const onDragEnd = (result) => {
         if(!result) return;
@@ -95,7 +99,7 @@ export default function ContainerList() {
                                     );
                                 })}
                                 {provided.placeholder}
-                                <NewContainerButton new={getContainers}/>
+                                <NewContainerButton new={getContainersCallback}/>
                             </div>
                         );
                     }}

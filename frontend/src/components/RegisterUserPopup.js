@@ -18,7 +18,7 @@ export default function RegisterUserPopup(props) {
 
     async function submitInformation() {
         try {
-            const response = await axios.post('/register', 
+            await axios.post('/register', 
                 {
                     mail,
                     username,

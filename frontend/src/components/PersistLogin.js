@@ -24,7 +24,7 @@ export default function PersistLogin() {
         !auth?.token && persist ? verifyRefreshToken() : setIsLoading(false);
 
         return () => isMounted = false;
-    }, []);
+    }, [auth?.token, persist, refresh]);
 
     return (
         <>

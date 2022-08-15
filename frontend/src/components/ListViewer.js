@@ -27,28 +27,6 @@ export default function ListViewer({containerid}) {
     }
 
 
-    const getLists = async () => {
-        const result = await axiosList('/issueList/?containerid=' + containerid);
-        if(result) {
-            let ids = [];
-            result.forEach(e => ids.push(e.id));
-
-            const result2 = await axiosList('/issue/multi', {
-                listids: ids
-            });
-
-            if(result2) {
-                let data = result;
-
-                data.forEach(list => {
-                    list.issues = result2.filter(issue => issue.listid === list.id);
-                    list.issues.sort((issueA, issueB) => issueA.position > issueB.position ? 1:-1);
-                })
-                dispatch({type: 'load', payload: data});
-            }
-        }
-    }
-
     const removeList = async (position) => {
         let allData = [...state];
         for (let i = position+1; i < allData.length; i++) {
@@ -79,8 +57,30 @@ export default function ListViewer({containerid}) {
     }
 
     useEffect(() => {
+        const getLists = async () => {
+            const result = await axiosList('/issueList/?containerid=' + containerid);
+            if(result) {
+                let ids = [];
+                result.forEach(e => ids.push(e.id));
+
+                const result2 = await axiosList('/issue/multi', {
+                    listids: ids
+                });
+
+                if(result2) {
+                    let data = result;
+
+                    data.forEach(list => {
+                        list.issues = result2.filter(issue => issue.listid === list.id);
+                        list.issues.sort((issueA, issueB) => issueA.position > issueB.position ? 1:-1);
+                    })
+                    dispatch({type: 'load', payload: data});
+                }
+            }
+        }
+
         getLists();
-    }, []);
+    }, [axiosList, containerid, dispatch]);
 
     useEffect(() => {
         if(listsChanged.length > 0) {
@@ -96,7 +96,7 @@ export default function ListViewer({containerid}) {
             }
             syncList();
         }
-    }, [listsChanged])
+    }, [listsChanged, axiosList, state])
 
     const onDragEnd = (result) => {
         if(!result.destination) return;

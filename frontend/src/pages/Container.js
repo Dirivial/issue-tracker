@@ -5,7 +5,6 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import ListViewer from '../components/ListViewer.js';
 import './Container.css';
 
-
 export default function Container() {
 
     const [data, setData] = useState({});
@@ -33,26 +32,26 @@ export default function Container() {
         }
     }
 
-    const getContainerInfo = async () => {
-        try {
-            const response = await axiosPrivate.get('/container/get?id=' + id);
-            setData(response?.data);
-            setName(response?.data?.name);
-            setDesc(response?.data?.description);
-
-        } catch (err) {
-            console.log(err);
-            navigate('/login', { state: { from: location }, replace: true });
-        }
-    }
 
     useEffect(() => {
         setAllowUpdate(true);
     }, [name, desc])
 
     useEffect(() => {
+        const getContainerInfo = async () => {
+            try {
+                const response = await axiosPrivate.get('/container/get?id=' + id);
+                setData(response?.data);
+                setName(response?.data?.name);
+                setDesc(response?.data?.description);
+
+            } catch (err) {
+                console.log(err);
+                navigate('/login', { state: { from: location }, replace: true });
+            }
+        }
         getContainerInfo();
-    }, [])
+    }, [axiosPrivate, navigate, id, location])
 
     return (
     <div className="user-container">
