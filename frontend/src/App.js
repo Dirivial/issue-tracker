@@ -8,7 +8,7 @@ import Container from './pages/Container';
 import Login from './pages/Login';
 
 // Components
-import Navbar from './components/navbar.js';
+import Navbar from './components/Navbar.js';
 import RequireAuth from './components/RequireAuth.js';
 import PersistLogin from './components/PersistLogin.js';
 
