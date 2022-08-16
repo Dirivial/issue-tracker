@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
@@ -56,7 +56,7 @@ export default function ListViewer({containerid}) {
         })
     }
 
-    useEffect(() => {
+    const getListsCallback = useCallback(() => {
         const getLists = async () => {
             const result = await axiosList('/issueList/?containerid=' + containerid);
             if(result) {
@@ -80,7 +80,11 @@ export default function ListViewer({containerid}) {
         }
 
         getLists();
-    }, [axiosList, containerid, dispatch]);
+    }, [dispatch, containerid])
+
+    useEffect(() => {
+        getListsCallback();
+    }, [getListsCallback]);
 
     useEffect(() => {
         if(listsChanged.length > 0) {

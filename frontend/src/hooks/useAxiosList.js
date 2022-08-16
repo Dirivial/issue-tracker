@@ -11,7 +11,7 @@ export default function useAxiosList() {
 
         try {
             if (payload) {
-                const response = await axiosPrivate.post(path, payload);
+                const response = await axiosPrivate.post(path, payload, {withCredentials: true});
                 return response?.data;
             } else {
                 const response = await axiosPrivate.get(path);

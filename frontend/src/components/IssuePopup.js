@@ -79,17 +79,32 @@ export default function IssuePopup({issue, updateIssue, position, listid, onCrea
                     <h2 className="issueHeader">{issue ? "Edit Issue" : "New Issue"}</h2>
                 </div>
                 <Modal.Body className="normalBackground modalBody" >
-                    <div className="modalBodyGroup issueNameForm">
-                        <Form.Label className="">Name</Form.Label>
-                        <input type="text" className="modalInput" value={name} placeholder="Name" onChange={e => {setName(e.target.value)}}/>
+                    <div className="specialModalGroup">
+                        <div className="modalBodyGroup issueNameForm">
+                            <Form.Label className="">Name</Form.Label>
+                            <input type="text" className="modalInput" value={name} placeholder="Name" onChange={e => {setName(e.target.value)}}/>
+                        </div>
+                        <div className="modalBodyGroup">
+                            <Form.Label>Done</Form.Label>
+                            <input type="checkbox" onChange={e => {setDone(e.target.value)}}/>
+                        </div>
                     </div>
 
                     <br />
                     <div onClick={null} className="modalBodyGroup">
                         <Form.Label className="">Description</Form.Label>
                         {renderMarkdown ? 
-                            <div onClick={editMarkdown} className="markdownWrapper"><ReactMarkdown className="renderedMarkdown" children={description} remarkPlugins={[RemarkGFM]}/></div> : 
-                            <TextAreaAuto ref={textAreaRef} onBlur={() => setRenderMarkdown(true)} className="modalTextArea" value={description} placeholder="Description" onChange={e => {setDescription(e.target.value)}}/>
+                            <div onClick={editMarkdown} className="markdownWrapper markdownArea">
+                                <ReactMarkdown 
+                                className="renderedMarkdown"
+                                children={description}
+                                components={{
+                                    input: (props) => {
+                                        return <input {...props} className="mycheckbox"/>}
+                                }} 
+                                remarkPlugins={[RemarkGFM]}/>
+                            </div> : 
+                            <TextAreaAuto ref={textAreaRef} onBlur={() => setRenderMarkdown(true)} className="modalTextArea markdownArea" value={description} placeholder="Description" onChange={e => {setDescription(e.target.value)}}/>
                         }
                     </div>
                 </Modal.Body>

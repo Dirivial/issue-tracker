@@ -65,11 +65,18 @@
     width: 90%;
 }
 
-.nameLabel {
+.markdownArea {
+    max-height: 50vh;
+    overflow-y: scroll;
+}
+
+.specialModalGroup {
+    display: flex;
+    width: 90%;
 }
 
 .modalInput {
-    width: 50%;
+    width: 80%;
     font-size: 18px;
     background-color: var(--bg3);
     color: var(--main-fg);
@@ -84,7 +91,10 @@
 
 .modalTextArea {
     width: 100%;
-    min-heigth: 4rem;
+    min-height: 4rem;
+    font-size: 18px;
+    background-color: var(--bg2);
+    color: var(--main-fg);
 }
 
 .renderedMarkdown {
