@@ -128,5 +128,10 @@
     border: 1px solid var(--main-fg);
 }
 
+.task-list-item {
+    display: flex;
+    align-items: center;
+    column-gap: 1vh;
+}
 
 

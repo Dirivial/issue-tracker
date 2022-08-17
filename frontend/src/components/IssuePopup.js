@@ -5,6 +5,7 @@ import TextAreaAuto from 'react-textarea-autosize';
 import ReactMarkdown from 'react-markdown';
 import RemarkGFM from 'remark-gfm';
 
+import ButtonCheckbox from './ButtonCheckbox.js';
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import './IssuePopup.css';
 
@@ -45,7 +46,7 @@ export default function IssuePopup({issue, updateIssue, position, listid, onCrea
                 position: issue().position,
                 listid: issue().listid,
                 issueid: issue().issueid,
-                done: issue().done
+                done: done
             };
             await axiosPrivate.post('/issue/update', myIssue);
             
@@ -55,6 +56,36 @@ export default function IssuePopup({issue, updateIssue, position, listid, onCrea
             //navigate('/login', { state: { from: location }, replace: true });
         }
     }
+
+    // Create custom ul aswell which counts the amount of "minitasks"
+    // The custom list items to use for the rendered markdown, this allows for buttons instead of checkboxes
+    const customListItem = (props) => {
+        if(props.checked !== null) {
+            return (
+                <li className="task-list-item">
+                    <ButtonCheckbox onClick={() => editMarkdownCheckbox(props.sourcePosition.start.line-1, props.checked)} isChecked={props.checked} className="mycheckbox" />
+                    {props.children.filter((_, index) => index > 0)}
+                </li>
+            );
+        }
+        return (<li {...props}/>);
+    }
+
+    // Finds where the checkbox should be in the description and replaces it with the "opposite" (true -> false, false -> true)
+    const editMarkdownCheckbox = (lineNumber, checked) => {
+        let newDescription = description.split('\n');
+        if(checked) {
+            newDescription[lineNumber] = newDescription[lineNumber].replace(
+                "* [x]", "* [ ]"
+            );
+        } else {
+            newDescription[lineNumber] = newDescription[lineNumber].replace(
+                "* [ ]", "* [x]"
+            );
+        }
+        newDescription = newDescription.map(line => line + '\n');
+        setDescription(String.prototype.concat(...newDescription));
+    } 
 
     const editMarkdown = () => {
         setRenderMarkdown(false);
@@ -78,40 +109,42 @@ export default function IssuePopup({issue, updateIssue, position, listid, onCrea
                 <div className="modalHeader normalBackground">
                     <h2 className="issueHeader">{issue ? "Edit Issue" : "New Issue"}</h2>
                 </div>
-                <Modal.Body className="normalBackground modalBody" >
-                    <div className="specialModalGroup">
-                        <div className="modalBodyGroup issueNameForm">
-                            <Form.Label className="">Name</Form.Label>
-                            <input type="text" className="modalInput" value={name} placeholder="Name" onChange={e => {setName(e.target.value)}}/>
+                <Form>
+                    <Modal.Body className="normalBackground modalBody" >
+                        <div className="specialModalGroup">
+                            <div className="modalBodyGroup issueNameForm">
+                                <Form.Label className="">Name</Form.Label>
+                                <input type="text" className="modalInput" value={name} placeholder="Name" onChange={e => {setName(e.target.value)}}/>
+                            </div>
+                            <div className="modalBodyGroup">
+                                <Form.Label>Done</Form.Label>
+                                <ButtonCheckbox isChecked={done} onClick={() => {console.log(done);setDone(prev => !prev)}}/>
+                            </div>
                         </div>
-                        <div className="modalBodyGroup">
-                            <Form.Label>Done</Form.Label>
-                            <input type="checkbox" onChange={e => {setDone(e.target.value)}}/>
-                        </div>
-                    </div>
 
-                    <br />
-                    <div onClick={null} className="modalBodyGroup">
-                        <Form.Label className="">Description</Form.Label>
-                        {renderMarkdown ? 
-                            <div onClick={editMarkdown} className="markdownWrapper markdownArea">
-                                <ReactMarkdown 
-                                className="renderedMarkdown"
-                                children={description}
-                                components={{
-                                    input: (props) => {
-                                        return <input {...props} className="mycheckbox"/>}
-                                }} 
-                                remarkPlugins={[RemarkGFM]}/>
-                            </div> : 
-                            <TextAreaAuto ref={textAreaRef} onBlur={() => setRenderMarkdown(true)} className="modalTextArea markdownArea" value={description} placeholder="Description" onChange={e => {setDescription(e.target.value)}}/>
-                        }
-                    </div>
-                </Modal.Body>
-                <Modal.Footer bsPrefix="normalBackground customFoot">
-                    <button onClick={onHide} className="closeButton">Close</button>
-                    <button onClick={() => {issue ? update() : create()}} className="saveButton">Save</button>
-                </Modal.Footer>
+                        <br />
+                        <div onClick={null} className="modalBodyGroup">
+                            <Form.Label className="">Description <button onClick={editMarkdown} className="saveButton">Edit</button></Form.Label>
+                            {renderMarkdown ? 
+                                <div className="markdownWrapper markdownArea">
+                                    <ReactMarkdown 
+                                    className="renderedMarkdown"
+                                    children={description}
+                                    rawSourcePos={true}
+                                    components={{
+                                        li: customListItem
+                                    }} 
+                                    remarkPlugins={[RemarkGFM]}/>
+                                </div> : 
+                                <TextAreaAuto ref={textAreaRef} onBlur={() => setRenderMarkdown(true)} className="modalTextArea markdownArea" value={description} placeholder="Description" onChange={e => {setDescription(e.target.value)}}/>
+                            }
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer bsPrefix="normalBackground customFoot">
+                        <button onClick={onHide} className="closeButton">Close</button>
+                        <button type="submit" onClick={() => {issue ? update() : create()}} className="saveButton">Save</button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
         </div>
     )
