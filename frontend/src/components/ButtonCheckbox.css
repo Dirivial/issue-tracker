@@ -1,0 +1,36 @@
+.buttonCheckbox {
+    height: 2vh;
+    width: 2vh;
+
+    border-radius: 3px;
+    border-style: none;
+}
+
+.checkedButton {
+    background-color: var(--accent-orange);
+    transition: background-color 0.2s;
+
+    display: flex;
+    justify-content: center;
+}
+
+.checkedButton:hover {
+    background-color: var(--main-orange);
+    transition: background-color 0.2s;
+}
+
+.uncheckedButton {
+    padding: 1vh 1vh 1vh 1vh;
+    background-color: var(--fg1);
+    transition: background-color 0.2s;
+}
+
+.uncheckedButton:hover {
+    background-color: var(--fg3);
+    transition: background-color 0.2s;
+}
+
+.checkedIcon {
+    height: 1.8vh;
+    width: 1.8vh;
+}
