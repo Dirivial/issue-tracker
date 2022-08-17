@@ -12,7 +12,6 @@
 
 .issue-list-item > button {
     color: var(--fg2);
-    heigth: 100%;
     background-color: var(--main-bg-soft);
     transition: background-color 0.2s;
     border-radius: 2px;
@@ -33,6 +32,7 @@
     margin-top: 1vh;
     margin-left: 1vh;
     max-width: 14rem;
+    min-height: 3vh;
     overflow: hidden;
 }
 

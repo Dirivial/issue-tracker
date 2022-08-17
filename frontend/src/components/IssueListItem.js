@@ -57,7 +57,7 @@ export default function IssueListItem({name, remove, issueid, position, descript
                             }}
                             onClick={() => openModal()}
                         >
-                            <h4 className="issue-name">{issue.name}</h4>
+                            <h4 className="issue-name">{issue.done ? <s>{issue.name}</s> : issue.name}</h4>
                             <button onClick={removeIssue}><FontAwesomeIcon icon={faEllipsisVertical} /></button>
                             {provided.placeholder}
                         </div>
