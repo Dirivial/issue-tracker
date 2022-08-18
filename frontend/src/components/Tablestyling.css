@@ -1,0 +1,15 @@
+th {
+    border: 1px solid white;
+    padding: 1vh;
+    margin: 0.2vh;
+}
+
+td {
+    border-left: 1px solid white;
+    border-bottom: 1px dotted white;
+}
+
+tbody {
+    border: 1px solid white;
+}
+
