@@ -1,26 +1,26 @@
 .ContainerList {
-    color: var(--main-fg);
-    margin-top: 5vh;
+  color: var(--main-fg);
+  margin-top: 5vh;
 
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .ContainerListHeader {
-    padding-top: 3vh;
-    text-align: center;
+  padding-top: 3vh;
+  text-align: center;
 }
 
 .ContainerGrid {
-    width: 80%;
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 6rem;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 6rem;
 }
 
 .ContainerGridWrapper {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
 }

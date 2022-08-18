@@ -1,82 +1,81 @@
-
 .issue-list {
-    min-width: 18rem;
-    width: 18rem;
-    max-width: 20rem;
-    background-color: var(--bg3);
-    border-radius: 3px;
-    padding: 2px;
+  min-width: 18rem;
+  width: 18rem;
+  max-width: 20rem;
+  background-color: var(--bg3);
+  border-radius: 3px;
+  padding: 2px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .list-name-wrapper {
-    border-bottom-style: solid;
-    border-color: var(--main-orange);
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+  border-bottom-style: solid;
+  border-color: var(--main-orange);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 .list-name {
-    background-color: var(--bg3);
-    color: var(--main-fg);
-    border-style: none;
-    max-width: 13rem;
-    resize: none;
-    overflow: hidden;
+  background-color: var(--bg3);
+  color: var(--main-fg);
+  border-style: none;
+  max-width: 13rem;
+  resize: none;
+  overflow: hidden;
 
-    font-size: 18px;
+  font-size: 18px;
 
-    margin: 1vh 1vh 1vh 1vh;
+  margin: 1vh 1vh 1vh 1vh;
 }
 
 .list-name::placeholder {
-    opacity: 1;
-    color: var(--main-fg);
+  opacity: 1;
+  color: var(--main-fg);
 }
 
 .list-name:focus {
-    outline: 2px solid var(--fg4);
+  outline: 2px solid var(--fg4);
 }
 
 .list-of-issues-wrapper {
-    min-height: 1vh;
+  min-height: 1vh;
 }
 
 .list-of-issues {
-    padding-top: 3px;
-    min-height: 1.5vh;
+  padding-top: 3px;
+  min-height: 1.5vh;
 }
 
 .new-issue-button {
-    align-self: center;
-    width: 100%;
-    padding: 1vh 0vh 1vh 0vh;
-    color: var(--fg2);
-    background-color: var(--bg1);
-    transition: background-color 0.2s;
-    border-radius: 3px;
-    border-style: none;
+  align-self: center;
+  width: 100%;
+  padding: 1vh 0vh 1vh 0vh;
+  color: var(--fg2);
+  background-color: var(--bg1);
+  transition: background-color 0.2s;
+  border-radius: 3px;
+  border-style: none;
 }
 
 .new-issue-button:hover {
-    background-color: var(--main-bg-hard);
-    transition: background-color 0.2s;
+  background-color: var(--main-bg-hard);
+  transition: background-color 0.2s;
 }
 
 .list-name-wrapper > button {
-    color: var(--fg2);
-    background-color: var(--bg2);
-    transition: background-color 0.2s;
-    margin: 0 1vh 0 0;
-    border-radius: 3px;
-    border-style: none;
+  color: var(--fg2);
+  background-color: var(--bg2);
+  transition: background-color 0.2s;
+  margin: 0 1vh 0 0;
+  border-radius: 3px;
+  border-style: none;
 }
 
 .list-name-wrapper > button:hover {
-    background-color: var(--bg1);
-    transition: background-color 0.2s;
+  background-color: var(--bg1);
+  transition: background-color 0.2s;
 }

@@ -1,137 +1,135 @@
 .customFoot {
-    display: flex;
-    justify-content: flex-end;
-    row-gap: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  row-gap: 1rem;
 
-    padding: 10px;
-    margin: 0px;
-    width: 100%;
-    height: 100%;
+  padding: 10px;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
 }
 
 .closeButton {
-    margin-right: 1vh;
-    padding: 0.5vh;
-    color: var(--main-bg-hard);
-    background-color: var(--accent-red);
-    transition: background-color 0.2s;
-    border-radius: 3px;
-    border-style: none;
+  margin-right: 1vh;
+  padding: 0.5vh;
+  color: var(--main-bg-hard);
+  background-color: var(--accent-red);
+  transition: background-color 0.2s;
+  border-radius: 3px;
+  border-style: none;
 }
 
 .closeButton:hover {
-    background-color: var(--main-red);
-    transition: background-color 0.2s;
+  background-color: var(--main-red);
+  transition: background-color 0.2s;
 }
 
 .saveButton {
-    margin-right: 1vh;
-    padding: 0.5vh;
-    color: var(--main-bg-hard);
-    background-color: var(--accent-orange);
-    transition: background-color 0.2s;
-    border-radius: 3px;
-    border-style: none;
+  margin-right: 1vh;
+  padding: 0.5vh;
+  color: var(--main-bg-hard);
+  background-color: var(--accent-orange);
+  transition: background-color 0.2s;
+  border-radius: 3px;
+  border-style: none;
 }
 
 .saveButton:hover {
-    background-color: var(--main-orange);
-    transition: background-color 0.2s;
+  background-color: var(--main-orange);
+  transition: background-color 0.2s;
 }
 
 .normalBackground {
-    background-color: var(--bg2);
-    color: var(--fg1);
+  background-color: var(--bg2);
+  color: var(--fg1);
 }
 
 .issueHeader {
-    padding: 1vh;
-    text-align: center;
-    border-bottom: 2px solid var(--main-orange);
+  padding: 1vh;
+  text-align: center;
+  border-bottom: 2px solid var(--main-orange);
 }
 
 .modalBody {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .modalBodyGroup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
 }
 
 .markdownArea {
-    max-height: 50vh;
-    overflow-y: scroll;
+  max-height: 50vh;
+  overflow-y: scroll;
 }
 
 .specialModalGroup {
-    display: flex;
-    width: 90%;
+  display: flex;
+  width: 90%;
 }
 
 .modalInput {
-    width: 80%;
-    font-size: 18px;
-    background-color: var(--bg3);
-    color: var(--main-fg);
-    border-style: none;
-    border-radius: 2px;
-    padding: 0.5vh;
+  width: 80%;
+  font-size: 18px;
+  background-color: var(--bg3);
+  color: var(--main-fg);
+  border-style: none;
+  border-radius: 2px;
+  padding: 0.5vh;
 }
 
 .modalInput:focus {
-    outline: 2px solid var(--fg4);
+  outline: 2px solid var(--fg4);
 }
 
 .modalTextArea {
-    width: 100%;
-    min-height: 4rem;
-    font-size: 18px;
-    background-color: var(--bg2);
-    color: var(--main-fg);
+  width: 100%;
+  min-height: 4rem;
+  font-size: 18px;
+  background-color: var(--bg2);
+  color: var(--main-fg);
 }
 
 .renderedMarkdown {
-    width: 100%;
+  width: 100%;
 }
 
 .renderedMarkdown > p {
-    text-align: left;
+  text-align: left;
 }
 
 .renderedMarkdown > h1 {
-    text-align: left;
-    font-size: 28px;
+  text-align: left;
+  font-size: 28px;
 }
 
 .renderedMarkdown > h2 {
-    text-align: left;
-    font-size: 24px;
+  text-align: left;
+  font-size: 24px;
 }
 
 .renderedMarkdown > h3 {
-    text-align: left;
-    font-size: 20px;
+  text-align: left;
+  font-size: 20px;
 }
 
 .markdownWrapper {
-    width: 100%;
-    min-height: 2vh;
-    font-size: 18px;
-    padding: 1vh;
-    border: 1px solid var(--main-fg);
+  width: 100%;
+  min-height: 2vh;
+  font-size: 18px;
+  padding: 1vh;
+  border: 1px solid var(--main-fg);
 }
 
 .task-list-item {
-    display: flex;
-    align-items: center;
-    column-gap: 1vh;
+  display: flex;
+  align-items: center;
+  column-gap: 1vh;
 }
-
-

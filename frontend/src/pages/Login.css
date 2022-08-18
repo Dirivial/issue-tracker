@@ -1,43 +1,39 @@
-
 .login {
-    color: var(--main-fg);
+  color: var(--main-fg);
 }
 
 .loginFormWrapper {
-    background-color: #504945;
-    padding: 30px 70px 30px 70px;
-    border-radius: 3px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #504945;
+  padding: 30px 70px 30px 70px;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .loginform-thing {
-    padding-top: 3vh;
-    display: flex;
-    justify-content: center;
-
+  padding-top: 3vh;
+  display: flex;
+  justify-content: center;
 }
 
 .btnLoginRow {
-    display: flex;
-    margin-top: 2vh;
-    justify-content: center;
+  display: flex;
+  margin-top: 2vh;
+  justify-content: center;
 }
 
 .btnLogin {
-    width: auto;
-    margin-left: 1vh;
+  width: auto;
+  margin-left: 1vh;
 }
 
 .loginInput {
-    padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .submitLoginContainer {
-    margin: 1vh;
+  margin: 1vh;
 }
 
 #persist {
-    margin: 1vh;
+  margin: 1vh;
 }
-
-

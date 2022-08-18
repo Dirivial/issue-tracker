@@ -1,20 +1,19 @@
-
 .about {
-    background-color: var(--main-bg);
-    color: var(--main-fg);
-    margin-top: 5vh;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  background-color: var(--main-bg);
+  color: var(--main-fg);
+  margin-top: 5vh;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .about-section {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .about-section {
-    text-align: center;
+  text-align: center;
 }

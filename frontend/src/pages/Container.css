@@ -1,75 +1,74 @@
-
 .user-container {
-    margin-bottom: 0;
-    color: var(--main-fg);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+  margin-bottom: 0;
+  color: var(--main-fg);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .container-header {
-    display: flex;
-    align-content: center;
+  display: flex;
+  align-content: center;
 }
 
 .container-title {
-    font-size: 32px;
-    background-color: var(--main-bg);
-    color: var(--main-fg);
-    border-style: none;
-    margin: 2vh;
+  font-size: 32px;
+  background-color: var(--main-bg);
+  color: var(--main-fg);
+  border-style: none;
+  margin: 2vh;
 }
 
 .container-title::placeholder {
-    opacity: 1;
-    color: var(--main-fg);
+  opacity: 1;
+  color: var(--main-fg);
 }
 
 .container-title:focus {
-    outline: 2px solid var(--fg4);
+  outline: 2px solid var(--fg4);
 }
 
 .container-description {
-    font-size: 18px;
-    resize: none;
-    max-height: 12rem;
-    background-color: var(--main-bg);
-    color: var(--main-fg);
-    border-style: solid;
-    border-width: 1px;
-    margin-bottom: 1vh;
-    margin-right: 5px;
+  font-size: 18px;
+  resize: none;
+  max-height: 12rem;
+  background-color: var(--main-bg);
+  color: var(--main-fg);
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 1vh;
+  margin-right: 5px;
 }
 
 .containerDescription:focus {
-    outline: 2px solid var(--fg4);
+  outline: 2px solid var(--fg4);
 }
 
 .IssueListsContainer {
-    color: var(--main-fg);
-    width: 100%;
+  color: var(--main-fg);
+  width: 100%;
 
-    flex: 1;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding-top: 2vh;
+  flex: 1;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 2vh;
 }
 
 .NewListBtn {
-    width: 12rem;
-    min-width: 12rem;
-    padding: 3vh 5vh 3vh 5vh;
-    color: var(--fg2);
-    background-color: var(--bg2);
-    transition: background-color 0.2s;
-    border-radius: 3px;
-    border-style: none;
+  width: 12rem;
+  min-width: 12rem;
+  padding: 3vh 5vh 3vh 5vh;
+  color: var(--fg2);
+  background-color: var(--bg2);
+  transition: background-color 0.2s;
+  border-radius: 3px;
+  border-style: none;
 }
 
 .NewListBtn:hover {
-    background-color: var(--bg1);
-    transition: background-color 0.2s;
+  background-color: var(--bg1);
+  transition: background-color 0.2s;
 }
