@@ -8,6 +8,7 @@ import RemarkGFM from 'remark-gfm';
 import ButtonCheckbox from './ButtonCheckbox.js';
 import useAxiosPrivate from '../hooks/useAxiosPrivate.js';
 import './IssuePopup.css';
+import './Tablestyling.css';
 
 export default function IssuePopup({issue, updateIssue, position, listid, onCreated, show, onHide}) {
 
@@ -87,8 +88,12 @@ export default function IssuePopup({issue, updateIssue, position, listid, onCrea
         setDescription(String.prototype.concat(...newDescription));
     } 
 
-    const editMarkdown = () => {
-        setRenderMarkdown(false);
+    const editOrSave = () => {
+        if(renderMarkdown) {
+            setRenderMarkdown(false);
+        } else {
+            setRenderMarkdown(true);
+        }
     }
 
     useEffect(() => {
@@ -109,42 +114,41 @@ export default function IssuePopup({issue, updateIssue, position, listid, onCrea
                 <div className="modalHeader normalBackground">
                     <h2 className="issueHeader">{issue ? "Edit Issue" : "New Issue"}</h2>
                 </div>
-                <Form>
-                    <Modal.Body className="normalBackground modalBody" >
-                        <div className="specialModalGroup">
-                            <div className="modalBodyGroup issueNameForm">
-                                <Form.Label className="">Name</Form.Label>
-                                <input type="text" className="modalInput" value={name} placeholder="Name" onChange={e => {setName(e.target.value)}}/>
-                            </div>
-                            <div className="modalBodyGroup">
-                                <Form.Label>Done</Form.Label>
-                                <ButtonCheckbox isChecked={done} onClick={() => {console.log(done);setDone(prev => !prev)}}/>
-                            </div>
+                <Modal.Body className="normalBackground modalBody" >
+                    <div className="specialModalGroup">
+                        <div className="modalBodyGroup issueNameForm">
+                            <Form.Label className="">Name</Form.Label>
+                            <input type="text" className="modalInput" value={name} placeholder="Name" onChange={e => {setName(e.target.value)}}/>
                         </div>
+                        <div className="modalBodyGroup">
+                            <Form.Label>Done</Form.Label>
+                            <ButtonCheckbox isChecked={done} onClick={() => {setDone(prev => !prev)}}/>
+                        </div>
+                    </div>
 
-                        <br />
-                        <div onClick={null} className="modalBodyGroup">
-                            <Form.Label className="">Description <button onClick={editMarkdown} className="saveButton">Edit</button></Form.Label>
-                            {renderMarkdown ? 
-                                <div className="markdownWrapper markdownArea">
-                                    <ReactMarkdown 
-                                    className="renderedMarkdown"
-                                    children={description}
-                                    rawSourcePos={true}
-                                    components={{
-                                        li: customListItem
-                                    }} 
-                                    remarkPlugins={[RemarkGFM]}/>
-                                </div> : 
-                                <TextAreaAuto ref={textAreaRef} onBlur={() => setRenderMarkdown(true)} className="modalTextArea markdownArea" value={description} placeholder="Description" onChange={e => {setDescription(e.target.value)}}/>
-                            }
-                        </div>
-                    </Modal.Body>
-                    <Modal.Footer bsPrefix="normalBackground customFoot">
-                        <button onClick={onHide} className="closeButton">Close</button>
-                        <button type="submit" onClick={() => {issue ? update() : create()}} className="saveButton">Save</button>
-                    </Modal.Footer>
-                </Form>
+                    <br />
+                    <div className="modalBodyGroup">
+                        <Form.Label className="">Description </Form.Label>
+                        {renderMarkdown ? 
+                            <div className="markdownWrapper markdownArea">
+                                <ReactMarkdown 
+                                className="renderedMarkdown"
+                                children={description}
+                                rawSourcePos={true}
+                                components={{
+                                    li: customListItem
+                                }} 
+                                remarkPlugins={[RemarkGFM]}/>
+                            </div> : 
+                            <TextAreaAuto ref={textAreaRef} className="modalTextArea markdownArea" value={description} placeholder="Description" onChange={e => {setDescription(e.target.value)}}/>
+                        }
+                        <button onClick={editOrSave} className="saveButton">{renderMarkdown ? "Edit" : "Save Changes"}</button>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer bsPrefix="normalBackground customFoot">
+                    <button onClick={onHide} className="closeButton">Close</button>
+                    <button onClick={() => {issue ? update() : create()}} className="saveButton">Save</button>
+                </Modal.Footer>
             </Modal>
         </div>
     )
