@@ -112,7 +112,10 @@ export default function ContainerList() {
                     );
                   })}
                   {provided.placeholder}
-                  <NewContainerButton new={getContainersCallback} />
+                  <NewContainerButton
+                    position={() => containerData.length}
+                    new={getContainersCallback}
+                  />
                 </div>
               );
             }}

@@ -22,6 +22,7 @@ export default function NewContainerButton(props) {
         updateContainers={() => props.new()}
         onHide={() => setShowModal(false)}
         show={showModal}
+        position={props.position}
       />
     </div>
   );
@@ -45,6 +46,7 @@ function NewContainerPopup(props) {
         {
           name: name,
           description: description,
+          position: props.position(),
           userid: auth.userid,
         },
         {
