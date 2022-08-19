@@ -42,6 +42,10 @@ export default function IssuePopup({
       myIssue.id = response.data.id;
       onCreated(myIssue);
       onHide();
+      setName("");
+      setDescription("");
+      setDone("");
+      setRenderMarkdown(true);
     } catch (err) {
       console.log(err);
       //navigate('/login', { state: { from: location }, replace: true });
