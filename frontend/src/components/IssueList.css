@@ -2,6 +2,9 @@
   min-width: 18rem;
   width: 18rem;
   max-width: 20rem;
+
+  max-height: 90%;
+
   background-color: var(--bg3);
   border-radius: 3px;
   padding: 2px;
@@ -43,6 +46,7 @@
 
 .list-of-issues-wrapper {
   min-height: 1vh;
+  overflow-y: scroll;
 }
 
 .list-of-issues {
