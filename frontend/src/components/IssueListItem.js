@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Draggable } from "react-beautiful-dnd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 import IssuePopup from "./IssuePopup.js";
 import "./IssueListItem.css";
@@ -55,7 +55,7 @@ export default function IssueListItem({
         {(provided, snapshot) => {
           return (
             <div
-              className="issue-list-item"
+              className="issueListItem"
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
@@ -64,11 +64,13 @@ export default function IssueListItem({
               }}
               onClick={() => openModal()}
             >
-              <h4 className="issue-name">
+              <h4
+                className={issue.done ? "issueName issueNameDone" : "issueName"}
+              >
                 {issue.done ? <s>{issue.name}</s> : issue.name}
               </h4>
               <button onClick={removeIssue}>
-                <FontAwesomeIcon icon={faEllipsisVertical} />
+                <FontAwesomeIcon icon={faTrashCan} />
               </button>
               {provided.placeholder}
             </div>

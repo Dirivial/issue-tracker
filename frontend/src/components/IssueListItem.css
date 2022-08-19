@@ -1,6 +1,5 @@
-.issue-list-item {
+.issueListItem {
   background-color: var(--main-bg-soft);
-  margin-bottom: 2px;
   border-radius: 3px;
   user-select: none;
 
@@ -9,7 +8,7 @@
   align-items: stretch;
 }
 
-.issue-list-item > button {
+.issueListItem > button {
   color: var(--fg2);
   background-color: var(--main-bg-soft);
   transition: background-color 0.2s;
@@ -19,12 +18,12 @@
   padding: 0vh 1vh 0vh 1vh;
 }
 
-.issue-list-item > button:hover {
+.issueListItem > button:hover {
   background-color: var(--bg3);
   transition: background-color 0.2s;
 }
 
-.issue-name {
+.issueName {
   background-color: var(--main-bg-soft);
   color: var(--main-fg);
   border-style: none;
@@ -33,13 +32,10 @@
   max-width: 14rem;
   min-height: 3vh;
   overflow: hidden;
+
+  font-size: 18px;
 }
 
-.issue-name::placeholder {
-  opacity: 1;
-  color: var(--main-fg);
-}
-
-.issue-name:focus {
-  outline: 2px solid var(--fg4);
+.issueNameDone {
+  font-size: 14px;
 }
