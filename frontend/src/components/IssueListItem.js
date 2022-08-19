@@ -15,6 +15,7 @@ export default function IssueListItem({
   description,
   listid,
   done,
+  update,
 }) {
   const [issuePopupShow, setIssuePopupShow] = useState(false);
 
@@ -42,6 +43,7 @@ export default function IssueListItem({
   const updateIssue = (updatedIssue) => {
     setIssue(updatedIssue);
     setIssuePopupShow(false);
+    update(updatedIssue);
   };
 
   return (

@@ -139,6 +139,7 @@ export default function IssueList(props) {
                             description={issue.description}
                             done={issue.done}
                             remove={() => removeIssue(issue.id, index)}
+                            update={(newIssue) => props.updateIssue(newIssue)}
                           />
                         );
                       })}

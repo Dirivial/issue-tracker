@@ -86,6 +86,7 @@ export default function ListViewer({ containerid }) {
     getListsCallback();
   }, [getListsCallback]);
 
+  // Sync changes to database when lists have been changed
   useEffect(() => {
     if (listsChanged.length > 0) {
       const syncList = async () => {
@@ -102,9 +103,11 @@ export default function ListViewer({ containerid }) {
     }
   }, [listsChanged, axiosList, state]);
 
+  // User let go of a draggable item
   const onDragEnd = (result) => {
     if (!result.destination) return;
 
+    // Check if user moved a list or an issue
     if (result.source.droppableId !== "ListsContainer") {
       dispatch({ type: "moveIssue", payload: result });
 
@@ -128,12 +131,17 @@ export default function ListViewer({ containerid }) {
     }
   };
 
+  /* Dispatching functions for editing issues */
   const addIssue = (issue, listIndex) => {
     dispatch({ type: "addIssue", payload: { issue, listIndex } });
   };
 
   const removeIssue = (issueIndex, listIndex) => {
     dispatch({ type: "removeIssue", payload: { issueIndex, listIndex } });
+  };
+
+  const updateIssueContent = (issue, listIndex) => {
+    dispatch({ type: "updateIssue", payload: { issue, listIndex } });
   };
 
   return (
@@ -168,6 +176,9 @@ export default function ListViewer({ containerid }) {
                     addIssue={(issue) => addIssue(issue, listIndex)}
                     removeIssue={(issueIndex) =>
                       removeIssue(issueIndex, listIndex)
+                    }
+                    updateIssue={(issue) =>
+                      updateIssueContent(issue, listIndex)
                     }
                   />
                 );

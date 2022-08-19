@@ -54,6 +54,13 @@ function reducerFunction(state, action) {
       }
       newState = data;
       break;
+    case "updateIssue":
+      newState[action.payload.listIndex].issues.splice(
+        action.payload.issue.position,
+        1,
+        action.payload.issue
+      );
+      break;
     case "moveIssue":
       // Each contains index and droppableId
       let source = action.payload.source;
