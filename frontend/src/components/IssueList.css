@@ -45,6 +45,7 @@
 }
 
 .list-of-issues-wrapper {
+  max-height: 700px;
   min-height: 1vh;
   overflow-y: scroll;
 }
