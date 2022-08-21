@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import TextAreaAuto from "react-textarea-autosize";
+import Popup from "reactjs-popup";
 
 import useAxiosList from "../hooks/useAxiosList.js";
 
@@ -146,22 +147,27 @@ export default function IssueList(props) {
               </Droppable>
             </div>
 
-            <button className="new-issue-button" onClick={launchIssuePopup}>
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-            <IssuePopup
-              position={() => {
-                return props.issues.length;
-              }}
-              listid={props.listid}
-              onCreated={(issue) => {
-                addIssue(issue);
-              }}
-              show={issuePopupShow}
-              onHide={() => {
-                setIssuePopupShow(false);
-              }}
-            />
+            <Popup
+              trigger={
+                <button className="new-issue-button" onClick={launchIssuePopup}>
+                  <FontAwesomeIcon icon={faPlus} />
+                </button>
+              }
+            >
+              <IssuePopup
+                position={() => {
+                  return props.issues.length;
+                }}
+                listid={props.listid}
+                onCreated={(issue) => {
+                  addIssue(issue);
+                }}
+                show={issuePopupShow}
+                onHide={() => {
+                  setIssuePopupShow(false);
+                }}
+              />
+            </Popup>
             {provided.placeholder}
           </div>
         );

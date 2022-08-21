@@ -38,19 +38,13 @@ export default function RegisterUserPopup(props) {
 
   return (
     <div className="NewIssuePopup">
-      <div
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-      >
-        <div closeButton>
+      <div>
+        <div>
           <div id="contained-modal-title-vcenter">Register</div>
         </div>
         <div>
           <form style={{ maxWidth: 700 }} className="">
-            <div className="loginInput" controlId="formBasicEmail">
+            <div className="loginInput">
               <div className="float-left">Email</div>
               <input
                 type="email"
@@ -61,7 +55,7 @@ export default function RegisterUserPopup(props) {
                 }}
               />
             </div>
-            <div className="loginInput" controlId="formBasicUsername">
+            <div className="loginInput">
               <div className="float-left">Username</div>
               <input
                 type="user"
@@ -73,7 +67,7 @@ export default function RegisterUserPopup(props) {
               />
             </div>
 
-            <div className="loginInput" controlId="formBasicPassword">
+            <div className="loginInput">
               <div className="float-left">Password</div>
               <input
                 type="password"

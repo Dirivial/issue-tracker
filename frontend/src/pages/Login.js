@@ -89,7 +89,7 @@ function LoginForm() {
     <div className="loginform-thing">
       <div className="loginFormWrapper" style={{ maxWidth: 750 }}>
         <form style={{ maxWidth: 700 }} className="">
-          <div className="loginInput" controlId="formBasicEmail">
+          <div className="loginInput">
             <div className="float-left">E-mail</div>
             <input
               type="email"
@@ -101,7 +101,7 @@ function LoginForm() {
             />
           </div>
 
-          <div className="loginInput" controlId="formBasicPassword">
+          <div className="loginInput">
             <div className="float-left">Password</div>
             <input
               type="password"

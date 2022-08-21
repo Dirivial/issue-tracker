@@ -10,8 +10,9 @@
 }
 
 .closeButton {
-  margin-right: 1vh;
-  padding: 0.5vh;
+  margin-right: 2vh;
+  font-size: 18px;
+  padding: 1vh;
   color: var(--main-bg-hard);
   background-color: var(--accent-red);
   transition: background-color 0.2s;
@@ -26,7 +27,8 @@
 
 .saveButton {
   margin-right: 1vh;
-  padding: 0.5vh;
+  padding: 1vh;
+  font-size: 18px;
   color: var(--main-bg-hard);
   background-color: var(--accent-orange);
   transition: background-color 0.2s;

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import Popup from "reactjs-popup";
 
 import IssuePopup from "./IssuePopup.js";
 import "./IssueListItem.css";
@@ -49,34 +50,44 @@ export default function IssueListItem({ contents, position, remove, update }) {
         {(provided, snapshot) => {
           return (
             <div
-              className="issueListItem"
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
               style={{
                 ...provided.draggableProps.style,
               }}
-              onClick={() => openModal()}
             >
-              <h4
-                className={issue.done ? "issueName issueNameDone" : "issueName"}
+              <Popup
+                trigger={
+                  <div className="issueListItem" onClick={() => openModal()}>
+                    <h4
+                      className={
+                        issue.done ? "issueName issueNameDone" : "issueName"
+                      }
+                    >
+                      {issue.done ? <s>{issue.name}</s> : issue.name}
+                    </h4>
+                    <button onClick={removeIssue}>
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    </button>
+
+                    {provided.placeholder}
+                  </div>
+                }
               >
-                {issue.done ? <s>{issue.name}</s> : issue.name}
-              </h4>
-              <button onClick={removeIssue}>
-                <FontAwesomeIcon icon={faTrashCan} />
-              </button>
-              {provided.placeholder}
+                {(close) => {
+                  <IssuePopup
+                    issue={() => issue}
+                    updateIssue={(updatedIssue) => updateIssue(updatedIssue)}
+                    show={issuePopupShow}
+                    onHide={close}
+                  />;
+                }}
+              </Popup>
             </div>
           );
         }}
       </Draggable>
-      <IssuePopup
-        issue={() => issue}
-        updateIssue={(updatedIssue) => updateIssue(updatedIssue)}
-        show={issuePopupShow}
-        onHide={closeModal}
-      />
     </div>
   );
 }

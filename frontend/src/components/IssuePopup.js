@@ -135,15 +135,7 @@ export default function IssuePopup({
 
   return (
     <div className="NewIssuePopup">
-      <div
-        show={show}
-        onHide={onHide}
-        aria-labelledby="contained-modal-title-vcenter"
-        size="xl"
-        centered
-        backdrop="static"
-        contentClassName="normalBackground"
-      >
+      <div show={show} onHide={onHide} contentClassName="normalBackground">
         <div className="modalHeader normalBackground">
           <h2 className="issueHeader">{issue ? "Edit Issue" : "New Issue"}</h2>
         </div>
