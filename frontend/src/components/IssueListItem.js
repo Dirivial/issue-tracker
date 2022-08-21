@@ -7,25 +7,17 @@ import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import IssuePopup from "./IssuePopup.js";
 import "./IssueListItem.css";
 
-export default function IssueListItem({
-  name,
-  remove,
-  issueid,
-  position,
-  description,
-  listid,
-  done,
-  update,
-}) {
+export default function IssueListItem({ contents, position, remove, update }) {
   const [issuePopupShow, setIssuePopupShow] = useState(false);
 
   const [issue, setIssue] = useState({
-    name: name,
-    issueid: issueid,
+    name: contents.name,
+    id: contents.id,
     position: position,
-    description: description,
-    done: done,
-    listid: listid,
+    description: contents.description,
+    done: contents.done,
+    due: contents.due,
+    listid: contents.listid,
   });
 
   const removeIssue = () => {
@@ -49,8 +41,8 @@ export default function IssueListItem({
   return (
     <div onClick={null}>
       <Draggable
-        key={issueid}
-        draggableId={"Issue" + issueid}
+        key={issue.id}
+        draggableId={"Issue" + issue.id}
         index={position}
         type="ISSUE"
       >

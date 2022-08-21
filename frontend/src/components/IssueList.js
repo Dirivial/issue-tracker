@@ -132,12 +132,8 @@ export default function IssueList(props) {
                         return (
                           <IssueListItem
                             key={issue.id}
-                            listid={issue.listid}
-                            issueid={issue.id}
                             position={index}
-                            name={issue.name}
-                            description={issue.description}
-                            done={issue.done}
+                            contents={issue}
                             remove={() => removeIssue(issue.id, index)}
                             update={(newIssue) => props.updateIssue(newIssue)}
                           />

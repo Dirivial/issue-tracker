@@ -1,0 +1,95 @@
+.react-calendar {
+  background-color: var(--main-bg-hard);
+  color: var(--main-fg);
+}
+
+.react-datetime-picker {
+  color: var(--main-fg);
+  width: 100%;
+}
+
+.gamer {
+  background-color: var(--main-bg-soft) !important;
+  color: var(--main-fg);
+  padding: 0.5vh;
+}
+
+.react-calendar__navigation button:disabled {
+  background-color: var(--main-orange) !important;
+}
+
+.react-calendar button:hover {
+  background-color: var(--accent-orange) !important;
+}
+
+.react-calendar__tile--hasActive {
+  background-color: var(--main-red) !important;
+}
+
+.react-calendar__tile--now {
+  background-color: var(--accent-red) !important;
+}
+
+.react-calendar__tile--active {
+  background-color: var(--main-red) !important;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: var(--main-fg) !important;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: var(--main-bg) !important;
+}
+
+.react-calendar__month-view__days {
+  background-color: var(--bg2);
+}
+
+.react-calendar__viewContainer {
+  background-color: var(--bg2);
+}
+
+.react-calendar__tile {
+  background-color: var(--main-bg-soft);
+  border: none;
+  color: var(--main-fg);
+}
+
+.react-calendar__tile:hover {
+  background-color: var(--main-orange);
+}
+
+/* Calendar navigation buttons */
+
+.react-calendar__navigation__arrow {
+  border: none;
+  color: var(--main-fg);
+  background-color: var(--main-bg-soft);
+}
+
+.react-calendar__navigation__arrow:hover {
+  background-color: var(--main-bg);
+}
+
+.react-calendar__navigation__label {
+  background-color: var(--bg1) !important;
+  border: none;
+  color: var(--main-fg);
+}
+
+/* The input field */
+
+.react-datetime-picker__inputGroup__input {
+  color: var(--main-fg);
+}
+
+.react-datetime-picker__inputGroup__leadingZero {
+  color: var(--main-fg) !important;
+  padding-bottom: 1px;
+}
+
+/* Clock */
+.react-datetime-picker__clock {
+  background-color: var(--bg3) !important;
+}

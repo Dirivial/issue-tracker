@@ -1,14 +1,19 @@
 import { useState, useEffect, useRef } from "react";
-import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+
+import DateTimePicker from "react-datetime-picker";
+
+// Description stuff
 import TextAreaAuto from "react-textarea-autosize";
 import ReactMarkdown from "react-markdown";
 import RemarkGFM from "remark-gfm";
-
 import ButtonCheckbox from "./ButtonCheckbox.js";
+
 import useAxiosPrivate from "../hooks/useAxiosPrivate.js";
+
 import "./IssuePopup.css";
 import "./Tablestyling.css";
+import "./calendarStyling.css";
 
 export default function IssuePopup({
   issue,
@@ -24,6 +29,7 @@ export default function IssuePopup({
     issue ? issue().description : ""
   );
   const [done, setDone] = useState(issue ? issue().done : false);
+  const [dueDate, setDueDate] = useState(issue ? new Date(issue().due) : null);
   const [renderMarkdown, setRenderMarkdown] = useState(true);
   const textAreaRef = useRef();
   const axiosPrivate = useAxiosPrivate();
@@ -36,6 +42,7 @@ export default function IssuePopup({
         position: position(),
         listid: listid,
         done: done,
+        dueDate: dueDate ? dueDate.toISOString() : null,
       };
       const response = await axiosPrivate.post("/issue/create", myIssue);
 
@@ -59,11 +66,14 @@ export default function IssuePopup({
         description: description,
         position: issue().position,
         listid: issue().listid,
-        issueid: issue().issueid,
+        issueid: issue().id,
         done: done,
+        dueDate: dueDate ? dueDate.toISOString() : null,
       };
       await axiosPrivate.post("/issue/update", myIssue);
 
+      myIssue.id = myIssue.issueid;
+      delete myIssue.issueid;
       updateIssue(myIssue);
     } catch (err) {
       console.log(err);
@@ -130,7 +140,7 @@ export default function IssuePopup({
         show={show}
         onHide={onHide}
         aria-labelledby="contained-modal-title-vcenter"
-        size="lg"
+        size="xl"
         centered
         backdrop="static"
         contentClassName="normalBackground"
@@ -141,7 +151,7 @@ export default function IssuePopup({
         <Modal.Body className="normalBackground modalBody">
           <div className="specialModalGroup">
             <div className="modalBodyGroup issueNameForm">
-              <Form.Label className="">Name</Form.Label>
+              <h4 className="">Name</h4>
               <input
                 type="text"
                 className="modalInput"
@@ -153,7 +163,7 @@ export default function IssuePopup({
               />
             </div>
             <div className="modalBodyGroup">
-              <Form.Label>Done</Form.Label>
+              <h4>Done</h4>
               <ButtonCheckbox
                 isChecked={done}
                 onClick={() => {
@@ -162,10 +172,19 @@ export default function IssuePopup({
               />
             </div>
           </div>
-
+          <div className="modalBodyGroup">
+            <h4>Due</h4>
+            <DateTimePicker
+              //className="gamer"
+              calendarClassName="gamer"
+              format="yyyy-MM-dd hh:mm"
+              value={dueDate}
+              onChange={setDueDate}
+            />
+          </div>
           <br />
           <div className="modalBodyGroup">
-            <Form.Label className="">Description </Form.Label>
+            <h4 className="">Description </h4>
             {renderMarkdown ? (
               <div className="markdownWrapper markdownArea">
                 <ReactMarkdown
@@ -189,6 +208,7 @@ export default function IssuePopup({
                 }}
               />
             )}
+            <br />
             <button onClick={editOrSave} className="saveButton">
               {renderMarkdown ? "Edit" : "Save Changes"}
             </button>
