@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Popup from "reactjs-popup";
 
 import axios from "../api/axios.js";
 import useAuth from "../hooks/useAuth.js";
@@ -9,23 +10,18 @@ import RegisterPopup from "../components/RegisterUserPopup.js";
 import "./Login.css";
 
 export default function Login() {
-  const [showRegisterPopup, setShowRegisterPopup] = useState(false);
-
   return (
     <div className="login">
       <LoginForm />
-      <div className="btnLoginRow">
-        <button className="btnLogin" onClick={() => setShowRegisterPopup(true)}>
-          Not registered?
-        </button>
-      </div>
-
-      <RegisterPopup
-        show={showRegisterPopup}
-        onHide={() => {
-          setShowRegisterPopup(false);
+      <Popup
+        modal={true}
+        className="modalPopup"
+        trigger={<button className="btnLogin">Not registered?</button>}
+      >
+        {(close) => {
+          return <RegisterPopup close={close} />;
         }}
-      />
+      </Popup>
     </div>
   );
 }

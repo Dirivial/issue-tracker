@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
+import Modal from "./Modal.js";
 import axios from "../api/axios.js";
 
-export default function RegisterUserPopup(props) {
+export default function RegisterUserPopup({ close }) {
   const [mail, setMail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +25,7 @@ export default function RegisterUserPopup(props) {
           withCredentials: true,
         }
       );
-      props.onHide();
+      close();
     } catch (err) {
       if (!err?.response) {
         setErrorMsg("No server response.");
@@ -37,16 +38,19 @@ export default function RegisterUserPopup(props) {
   }
 
   return (
-    <div className="NewIssuePopup">
-      <div>
-        <div>
-          <div id="contained-modal-title-vcenter">Register</div>
-        </div>
-        <div>
-          <form style={{ maxWidth: 700 }} className="">
-            <div className="loginInput">
-              <div className="float-left">Email</div>
+    <Modal
+      header="Register"
+      submitText="Register"
+      closeText="Close"
+      onSubmit={submitInformation}
+      onClose={close}
+      render={() => {
+        return (
+          <div className="modalBody">
+            <div className="modalBodyGroup">
+              <div className="modalLabel">Email</div>
               <input
+                className="modalInput"
                 type="email"
                 value={mail}
                 placeholder="Enter email"
@@ -55,10 +59,11 @@ export default function RegisterUserPopup(props) {
                 }}
               />
             </div>
-            <div className="loginInput">
-              <div className="float-left">Username</div>
+            <div className="modalBodyGroup">
+              <div className="modalLabel">Username</div>
               <input
-                type="user"
+                className="modalInput"
+                type="text"
                 value={username}
                 placeholder="Username"
                 onChange={(e) => {
@@ -67,9 +72,10 @@ export default function RegisterUserPopup(props) {
               />
             </div>
 
-            <div className="loginInput">
-              <div className="float-left">Password</div>
+            <div className="modalBodyGroup">
+              <div className="modalLabel">Password</div>
               <input
+                className="modalInput"
                 type="password"
                 value={password}
                 placeholder="Password"
@@ -81,16 +87,10 @@ export default function RegisterUserPopup(props) {
                 }}
               />
             </div>
-          </form>
-        </div>
-        <div>
-          {errorMsg ? <p style={{ color: "red" }}>{errorMsg}</p> : null}
-          <button className="float-left" onClick={props.onHide}>
-            Close
-          </button>
-          <button onClick={submitInformation}>Submit</button>
-        </div>
-      </div>
-    </div>
+            {errorMsg ? <p style={{ color: "red" }}>{errorMsg}</p> : null}
+          </div>
+        );
+      }}
+    />
   );
 }

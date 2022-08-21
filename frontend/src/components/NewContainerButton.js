@@ -63,7 +63,7 @@ export default function NewContainerButton({ position, updateContainers }) {
               onSubmit={() => submitContainer(close)}
               render={() => {
                 return (
-                  <div>
+                  <div className="modalBody">
                     {" "}
                     <h3 className="modalLabel">Name:</h3>
                     <input
