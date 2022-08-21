@@ -7,11 +7,10 @@ module.exports = function (app) {
   app.post(PATH + "/create", (req, res) => {
     const name = req.body.name;
     const userid = req.body.userid;
-    const position = req.body.position;
 
     db.query(
-      "INSERT INTO container (name, userid, position) VALUES (?,?,?,?)",
-      [name, userid, position],
+      "INSERT INTO container (name, userid) VALUES (?,?)",
+      [name, userid],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -79,11 +78,10 @@ module.exports = function (app) {
   app.post(PATH + "/update", (req, res) => {
     const name = req.body.name;
     const id = req.body.id;
-    const position = req.body.position;
 
     db.query(
-      "UPDATE container SET name = ?, position = ? WHERE id = ?",
-      [name, position, id],
+      "UPDATE container SET name = ?, WHERE id = ?",
+      [name, id],
       (err, result) => {
         if (err) {
           console.log(err);
