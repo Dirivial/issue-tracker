@@ -80,7 +80,7 @@ module.exports = function (app) {
     const id = req.body.id;
 
     db.query(
-      "UPDATE container SET name = ?, WHERE id = ?",
+      "UPDATE container SET name = ? WHERE id = ?",
       [name, id],
       (err, result) => {
         if (err) {
