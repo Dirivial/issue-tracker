@@ -148,25 +148,29 @@ export default function IssueList(props) {
             </div>
 
             <Popup
+              modal={true}
+              position="center center"
+              className="new-container"
               trigger={
                 <button className="new-issue-button" onClick={launchIssuePopup}>
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
               }
             >
-              <IssuePopup
-                position={() => {
-                  return props.issues.length;
-                }}
-                listid={props.listid}
-                onCreated={(issue) => {
-                  addIssue(issue);
-                }}
-                show={issuePopupShow}
-                onHide={() => {
-                  setIssuePopupShow(false);
-                }}
-              />
+              {(close) => {
+                return (
+                  <IssuePopup
+                    position={() => {
+                      return props.issues.length;
+                    }}
+                    listid={props.listid}
+                    onCreated={(issue) => {
+                      addIssue(issue);
+                    }}
+                    close={close}
+                  />
+                );
+              }}
             </Popup>
             {provided.placeholder}
           </div>
