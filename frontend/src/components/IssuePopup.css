@@ -52,23 +52,8 @@
   border-bottom: 2px solid var(--main-orange);
 }
 
-.modalBody {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.modalBodyGroup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 90%;
-}
-
 .markdownArea {
-  max-height: 50vh;
+  max-height: 30vh;
   overflow-y: scroll;
 }
 

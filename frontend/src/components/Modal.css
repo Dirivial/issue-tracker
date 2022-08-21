@@ -16,6 +16,10 @@
 .modalBody {
   width: 100%;
   padding-bottom: 1vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .modalFooter {
@@ -24,6 +28,14 @@
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.modalBodyGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
 }
 
 .modalLabel {

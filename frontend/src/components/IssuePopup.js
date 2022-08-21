@@ -74,6 +74,7 @@ export default function IssuePopup({
       myIssue.id = myIssue.issueid;
       delete myIssue.issueid;
       updateIssue(myIssue);
+      close();
     } catch (err) {
       console.log(err);
       //navigate('/login', { state: { from: location }, replace: true });
@@ -106,18 +107,23 @@ export default function IssuePopup({
   // Finds where the checkbox should be in the description and replaces it with the "opposite" (true -> false, false -> true)
   const editMarkdownCheckbox = (lineNumber, checked) => {
     let newDescription = description.split("\n");
+    console.log(newDescription);
     if (checked) {
       newDescription[lineNumber] = newDescription[lineNumber].replace(
-        "* [x]",
+        /[\-\*] \[[x]\]/,
         "* [ ]"
       );
     } else {
       newDescription[lineNumber] = newDescription[lineNumber].replace(
-        "* [ ]",
+        /[\-\*] \[[\s]\]/,
         "* [x]"
       );
     }
-    newDescription = newDescription.map((line) => line + "\n");
+    newDescription = newDescription.map((line, index) => {
+      if (index < newDescription.length - 1) return line + "\n";
+      return line;
+    });
+    console.log(...newDescription);
     setDescription(String.prototype.concat(...newDescription));
   };
 
