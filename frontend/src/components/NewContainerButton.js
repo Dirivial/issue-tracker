@@ -1,7 +1,4 @@
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import useAxiosPrivate from "../hooks/useAxiosPrivate.js";
@@ -62,7 +59,7 @@ function NewContainerPopup(props) {
 
   return (
     <div className="NewContainerButton">
-      <Modal
+      <div
         show={props.show}
         onHide={props.onHide}
         size="lg"
@@ -70,15 +67,13 @@ function NewContainerPopup(props) {
         centered
         backdrop="static"
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            Create New Container
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form.Group className="" controlId="containerName">
-            <Form.Label className="float-left">Name of container</Form.Label>
-            <Form.Control
+        <div closeButton>
+          <div id="contained-modal-title-vcenter">Create New Container</div>
+        </div>
+        <div>
+          <div className="" controlId="containerName">
+            <div className="float-left">Name of container</div>
+            <input
               autoComplete="off"
               type="text"
               value={name}
@@ -87,16 +82,16 @@ function NewContainerPopup(props) {
                 setName(e.target.value);
               }}
             />
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
+          </div>
+        </div>
+        <div>
           {errorMsg ? <p style={{ color: "red" }}>{errorMsg}</p> : null}
-          <Button className="float-left" onClick={props.onHide}>
+          <button className="float-left" onClick={props.onHide}>
             Close
-          </Button>
-          <Button onClick={() => submitContainer()}>Create</Button>
-        </Modal.Footer>
-      </Modal>
+          </button>
+          <button onClick={() => submitContainer()}>Create</button>
+        </div>
+      </div>
     </div>
   );
 }

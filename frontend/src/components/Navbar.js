@@ -1,8 +1,5 @@
 import { Outlet, useNavigate, Link } from "react-router-dom";
 
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-
 import useLogout from "../hooks/useLogout.js";
 
 import "./Navbar.css";
@@ -18,8 +15,8 @@ export default function MyNavbar() {
 
   return (
     <div className="background">
-      <Navbar className="navbar navbar-expand-lg navbar-dark bg-dark ml-auto">
-        <Nav className="me-auto navstuff">
+      <div className="navbar">
+        <div className="navstuff">
           <Link className="navbarlink" to="/">
             Home
           </Link>
@@ -29,14 +26,14 @@ export default function MyNavbar() {
           <Link className="navbarlink" to="/about">
             About
           </Link>
-        </Nav>
+        </div>
 
-        <Navbar.Collapse className="justify-content-end">
+        <div className="">
           <button className="logoutButton" onClick={signOut}>
             Sign Out
           </button>
-        </Navbar.Collapse>
-      </Navbar>
+        </div>
+      </div>
       <Outlet />
     </div>
   );

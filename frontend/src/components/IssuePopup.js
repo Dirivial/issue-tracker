@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import Modal from "react-bootstrap/Modal";
 
 import DateTimePicker from "react-datetime-picker";
 
@@ -136,7 +135,7 @@ export default function IssuePopup({
 
   return (
     <div className="NewIssuePopup">
-      <Modal
+      <div
         show={show}
         onHide={onHide}
         aria-labelledby="contained-modal-title-vcenter"
@@ -148,7 +147,7 @@ export default function IssuePopup({
         <div className="modalHeader normalBackground">
           <h2 className="issueHeader">{issue ? "Edit Issue" : "New Issue"}</h2>
         </div>
-        <Modal.Body className="normalBackground modalBody">
+        <div className="normalBackground modalBody">
           <div className="specialModalGroup">
             <div className="modalBodyGroup issueNameForm">
               <h4 className="">Name</h4>
@@ -213,8 +212,8 @@ export default function IssuePopup({
               {renderMarkdown ? "Edit" : "Save Changes"}
             </button>
           </div>
-        </Modal.Body>
-        <Modal.Footer bsPrefix="normalBackground customFoot">
+        </div>
+        <div bsPrefix="normalBackground customFoot">
           <button onClick={onHide} className="closeButton">
             Close
           </button>
@@ -226,8 +225,8 @@ export default function IssuePopup({
           >
             Save
           </button>
-        </Modal.Footer>
-      </Modal>
+        </div>
+      </div>
     </div>
   );
 }

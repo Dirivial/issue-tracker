@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
 
 import axios from "../api/axios.js";
 
@@ -41,21 +38,21 @@ export default function RegisterUserPopup(props) {
 
   return (
     <div className="NewIssuePopup">
-      <Modal
+      <div
         {...props}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
         backdrop="static"
       >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Register</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+        <div closeButton>
+          <div id="contained-modal-title-vcenter">Register</div>
+        </div>
+        <div>
           <form style={{ maxWidth: 700 }} className="">
-            <Form.Group className="loginInput" controlId="formBasicEmail">
-              <Form.Label className="float-left">Email</Form.Label>
-              <Form.Control
+            <div className="loginInput" controlId="formBasicEmail">
+              <div className="float-left">Email</div>
+              <input
                 type="email"
                 value={mail}
                 placeholder="Enter email"
@@ -63,10 +60,10 @@ export default function RegisterUserPopup(props) {
                   setMail(e.target.value);
                 }}
               />
-            </Form.Group>
-            <Form.Group className="loginInput" controlId="formBasicUsername">
-              <Form.Label className="float-left">Username</Form.Label>
-              <Form.Control
+            </div>
+            <div className="loginInput" controlId="formBasicUsername">
+              <div className="float-left">Username</div>
+              <input
                 type="user"
                 value={username}
                 placeholder="Username"
@@ -74,11 +71,11 @@ export default function RegisterUserPopup(props) {
                   setUsername(e.target.value);
                 }}
               />
-            </Form.Group>
+            </div>
 
-            <Form.Group className="loginInput" controlId="formBasicPassword">
-              <Form.Label className="float-left">Password</Form.Label>
-              <Form.Control
+            <div className="loginInput" controlId="formBasicPassword">
+              <div className="float-left">Password</div>
+              <input
                 type="password"
                 value={password}
                 placeholder="Password"
@@ -89,17 +86,17 @@ export default function RegisterUserPopup(props) {
                   setPassword(e.target.value);
                 }}
               />
-            </Form.Group>
+            </div>
           </form>
-        </Modal.Body>
-        <Modal.Footer>
+        </div>
+        <div>
           {errorMsg ? <p style={{ color: "red" }}>{errorMsg}</p> : null}
-          <Button className="float-left" onClick={props.onHide}>
+          <button className="float-left" onClick={props.onHide}>
             Close
-          </Button>
-          <Button onClick={submitInformation}>Submit</Button>
-        </Modal.Footer>
-      </Modal>
+          </button>
+          <button onClick={submitInformation}>Submit</button>
+        </div>
+      </div>
     </div>
   );
 }

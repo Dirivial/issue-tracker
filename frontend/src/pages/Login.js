@@ -5,8 +5,6 @@ import axios from "../api/axios.js";
 import useAuth from "../hooks/useAuth.js";
 
 import RegisterPopup from "../components/RegisterUserPopup.js";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 
 import "./Login.css";
 
@@ -17,9 +15,9 @@ export default function Login() {
     <div className="login">
       <LoginForm />
       <div className="btnLoginRow">
-        <Button className="btnLogin" onClick={() => setShowRegisterPopup(true)}>
+        <button className="btnLogin" onClick={() => setShowRegisterPopup(true)}>
           Not registered?
-        </Button>
+        </button>
       </div>
 
       <RegisterPopup
@@ -91,9 +89,9 @@ function LoginForm() {
     <div className="loginform-thing">
       <div className="loginFormWrapper" style={{ maxWidth: 750 }}>
         <form style={{ maxWidth: 700 }} className="">
-          <Form.Group className="loginInput" controlId="formBasicEmail">
-            <Form.Label className="float-left">E-mail</Form.Label>
-            <Form.Control
+          <div className="loginInput" controlId="formBasicEmail">
+            <div className="float-left">E-mail</div>
+            <input
               type="email"
               value={mail}
               placeholder="E-mail"
@@ -101,11 +99,11 @@ function LoginForm() {
                 setMail(e.target.value);
               }}
             />
-          </Form.Group>
+          </div>
 
-          <Form.Group className="loginInput" controlId="formBasicPassword">
-            <Form.Label className="float-left">Password</Form.Label>
-            <Form.Control
+          <div className="loginInput" controlId="formBasicPassword">
+            <div className="float-left">Password</div>
+            <input
               type="password"
               value={password}
               placeholder="Password"
@@ -116,7 +114,7 @@ function LoginForm() {
                 setPassword(e.target.value);
               }}
             />
-          </Form.Group>
+          </div>
           <div className="submitLoginContainer">
             <input
               type="checkbox"
@@ -125,9 +123,9 @@ function LoginForm() {
               checked={persist}
             />
             <label htmlFor="persist"> Trust This Device? </label>
-            <Button className="btnLogin" onClick={loginClicked}>
+            <button className="btnLogin" onClick={loginClicked}>
               Log in
-            </Button>
+            </button>
           </div>
           {errorMsg ? <p style={{ color: "red" }}>{errorMsg}</p> : null}
         </form>
