@@ -111,7 +111,7 @@ export default function IssueList(props) {
               ) : (
                 <h3 className="list-name">{listName}</h3>
               )}
-              <button onClick={removeList}>
+              <button className="delete-list-button" onClick={removeList}>
                 <FontAwesomeIcon icon={faX} />
               </button>
             </div>

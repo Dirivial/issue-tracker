@@ -15,7 +15,7 @@
 }
 
 .list-name-wrapper {
-  border-bottom-style: solid;
+  border-bottom-style: dashed;
   border-color: var(--main-orange);
   display: flex;
   justify-content: space-between;
@@ -45,6 +45,7 @@
 }
 
 .list-of-issues-wrapper {
+  margin-top: 0.5vh;
   max-height: 700px;
   min-height: 1vh;
   overflow-y: scroll;
@@ -77,6 +78,7 @@
   background-color: var(--bg2);
   transition: background-color 0.2s;
   margin: 0 1vh 0 0;
+  padding: 0.5vh;
   border-radius: 3px;
   border-style: none;
 }
