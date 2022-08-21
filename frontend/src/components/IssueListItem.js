@@ -60,13 +60,15 @@ export default function IssueListItem({ contents, position, remove, update }) {
             >
               <Popup
                 trigger={
-                  <h4
-                    className={
-                      issue.done ? "issueName issueNameDone" : "issueName"
-                    }
-                  >
-                    {issue.done ? <s>{issue.name}</s> : issue.name}
-                  </h4>
+                  <div className="issueNameWrapper">
+                    <h4
+                      className={
+                        issue.done ? "issueName issueNameDone" : "issueName"
+                      }
+                    >
+                      {issue.done ? <s>{issue.name}</s> : issue.name}
+                    </h4>
+                  </div>
                 }
                 position="center center"
                 modal={true}
