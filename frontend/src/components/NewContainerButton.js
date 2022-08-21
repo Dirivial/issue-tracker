@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
+import Popup from "reactjs-popup";
+
 import useAxiosPrivate from "../hooks/useAxiosPrivate.js";
 import useAuth from "../hooks/useAuth.js";
 
@@ -9,23 +11,6 @@ import "./NewContainerButton.css";
 export default function NewContainerButton(props) {
   const [showModal, setShowModal] = useState(false);
 
-  return (
-    <div className="NewContainerComponent">
-      <button className="NewContainerBtn" onClick={() => setShowModal(true)}>
-        New Container
-      </button>
-
-      <NewContainerPopup
-        updateContainers={() => props.new()}
-        onHide={() => setShowModal(false)}
-        show={showModal}
-        position={props.position}
-      />
-    </div>
-  );
-}
-
-function NewContainerPopup(props) {
   const [name, setName] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -35,7 +20,7 @@ function NewContainerPopup(props) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  async function submitContainer() {
+  async function submitContainer(close) {
     try {
       const response = axiosPrivate.post(
         "/container/create",
@@ -50,7 +35,7 @@ function NewContainerPopup(props) {
       );
       setName("");
       props.updateContainers();
-      props.onHide();
+      close();
     } catch (err) {
       console.log(err);
       navigate("/login", { state: { from: location }, replace: true });
@@ -58,40 +43,53 @@ function NewContainerPopup(props) {
   }
 
   return (
-    <div className="NewContainerButton">
-      <div
-        show={props.show}
-        onHide={props.onHide}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        backdrop="static"
-      >
-        <div closeButton>
-          <div id="contained-modal-title-vcenter">Create New Container</div>
-        </div>
-        <div>
-          <div className="" controlId="containerName">
-            <div className="float-left">Name of container</div>
-            <input
-              autoComplete="off"
-              type="text"
-              value={name}
-              placeholder="Enter a name"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            />
-          </div>
-        </div>
-        <div>
-          {errorMsg ? <p style={{ color: "red" }}>{errorMsg}</p> : null}
-          <button className="float-left" onClick={props.onHide}>
-            Close
+    <div className="NewContainerComponent">
+      <Popup
+        trigger={
+          <button
+            className="NewContainerBtn"
+            onClick={() => setShowModal(true)}
+          >
+            New Container
           </button>
-          <button onClick={() => submitContainer()}>Create</button>
-        </div>
-      </div>
+        }
+        position="center center"
+        modal={true}
+        className="new-container"
+      >
+        {(close) => {
+          return (
+            <div className="newContainerPopup">
+              <h2 className="newContainerHeader">Create New Container</h2>
+              <div className="newContainerBody">
+                <h3 className="newContainerLabel">Name:</h3>
+                <input
+                  className="newContainerInput"
+                  autoComplete="off"
+                  type="text"
+                  value={name}
+                  placeholder="Enter a name"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+              </div>
+              <div className="newContainerFooter">
+                {errorMsg ? <p style={{ color: "red" }}>{errorMsg}</p> : null}
+                <button className="closeButton" onClick={close}>
+                  Close
+                </button>
+                <button
+                  className="saveButton"
+                  onClick={() => submitContainer(close)}
+                >
+                  Create
+                </button>
+              </div>
+            </div>
+          );
+        }}
+      </Popup>
     </div>
   );
 }
