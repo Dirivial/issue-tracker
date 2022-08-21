@@ -28,7 +28,9 @@ export default function IssuePopup({
     issue ? issue().description : ""
   );
   const [done, setDone] = useState(issue ? issue().done : false);
-  const [dueDate, setDueDate] = useState(issue ? new Date(issue().due) : null);
+  const [due, setDue] = useState(
+    issue ? (issue().due ? new Date(issue().due) : null) : null
+  );
   const [renderMarkdown, setRenderMarkdown] = useState(true);
   const textAreaRef = useRef();
   const axiosPrivate = useAxiosPrivate();
@@ -41,7 +43,7 @@ export default function IssuePopup({
         position: position(),
         listid: listid,
         done: done,
-        dueDate: dueDate ? dueDate.toISOString() : null,
+        due: due ? due.toISOString() : null,
       };
       const response = await axiosPrivate.post("/issue/create", myIssue);
 
@@ -67,7 +69,7 @@ export default function IssuePopup({
         listid: issue().listid,
         issueid: issue().id,
         done: done,
-        dueDate: dueDate ? dueDate.toISOString() : null,
+        due: due ? due.toISOString() : null,
       };
       await axiosPrivate.post("/issue/update", myIssue);
 
@@ -107,7 +109,6 @@ export default function IssuePopup({
   // Finds where the checkbox should be in the description and replaces it with the "opposite" (true -> false, false -> true)
   const editMarkdownCheckbox = (lineNumber, checked) => {
     let newDescription = description.split("\n");
-    console.log(newDescription);
     if (checked) {
       newDescription[lineNumber] = newDescription[lineNumber].replace(
         /[\-\*] \[[x]\]/,
@@ -123,7 +124,6 @@ export default function IssuePopup({
       if (index < newDescription.length - 1) return line + "\n";
       return line;
     });
-    console.log(...newDescription);
     setDescription(String.prototype.concat(...newDescription));
   };
 
@@ -176,8 +176,8 @@ export default function IssuePopup({
                 //className="gamer"
                 calendarClassName="gamer"
                 format="yyyy-MM-dd hh:mm"
-                value={dueDate}
-                onChange={setDueDate}
+                value={due}
+                onChange={setDue}
               />
             </div>
             <br />

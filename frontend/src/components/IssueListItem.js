@@ -9,8 +9,6 @@ import IssuePopup from "./IssuePopup.js";
 import "./IssueListItem.css";
 
 export default function IssueListItem({ contents, position, remove, update }) {
-  const [issuePopupShow, setIssuePopupShow] = useState(false);
-
   const [issue, setIssue] = useState({
     name: contents.name,
     id: contents.id,
@@ -25,17 +23,8 @@ export default function IssueListItem({ contents, position, remove, update }) {
     remove(position);
   };
 
-  const openModal = () => {
-    setIssuePopupShow(true);
-  };
-
-  const closeModal = () => {
-    setIssuePopupShow(false);
-  };
-
   const updateIssue = (updatedIssue) => {
     setIssue(updatedIssue);
-    setIssuePopupShow(false);
     update(updatedIssue);
   };
 
