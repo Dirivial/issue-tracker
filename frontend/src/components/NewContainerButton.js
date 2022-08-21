@@ -51,7 +51,7 @@ export default function NewContainerButton({ position, updateContainers }) {
         }
         position="center center"
         modal={true}
-        className="new-container"
+        className="modalPopup"
       >
         {(close) => {
           return (

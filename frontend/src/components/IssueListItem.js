@@ -61,7 +61,7 @@ export default function IssueListItem({ contents, position, remove, update }) {
                 }
                 position="center center"
                 modal={true}
-                className="new-container"
+                className="modalPopup"
               >
                 {(close) => {
                   return (

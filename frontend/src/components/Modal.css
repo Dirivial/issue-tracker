@@ -61,25 +61,25 @@
   outline: 1px solid var(--fg3);
 }
 
-.new-container-content {
+.modalPopup-content {
   border-radius: 5px;
   margin: auto;
   background: var(--main-bg);
   width: 50%;
   padding: 1vh;
 }
-.new-container-arrow {
+.modalPopup-arrow {
   color: rgb(255, 255, 255);
 }
-[role="tooltip"].new-container-content {
+[role="tooltip"].modalPopup-content {
   width: 200px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
 }
 
-.new-container-overlay {
+.modalPopup-overlay {
   background: rgba(0, 0, 0, 0.5);
 }
-[data-popup="tooltip"].new-container-overlay {
+[data-popup="tooltip"].modalPopup-overlay {
   background: transparent;
 }
 
