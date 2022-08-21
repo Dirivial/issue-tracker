@@ -50,6 +50,7 @@ export default function IssueListItem({ contents, position, remove, update }) {
         {(provided, snapshot) => {
           return (
             <div
+              className="issueListItem"
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
@@ -59,31 +60,32 @@ export default function IssueListItem({ contents, position, remove, update }) {
             >
               <Popup
                 trigger={
-                  <div className="issueListItem" onClick={() => openModal()}>
-                    <h4
-                      className={
-                        issue.done ? "issueName issueNameDone" : "issueName"
-                      }
-                    >
-                      {issue.done ? <s>{issue.name}</s> : issue.name}
-                    </h4>
-                    <button onClick={removeIssue}>
-                      <FontAwesomeIcon icon={faTrashCan} />
-                    </button>
-
-                    {provided.placeholder}
-                  </div>
+                  <h4
+                    className={
+                      issue.done ? "issueName issueNameDone" : "issueName"
+                    }
+                  >
+                    {issue.done ? <s>{issue.name}</s> : issue.name}
+                  </h4>
                 }
+                position="center center"
+                modal={true}
+                className="new-container"
               >
                 {(close) => {
-                  <IssuePopup
-                    issue={() => issue}
-                    updateIssue={(updatedIssue) => updateIssue(updatedIssue)}
-                    show={issuePopupShow}
-                    onHide={close}
-                  />;
+                  return (
+                    <IssuePopup
+                      issue={() => issue}
+                      updateIssue={(updatedIssue) => updateIssue(updatedIssue)}
+                      close={close}
+                    />
+                  );
                 }}
               </Popup>
+              <button onClick={removeIssue}>
+                <FontAwesomeIcon icon={faTrashCan} />
+              </button>
+              {provided.placeholder}
             </div>
           );
         }}

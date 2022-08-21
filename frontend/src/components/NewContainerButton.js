@@ -3,14 +3,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import Popup from "reactjs-popup";
 
+import Modal from "./Modal.js";
 import useAxiosPrivate from "../hooks/useAxiosPrivate.js";
 import useAuth from "../hooks/useAuth.js";
 
 import "./NewContainerButton.css";
 
-export default function NewContainerButton(props) {
-  const [showModal, setShowModal] = useState(false);
-
+export default function NewContainerButton({ position, updateContainers }) {
   const [name, setName] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -26,7 +25,7 @@ export default function NewContainerButton(props) {
         "/container/create",
         {
           name: name,
-          position: props.position(),
+          position: position(),
           userid: auth.userid,
         },
         {
@@ -34,7 +33,7 @@ export default function NewContainerButton(props) {
         }
       );
       setName("");
-      props.updateContainers();
+      updateContainers();
       close();
     } catch (err) {
       console.log(err);
@@ -46,10 +45,7 @@ export default function NewContainerButton(props) {
     <div className="NewContainerComponent">
       <Popup
         trigger={
-          <button
-            className="NewContainerBtn"
-            onClick={() => setShowModal(true)}
-          >
+          <button className="NewContainerBtn" onClick={null}>
             New Container
           </button>
         }
@@ -59,34 +55,34 @@ export default function NewContainerButton(props) {
       >
         {(close) => {
           return (
-            <div className="newContainerPopup">
-              <h2 className="newContainerHeader">Create New Container</h2>
-              <div className="newContainerBody">
-                <h3 className="newContainerLabel">Name:</h3>
-                <input
-                  className="newContainerInput"
-                  autoComplete="off"
-                  type="text"
-                  value={name}
-                  placeholder="Enter a name"
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                />
-              </div>
-              <div className="newContainerFooter">
-                {errorMsg ? <p style={{ color: "red" }}>{errorMsg}</p> : null}
-                <button className="closeButton" onClick={close}>
-                  Close
-                </button>
-                <button
-                  className="saveButton"
-                  onClick={() => submitContainer(close)}
-                >
-                  Create
-                </button>
-              </div>
-            </div>
+            <Modal
+              header={"Create New Container"}
+              closeText="Close"
+              submitText="Submit"
+              onClose={close}
+              onSubmit={() => submitContainer(close)}
+              render={() => {
+                return (
+                  <div>
+                    {" "}
+                    <h3 className="modalLabel">Name:</h3>
+                    <input
+                      className="modalInput"
+                      autoComplete="off"
+                      type="text"
+                      value={name}
+                      placeholder="Enter a name"
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                    />
+                    {errorMsg ? (
+                      <p style={{ color: "red" }}>{errorMsg}</p>
+                    ) : null}
+                  </div>
+                );
+              }}
+            />
           );
         }}
       </Popup>

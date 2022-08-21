@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import RemarkGFM from "remark-gfm";
 import ButtonCheckbox from "./ButtonCheckbox.js";
 
+import Modal from "./Modal.js";
 import useAxiosPrivate from "../hooks/useAxiosPrivate.js";
 
 import "./IssuePopup.css";
@@ -20,8 +21,7 @@ export default function IssuePopup({
   position,
   listid,
   onCreated,
-  show,
-  onHide,
+  close,
 }) {
   const [name, setName] = useState(issue ? issue().name : "");
   const [description, setDescription] = useState(
@@ -47,7 +47,7 @@ export default function IssuePopup({
 
       myIssue.id = response.data.id;
       onCreated(myIssue);
-      onHide();
+      close();
       setName("");
       setDescription("");
       setDone("");
@@ -134,15 +134,17 @@ export default function IssuePopup({
   }, [renderMarkdown]);
 
   return (
-    <div className="NewIssuePopup">
-      <div show={show} onHide={onHide} contentClassName="normalBackground">
-        <div className="modalHeader normalBackground">
-          <h2 className="issueHeader">{issue ? "Edit Issue" : "New Issue"}</h2>
-        </div>
-        <div className="normalBackground modalBody">
-          <div className="specialModalGroup">
-            <div className="modalBodyGroup issueNameForm">
-              <h4 className="">Name</h4>
+    <Modal
+      header={issue ? "Edit Issue" : "New Issue"}
+      onClose={close}
+      onSubmit={() => {
+        issue ? update() : create();
+      }}
+      render={() => {
+        return (
+          <div className="modalBody">
+            <div className="modalBodyGroup">
+              <h4 className="modalLabel">Name</h4>
               <input
                 type="text"
                 className="modalInput"
@@ -154,7 +156,7 @@ export default function IssuePopup({
               />
             </div>
             <div className="modalBodyGroup">
-              <h4>Done</h4>
+              <h4 className="modalLabel">Done</h4>
               <ButtonCheckbox
                 isChecked={done}
                 onClick={() => {
@@ -162,63 +164,50 @@ export default function IssuePopup({
                 }}
               />
             </div>
-          </div>
-          <div className="modalBodyGroup">
-            <h4>Due</h4>
-            <DateTimePicker
-              //className="gamer"
-              calendarClassName="gamer"
-              format="yyyy-MM-dd hh:mm"
-              value={dueDate}
-              onChange={setDueDate}
-            />
-          </div>
-          <br />
-          <div className="modalBodyGroup">
-            <h4 className="">Description </h4>
-            {renderMarkdown ? (
-              <div className="markdownWrapper markdownArea">
-                <ReactMarkdown
-                  className="renderedMarkdown"
-                  children={description}
-                  rawSourcePos={true}
-                  components={{
-                    li: customListItem,
-                  }}
-                  remarkPlugins={[RemarkGFM]}
-                />
-              </div>
-            ) : (
-              <TextAreaAuto
-                ref={textAreaRef}
-                className="modalTextArea markdownArea"
-                value={description}
-                placeholder="Description"
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
+            <div className="modalBodyGroup">
+              <h4>Due</h4>
+              <DateTimePicker
+                //className="gamer"
+                calendarClassName="gamer"
+                format="yyyy-MM-dd hh:mm"
+                value={dueDate}
+                onChange={setDueDate}
               />
-            )}
+            </div>
             <br />
-            <button onClick={editOrSave} className="saveButton">
-              {renderMarkdown ? "Edit" : "Save Changes"}
-            </button>
+            <div className="modalBodyGroup">
+              <h4 className="modalLabel">Description </h4>
+              {renderMarkdown ? (
+                <div className="markdownWrapper markdownArea">
+                  <ReactMarkdown
+                    className="renderedMarkdown"
+                    children={description}
+                    rawSourcePos={true}
+                    components={{
+                      li: customListItem,
+                    }}
+                    remarkPlugins={[RemarkGFM]}
+                  />
+                </div>
+              ) : (
+                <TextAreaAuto
+                  ref={textAreaRef}
+                  className="modalTextArea markdownArea"
+                  value={description}
+                  placeholder="Description"
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
+                />
+              )}
+              <br />
+              <button onClick={editOrSave} className="saveButton">
+                {renderMarkdown ? "Edit" : "Save Changes"}
+              </button>
+            </div>
           </div>
-        </div>
-        <div bsPrefix="normalBackground customFoot">
-          <button onClick={onHide} className="closeButton">
-            Close
-          </button>
-          <button
-            onClick={() => {
-              issue ? update() : create();
-            }}
-            className="saveButton"
-          >
-            Save
-          </button>
-        </div>
-      </div>
-    </div>
+        );
+      }}
+    />
   );
 }

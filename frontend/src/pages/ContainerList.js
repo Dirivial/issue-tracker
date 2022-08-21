@@ -69,7 +69,7 @@ export default function ContainerList() {
 
           <NewContainerButton
             position={() => containerData.length}
-            new={getContainersCallback}
+            updateContainers={getContainersCallback}
           />
         </div>
       </div>
