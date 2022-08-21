@@ -9,11 +9,11 @@ module.exports = function (app) {
     const description = req.body.description;
     const position = req.body.position;
     const listid = req.body.listid;
-    const dueDate = req.body.dueDate;
+    const due = req.body.due;
 
     db.query(
       "INSERT INTO issue (name, description, position, done, listid, due) VALUES (?,?,?,?,?,?)",
-      [name, description, position, false, listid, dueDate],
+      [name, description, position, false, listid, due],
       (err, result) => {
         if (err) {
           console.error(err);
@@ -116,11 +116,11 @@ module.exports = function (app) {
     const done = req.body.done;
     const listid = req.body.listid;
     const issueid = req.body.issueid;
-    const dueDate = req.body.dueDate;
+    const due = req.body.due;
 
     db.query(
       "UPDATE issue SET name = ?, description = ?, position = ?, done = ?, listid = ?, due = ? WHERE id = (?)",
-      [name, description, position, done, listid, dueDate, issueid],
+      [name, description, position, done, listid, due, issueid],
       (err, result) => {
         if (err) {
           console.log(err);
