@@ -150,7 +150,7 @@ export default function IssueList(props) {
             <Popup
               modal={true}
               position="center center"
-              className="new-container"
+              className="modalPopup"
               trigger={
                 <button className="new-issue-button" onClick={launchIssuePopup}>
                   <FontAwesomeIcon icon={faPlus} />
