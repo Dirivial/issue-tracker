@@ -10,23 +10,6 @@ import RegisterPopup from "../components/RegisterUserPopup.js";
 import "./Login.css";
 
 export default function Login() {
-  return (
-    <div className="login">
-      <LoginForm />
-      <Popup
-        modal={true}
-        className="modalPopup"
-        trigger={<button className="btnLogin">Not registered?</button>}
-      >
-        {(close) => {
-          return <RegisterPopup close={close} />;
-        }}
-      </Popup>
-    </div>
-  );
-}
-
-function LoginForm() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
@@ -82,46 +65,71 @@ function LoginForm() {
   }, [persist]);
 
   return (
-    <div className="loginform-thing">
-      <div className="loginFormWrapper" style={{ maxWidth: 750 }}>
-        <form style={{ maxWidth: 700 }} className="">
-          <div className="loginInput">
-            <div className="float-left">E-mail</div>
-            <input
-              type="email"
-              value={mail}
-              placeholder="E-mail"
-              onChange={(e) => {
-                setMail(e.target.value);
-              }}
-            />
-          </div>
+    <div className="loginWrapper">
+      <div className="login">
+        <form className="loginForm">
+          <h2 className="modalLabel">Login</h2>
+          <h4 className="modalLabel">E-mail</h4>
+          <input
+            className="modalInput"
+            type="email"
+            value={mail}
+            placeholder="E-mail"
+            onChange={(e) => {
+              setMail(e.target.value);
+            }}
+          />
 
-          <div className="loginInput">
-            <div className="float-left">Password</div>
-            <input
-              type="password"
-              value={password}
-              placeholder="Password"
-              onKeyDown={(e) => {
-                handleKeyDown(e);
-              }}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-          </div>
+          <h4 className="modalLabel">Password</h4>
+          <input
+            className="modalInput"
+            type="password"
+            value={password}
+            placeholder="Password"
+            onKeyDown={(e) => {
+              handleKeyDown(e);
+            }}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+
           <div className="submitLoginContainer">
-            <input
-              type="checkbox"
-              id="persist"
-              onChange={togglePersist}
-              checked={persist}
-            />
-            <label htmlFor="persist"> Trust This Device? </label>
-            <button className="btnLogin" onClick={loginClicked}>
-              Log in
-            </button>
+            <div className="trustDevice">
+              <input
+                className="loginCheckbox"
+                type="checkbox"
+                id="persist"
+                onChange={togglePersist}
+                checked={persist}
+              />
+              <label className="modalLabel" htmlFor="persist">
+                Trust This Device?
+              </label>
+            </div>
+            <div className="loginRegisterButtons">
+              <Popup
+                modal={true}
+                className="modalPopup"
+                position="center center"
+                trigger={
+                  <button type="button" className="registerButton">
+                    Register
+                  </button>
+                }
+              >
+                {(close) => {
+                  return <RegisterPopup close={close} />;
+                }}
+              </Popup>
+              <button
+                type="submit"
+                className="loginButton"
+                onClick={loginClicked}
+              >
+                Log in
+              </button>
+            </div>
           </div>
           {errorMsg ? <p style={{ color: "red" }}>{errorMsg}</p> : null}
         </form>
