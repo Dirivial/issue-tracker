@@ -34,7 +34,9 @@ export default function MyNavbar() {
           </button>
         </div>
       </div>
-      <Outlet />
+      <div className="navbarOutlet">
+        <Outlet />
+      </div>
     </div>
   );
 }
