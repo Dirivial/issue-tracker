@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import useAxiosPrivate from "../hooks/useAxiosPrivate.js";
 import useAuth from "../hooks/useAuth.js";
 import NewContainerButton from "../components/NewContainerButton.js";
@@ -79,48 +78,26 @@ export default function ContainerList() {
   return (
     <div className="ContainerList">
       <h2 className="ContainerListHeader">These are my containers</h2>
+      <br />
       <div className="ContainerGridWrapper">
-        <DragDropContext
-          onDragEnd={(result) =>
-            onDragEnd({
-              destination: result.destination,
-              source: result.source,
-            })
-          }
-        >
-          <Droppable
-            droppableId="Containers"
-            direction="horizontal"
-            type="CONTAINER"
-          >
-            {(provided, snapshot) => {
-              return (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className="ContainerGrid"
-                >
-                  {Object.values(containerData).map((c, containerIndex) => {
-                    return (
-                      <ContainerListItem
-                        key={c.id}
-                        containerid={c.id}
-                        name={c.name}
-                        deleteContainer={deleteContainer}
-                        position={containerIndex}
-                      />
-                    );
-                  })}
-                  {provided.placeholder}
-                  <NewContainerButton
-                    position={() => containerData.length}
-                    new={getContainersCallback}
-                  />
-                </div>
-              );
-            }}
-          </Droppable>
-        </DragDropContext>
+        <div className="ContainerGrid">
+          {Object.values(containerData).map((c, index) => {
+            return (
+              <ContainerListItem
+                key={c.id}
+                containerid={c.id}
+                name={c.name}
+                deleteContainer={deleteContainer}
+                position={index}
+              />
+            );
+          })}
+
+          <NewContainerButton
+            position={() => containerData.length}
+            new={getContainersCallback}
+          />
+        </div>
       </div>
     </div>
   );

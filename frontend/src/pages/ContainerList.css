@@ -5,10 +5,11 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
+  overflow-y: scroll;
 }
 
 .ContainerListHeader {
-  padding-top: 3vh;
+  margin-top: 3vh;
   text-align: center;
 }
 
@@ -16,7 +17,8 @@
   width: 80%;
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 6rem;
+  gap: 0.8vh;
+  padding-bottom: 3vh;
 }
 
 .ContainerGridWrapper {
