@@ -33,14 +33,13 @@
 
 .IssueListsContainer {
   color: var(--main-fg);
-  width: 100%;
 
   flex: 1;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-  padding-top: 2vh;
+  padding-top: 1vh;
 }
 
 .NewListBtn {
