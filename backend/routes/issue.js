@@ -117,7 +117,6 @@ module.exports = function (app) {
     const listid = req.body.listid;
     const issueid = req.body.issueid;
     const dueDate = req.body.dueDate;
-    console.log(dueDate);
 
     db.query(
       "UPDATE issue SET name = ?, description = ?, position = ?, done = ?, listid = ?, due = ? WHERE id = (?)",
@@ -127,7 +126,6 @@ module.exports = function (app) {
           console.log(err);
           return res.sendStatus(500);
         } else {
-          console.log(result);
           return res.sendStatus(200);
         }
       }
