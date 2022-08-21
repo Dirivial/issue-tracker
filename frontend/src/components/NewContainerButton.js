@@ -30,7 +30,6 @@ export default function NewContainerButton(props) {
 
 function NewContainerPopup(props) {
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   const axiosPrivate = useAxiosPrivate();
@@ -45,7 +44,6 @@ function NewContainerPopup(props) {
         "/container/create",
         {
           name: name,
-          description: description,
           position: props.position(),
           userid: auth.userid,
         },
@@ -54,7 +52,6 @@ function NewContainerPopup(props) {
         }
       );
       setName("");
-      setDescription("");
       props.updateContainers();
       props.onHide();
     } catch (err) {
@@ -79,32 +76,18 @@ function NewContainerPopup(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form style={{ maxWidth: 700 }} className="">
-            <Form.Group className="" controlId="containerName">
-              <Form.Label className="float-left">Name of container</Form.Label>
-              <Form.Control
-                autoComplete="off"
-                type="text"
-                value={name}
-                placeholder="Enter a name"
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-            </Form.Group>
-            <Form.Group className="" controlId="containerName">
-              <Form.Label className="float-left">Description</Form.Label>
-              <Form.Control
-                autoComplete="off"
-                type="text"
-                value={description}
-                placeholder="Enter a description"
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-              />
-            </Form.Group>
-          </form>
+          <Form.Group className="" controlId="containerName">
+            <Form.Label className="float-left">Name of container</Form.Label>
+            <Form.Control
+              autoComplete="off"
+              type="text"
+              value={name}
+              placeholder="Enter a name"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           {errorMsg ? <p style={{ color: "red" }}>{errorMsg}</p> : null}

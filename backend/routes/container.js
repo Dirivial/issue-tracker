@@ -6,13 +6,12 @@ const PATH = "/container";
 module.exports = function (app) {
   app.post(PATH + "/create", (req, res) => {
     const name = req.body.name;
-    const description = req.body.description;
     const userid = req.body.userid;
     const position = req.body.position;
 
     db.query(
-      "INSERT INTO container (name, description, userid, position) VALUES (?,?,?,?)",
-      [name, description, userid, position],
+      "INSERT INTO container (name, userid, position) VALUES (?,?,?,?)",
+      [name, userid, position],
       (err, result) => {
         if (err) {
           console.log(err);
@@ -52,7 +51,6 @@ module.exports = function (app) {
         } else {
           return res.status(201).send({
             name: result[0].name,
-            description: result[0].description,
             creatorid: result[0].userid,
           });
         }
@@ -80,13 +78,12 @@ module.exports = function (app) {
 
   app.post(PATH + "/update", (req, res) => {
     const name = req.body.name;
-    const description = req.body.description;
     const id = req.body.id;
     const position = req.body.position;
 
     db.query(
-      "UPDATE container SET name = ?, description = ?, position = ? WHERE id = ?",
-      [name, description, position, id],
+      "UPDATE container SET name = ?, position = ? WHERE id = ?",
+      [name, position, id],
       (err, result) => {
         if (err) {
           console.log(err);

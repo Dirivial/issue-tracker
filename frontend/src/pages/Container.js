@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 import useAxiosPrivate from "../hooks/useAxiosPrivate.js";
+import useAuth from "../hooks/useAuth.js";
 import ListViewer from "../components/ListViewer.js";
 import "./Container.css";
 
 export default function Container() {
-  const [data, setData] = useState({});
   const [name, setName] = useState("");
-  const [desc, setDesc] = useState("");
   const [allowUpdate, setAllowUpdate] = useState(false);
+  const { auth } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,9 +20,7 @@ export default function Container() {
     try {
       await axiosPrivate.post("/container/update", {
         name: name,
-        description: desc,
         id: id,
-        position: data.position,
       });
       setAllowUpdate(false);
     } catch (err) {
@@ -31,17 +29,29 @@ export default function Container() {
     }
   };
 
+  const deleteContainer = async () => {
+    try {
+      const response = await axiosPrivate.post("/container/remove", {
+        containerid: id,
+        userid: auth.userid,
+      });
+
+      navigate("/containers", { state: { from: null }, replace: true });
+    } catch (err) {
+      console.log(err);
+      navigate("/login", { state: { from: location }, replace: true });
+    }
+  };
+
   useEffect(() => {
     setAllowUpdate(true);
-  }, [name, desc]);
+  }, [name]);
 
   useEffect(() => {
     const getContainerInfo = async () => {
       try {
         const response = await axiosPrivate.get("/container/get?id=" + id);
-        setData(response?.data);
         setName(response?.data?.name);
-        setDesc(response?.data?.description);
       } catch (err) {
         console.log(err);
         navigate("/login", { state: { from: location }, replace: true });
@@ -51,17 +61,19 @@ export default function Container() {
   }, [axiosPrivate, navigate, id, location]);
 
   return (
-    <div className="user-container">
-      <div className="container-header">
+    <div className="userContainer">
+      <div className="containerHeader">
         <input
-          className="container-title"
+          className="containerTitle"
           onBlur={sendContainerUpdate}
           value={name}
           onChange={(e) => {
             setName(e.target.value);
           }}
         />
-        {/* <textarea className="container-description" value={desc} onBlur={sendContainerUpdate} onChange={(e) => {setDesc(e.target.value)}}/> */}
+        <button className="deleteContainer" onClick={deleteContainer}>
+          Delete Container
+        </button>
       </div>
       <ListViewer containerid={id} />
     </div>

@@ -45,35 +45,9 @@ export default function ContainerList() {
     }
   };
 
-  const updateContainer = async (container) => {
-    try {
-      await axiosPrivate.post("/container/update", container);
-    } catch (err) {
-      navigate("/login", { state: { from: location }, replace: true });
-    }
-  };
-
   useEffect(() => {
     getContainersCallback();
   }, [getContainersCallback]);
-
-  const onDragEnd = (result) => {
-    if (!result) return;
-
-    setContainerData((prev) => {
-      let containers = [...prev];
-      containers.splice(
-        result.destination.index,
-        0,
-        containers.splice(result.source.index, 1)[0]
-      );
-      containers.forEach((container, index) => {
-        container.position = index;
-        updateContainer(container);
-      });
-      return containers;
-    });
-  };
 
   return (
     <div className="ContainerList">
