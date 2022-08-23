@@ -1,19 +1,36 @@
 .about {
   background-color: var(--main-bg);
   color: var(--main-fg);
-  margin-top: 5vh;
-  height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
 }
 
-.about-section {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.about-section {
+.aboutTitle {
+  font-size: 2em;
   text-align: center;
+}
+
+.about-section {
+  width: 500px;
+}
+
+.aboutList {
+  text-align: start;
+}
+
+.socials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.socials:link {
+  color: var(--main-fg);
+}
+
+.socials:visited {
+  color: var(--fg0);
 }
