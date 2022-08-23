@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Popup from "reactjs-popup";
 
+import useRefreshToken from "../hooks/useRefreshToken.js";
 import axios from "../api/axios.js";
 import useAuth from "../hooks/useAuth.js";
 
@@ -13,6 +14,7 @@ export default function Login() {
   const [errorMsg, setErrorMsg] = useState(null);
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
+  const refresh = useRefreshToken();
 
   const { setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
@@ -63,6 +65,11 @@ export default function Login() {
   useEffect(() => {
     localStorage.setItem("persist", persist);
   }, [persist]);
+
+  useEffect(() => {
+    const token = refresh();
+    if (token) navigate("/");
+  }, []);
 
   return (
     <div className="loginWrapper">
