@@ -29,10 +29,10 @@ export default function IssueListItem({ contents, position, remove, update }) {
   };
 
   return (
-    <div onClick={null}>
+    <div>
       <Draggable
         key={issue.id}
-        draggableId={"Issue" + issue.id}
+        draggableId={"" + issue.id}
         index={position}
         type="ISSUE"
       >

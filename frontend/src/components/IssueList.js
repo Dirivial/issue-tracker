@@ -17,7 +17,6 @@ export default function IssueList(props) {
     props.name ? props.name : "New list"
   );
   const [listNameBefore, setListNameBefore] = useState(listName);
-  const [issuePopupShow, setIssuePopupShow] = useState(false);
   const [editTitle, setEditTitle] = useState(false);
   const myRef = useRef(null);
   const axiosList = useAxiosList();
@@ -48,8 +47,10 @@ export default function IssueList(props) {
     props.addIssue(issue);
   };
 
-  const launchIssuePopup = () => {
-    setIssuePopupShow(true);
+  const updateIssue = (newIssue, index) => {
+    // Disgusting way to make sure the issue has the correct position
+    newIssue.position = index;
+    props.updateIssue(newIssue, index);
   };
 
   const handleKeyDown = (e) => {
@@ -136,7 +137,9 @@ export default function IssueList(props) {
                             position={index}
                             contents={issue}
                             remove={() => removeIssue(issue.id, index)}
-                            update={(newIssue) => props.updateIssue(newIssue)}
+                            update={(updatedIssue) =>
+                              updateIssue(updatedIssue, index)
+                            }
                           />
                         );
                       })}
@@ -152,7 +155,7 @@ export default function IssueList(props) {
               position="center center"
               className="modalPopup"
               trigger={
-                <button className="new-issue-button" onClick={launchIssuePopup}>
+                <button className="new-issue-button">
                   <FontAwesomeIcon icon={faPlus} />
                 </button>
               }

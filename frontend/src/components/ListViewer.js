@@ -70,9 +70,7 @@ export default function ListViewer({ containerid }) {
 
           data.forEach((list) => {
             list.issues = result2.filter((issue) => issue.listid === list.id);
-            list.issues.sort((issueA, issueB) =>
-              issueA.position > issueB.position ? 1 : -1
-            );
+            list.issues.sort((a, b) => (a.position < b.position ? -1 : 1));
           });
           dispatch({ type: "load", payload: data });
         }
@@ -141,7 +139,10 @@ export default function ListViewer({ containerid }) {
   };
 
   const updateIssueContent = (issue, listIndex) => {
-    dispatch({ type: "updateIssue", payload: { issue, listIndex } });
+    dispatch({
+      type: "updateIssue",
+      payload: { issue, listIndex },
+    });
   };
 
   return (
@@ -177,8 +178,8 @@ export default function ListViewer({ containerid }) {
                     removeIssue={(issueIndex) =>
                       removeIssue(issueIndex, listIndex)
                     }
-                    updateIssue={(issue) =>
-                      updateIssueContent(issue, listIndex)
+                    updateIssue={(updatedIssue) =>
+                      updateIssueContent(updatedIssue, listIndex)
                     }
                   />
                 );
