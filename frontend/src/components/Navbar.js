@@ -18,9 +18,6 @@ export default function MyNavbar() {
       <div className="navbar">
         <div className="navstuff">
           <Link className="navbarlink" to="/">
-            Home
-          </Link>
-          <Link className="navbarlink" to="/containers">
             Containers
           </Link>
           <Link className="navbarlink" to="/about">

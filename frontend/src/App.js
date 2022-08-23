@@ -19,12 +19,10 @@ export default function App() {
         {/* Public */}
         <Route path="login" element={<Login />} />
         <Route path="about" element={<About />} />
-
         {/* Protected routes */}
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>
-            <Route path="/" element={<Home />} />
-            <Route path="containers" element={<ContainerList />} />
+            <Route path="/" element={<ContainerList />} />
             <Route path="containers/:id" element={<Container />} />
           </Route>
         </Route>
