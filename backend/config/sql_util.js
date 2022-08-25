@@ -1,14 +1,5 @@
-const mysql = require("mysql");
-const settings = {
-  connectionLimit: 10,
-  user: process.env.MYSQLUSER,
-  host: process.env.MYSQL_URL,
-  port: process.env.MYSQLPORT,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
-};
-
-var db = mysql.createPool(settings);
+const mysql = require("mysql2");
+var db = mysql.createPool(process.env.MYSQL_URL);
 
 db.on("connection", (c) => {
   console.log("Connection established");
