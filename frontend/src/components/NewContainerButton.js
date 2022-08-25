@@ -21,7 +21,7 @@ export default function NewContainerButton({ position, updateContainers }) {
 
   async function submitContainer(close) {
     try {
-      const response = axiosPrivate.post(
+      await axiosPrivate.post(
         "/container/create",
         {
           name: name,
