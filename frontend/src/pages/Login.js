@@ -19,9 +19,11 @@ export default function Login() {
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
 
+  console.log("BASE_URL: ", process.env.SERVER_URL);
+  console.log(".env: ", process.env);
+
   const loginClicked = async () => {
     try {
-      console.log("BASE_URL: ", process.env.SERVER_URL);
       console.log("Sending request");
       const response = await axios.post(
         "/login",
