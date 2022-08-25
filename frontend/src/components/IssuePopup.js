@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import DateTimePicker from "react-datetime-picker";
 
@@ -35,6 +36,9 @@ export default function IssuePopup({
   const textAreaRef = useRef();
   const axiosPrivate = useAxiosPrivate();
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const create = async () => {
     try {
       let myIssue = {
@@ -56,7 +60,7 @@ export default function IssuePopup({
       setRenderMarkdown(true);
     } catch (err) {
       console.log(err);
-      //navigate('/login', { state: { from: location }, replace: true });
+      navigate("/login", { state: { from: location }, replace: true });
     }
   };
 
@@ -79,7 +83,7 @@ export default function IssuePopup({
       close();
     } catch (err) {
       console.log(err);
-      //navigate('/login', { state: { from: location }, replace: true });
+      navigate("/login", { state: { from: location }, replace: true });
     }
   };
 
@@ -111,12 +115,12 @@ export default function IssuePopup({
     let newDescription = description.split("\n");
     if (checked) {
       newDescription[lineNumber] = newDescription[lineNumber].replace(
-        /[\-\*] \[[x]\]/,
+        /[-*] \[[x]\]/,
         "* [ ]"
       );
     } else {
       newDescription[lineNumber] = newDescription[lineNumber].replace(
-        /[\-\*] \[[\s]\]/,
+        /[-*] \[[\s]\]/,
         "* [x]"
       );
     }

@@ -1,6 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub } from "@fortawesome/free-solid-svg-icons";
-
 import "./About.css";
 
 export default function About() {
@@ -37,9 +34,10 @@ export default function About() {
           className="socials"
           href="https://github.com/Dirivial"
           target="_blank"
+          rel="noreferrer"
         >
           <div className="socialsLabel">Github</div>
-          <img src="/GitHub-Mark-Light-32px.png" alt="image" />
+          <img src="/GitHub-Mark-Light-32px.png" alt="github-logo" />
         </a>
       </section>
     </div>

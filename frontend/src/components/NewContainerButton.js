@@ -11,7 +11,6 @@ import "./NewContainerButton.css";
 
 export default function NewContainerButton({ position, updateContainers }) {
   const [name, setName] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
 
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
@@ -76,9 +75,6 @@ export default function NewContainerButton({ position, updateContainers }) {
                         setName(e.target.value);
                       }}
                     />
-                    {errorMsg ? (
-                      <p style={{ color: "red" }}>{errorMsg}</p>
-                    ) : null}
                   </div>
                 );
               }}
