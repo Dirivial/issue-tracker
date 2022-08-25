@@ -1,2 +1,0 @@
-# Decided technologies
-MySQL
