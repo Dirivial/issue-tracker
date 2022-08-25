@@ -3,6 +3,8 @@ const settings = {
   connectionLimit: 10,
   user: process.env.MYSQLUSER,
   host: process.env.MYSQLHOST,
+  localAddress: process.env.MYSQL_URL,
+  port: process.env.MYSQLPORT,
   password: process.env.MYSQLPASSWORD,
   database: process.env.MYSQLDATABASE,
 };
