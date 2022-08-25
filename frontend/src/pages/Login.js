@@ -67,7 +67,7 @@ export default function Login() {
   return (
     <div className="loginWrapper">
       <div className="login">
-        <form className="loginForm">
+        <div className="loginForm">
           <h2 className="modalLabel">Login</h2>
           <h4 className="modalLabel">E-mail</h4>
           <input
@@ -132,7 +132,7 @@ export default function Login() {
             </div>
           </div>
           {errorMsg ? <p style={{ color: "red" }}>{errorMsg}</p> : null}
-        </form>
+        </div>
       </div>
     </div>
   );
