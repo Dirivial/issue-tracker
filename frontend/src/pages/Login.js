@@ -21,8 +21,7 @@ export default function Login() {
 
   const loginClicked = async () => {
     try {
-      const nice = await axios.get("/nice");
-      console.log(nice);
+      console.log("BASE_URL: ", process.env.SERVER_URL);
       console.log("Sending request");
       const response = await axios.post(
         "/login",
