@@ -1,5 +1,5 @@
 const mysql = require("mysql2");
-var db = mysql.createPool(process.env.MYSQL_URL);
+var db = mysql.createPool(process.env.URL);
 
 db.on("connection", (c) => {
   console.log("Connection established");
