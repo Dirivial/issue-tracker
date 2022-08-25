@@ -1,6 +1,15 @@
 const mysql = require("mysql2");
 var db = mysql.createPool(
-  "mysql://${process.env.MYSQLUSER}:${process.env.MYSQLPASSWORD}@${process.env.MYSQLHOST}:${process.env.MYSQLPORT}/${process.env.MYSQLDATABASE}"
+  "mysql://" +
+    process.env.MYSQLUSER +
+    ":" +
+    process.env.MYSQLPASSWORD +
+    "@" +
+    process.env.MYSQLHOST +
+    ":" +
+    process.env.MYSQLPORT +
+    "/" +
+    process.env.MYSQLDATABASE
 );
 
 db.on("connection", (c) => {
