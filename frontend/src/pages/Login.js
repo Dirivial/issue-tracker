@@ -21,6 +21,9 @@ export default function Login() {
 
   const loginClicked = async () => {
     try {
+      const nice = await axios.get("/nice");
+      console.log(nice);
+      console.log("Sending request");
       const response = await axios.post(
         "/login",
         {
@@ -32,12 +35,15 @@ export default function Login() {
           withCredentials: true,
         }
       );
+      console.log("Response", response.data);
       const token = response?.data?.token;
       const userid = response?.data?.userid;
 
       setAuth({ userid, token });
       navigate(from, { replace: true });
     } catch (err) {
+      console.log(err.response.status);
+      console.log(err.response.data);
       if (!err?.response) {
         setErrorMsg("No response from server");
       } else if (err.response?.status === 400) {
