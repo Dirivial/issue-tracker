@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://issue-tracker-production.up.railway.app/";
+const BASE_URL = process.env.SERVER_URL;
 
 export default axios.create({
   baseURL: BASE_URL,
